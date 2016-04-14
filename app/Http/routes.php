@@ -12,8 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::get('/events', 'EventController@userEvents');
+Route::get('/event/{slug}', 'EventController@eventBySlug');
+Route::post('/event/create', 'EventController@store');
+Route::post('/event/{slug}/update', 'EventController@index');
+Route::post('/event/{slug}/delete', 'EventController@index');
 
 /*
 |--------------------------------------------------------------------------

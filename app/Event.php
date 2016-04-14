@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +9,11 @@ class Event extends Model
     protected $table = 'events';
     public $timestamps = true;
 
+    public static function findBySlug($slug)
+    {
+        return Event::where('slug', $slug)->first();
+    }
+
     public function user()
     {
         return $this->belongsTo('User');
@@ -16,6 +21,6 @@ class Event extends Model
 
     public function guests()
     {
-        return $this->hasMany('EventGuest');
+        return $this->hasMany('App\EventGuest');
     }
 }
