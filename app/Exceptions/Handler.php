@@ -45,6 +45,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($this->isHttpException($e) && $e->getStatusCode() == 404) {
+            return response("Oops, route not found!", 404);
+        }
+
         return parent::render($request, $e);
     }
 }
