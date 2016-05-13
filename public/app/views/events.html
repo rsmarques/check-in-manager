@@ -1,0 +1,3 @@
+<ul ng-repeat="event in events">
+    <li>Event: <a ng-click="selectEvent(event)" href="/#/event/{{event.slug}}">{{event.name}}</a>, Guests: {{event.guest_count}}</li>
+</ul>

@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-xs-6">
+        <p>Event: <a href="/#/event/{{event.slug}}">{{currentEvent.name}}</a>, Guests: {{currentEvent.guest_count}}</p>
+    </div>
+    <div class="col-xs-6">
+        <div class="form-horizontal">
+            <label class="col-xs-2 control-label">Search</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" placeholder="nb12345, John Doe..." ng-model="searchKey" ng-keyup="searchGuests(searchKey)">
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Event Guests</div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th class="hidden-xs">Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="guest in guests">
+                    <th>{{ guest.slug }}</th>
+                    <td class="hidden-xs">{{ guest.name }}</td>
+                    <td>{{ guest.email }}</td>
+                    <td>
+                        <div ng-switch on="guest.check_in" ng-click="checkInGuest(guest)">
+                            <div ng-switch-when="1">
+                                <!-- code to render a large video block-->
+                                <button type="button" class="btn btn-danger btn-block test-button">Check Out</button>
+                            </div>
+                            <div ng-switch-default>
+                                <!-- code to render the regular video block -->
+                                <button type="button" class="btn btn-success btn-block test-button">Check In</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>

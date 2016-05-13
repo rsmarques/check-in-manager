@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
+use App\EventGuest;
+
+use Log;
+
 class EventController extends Controller
 {
     /**
@@ -12,22 +17,65 @@ class EventController extends Controller
     public function userEvents()
     {
         // TODO filter events by user
-        $events = \App\Event::get();
+        $events = Event::get();
 
-        return view('events', array("events" => $events));
+        // TODO put this data into transformer
+        foreach ($events as $event) {
+            $event["guest_count"]   = $event->guests()->count();
+        }
+
+        return $events;
     }
 
     public function eventBySlug($slug)
     {
-        $event  = \App\Event::findBySlug($slug);
+        $event  = Event::findBySlug($slug);
 
         if (!$event) {
             // TODO error page on event not found
+            return array();
         }
 
-        $guests = $event->guests()->get();
+        // TODO put this data into transformer
+        $event["guest_count"]   = $event->guests()->count();
 
-        return view('event', array("event" => $event, "guests" => $guests, "guest_count" => $event->guests()->count()));
+        return $event;
+    }
+
+    public function eventGuestsBySlug($slug)
+    {
+        $event  = Event::findBySlug($slug);
+
+        if (!$event) {
+            // TODO error page on event not found
+            return array();
+        }
+
+        $guests = $event->guests;
+
+        return $guests;
+    }
+
+    public function checkInGuest($eventSlug, $guestId)
+    {
+        $event  = Event::findBySlug($eventSlug);
+
+        if (!$event) {
+            // TODO error page on event not found
+            return array();
+        }
+
+        $guest  = EventGuest::find($guestId);
+
+        if ($guest && $guest->event_id === $event->id) {
+            $guest->check_in    = !$guest->check_in;
+            $guest->save();
+
+            return $guest;
+
+        } else {
+            return array();
+        }
     }
 
     /**
