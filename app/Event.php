@@ -21,6 +21,6 @@ class Event extends Model
 
     public function guests()
     {
-        return $this->hasMany('App\EventGuest');
+        return $this->hasMany('App\EventGuest')->orderBy('slug', 'ASC');
     }
 }

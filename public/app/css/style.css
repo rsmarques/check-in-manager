@@ -1,0 +1,71 @@
+.eventDetailBackground {
+    /*background: #f5f5f5;*/
+}
+
+.eventButtons > figure {
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.eventHeader {
+    margin-top: 13px;
+}
+
+.eventDescription > figure {
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.eventDescription h1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.eventDescription p, h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #888;
+}
+
+.eventGuestId {
+    padding-right: 20px;
+    color: #555;
+}
+
+.eventGuest h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #111;
+}
+
+.eventGuest h5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #888;
+}
+
+.eventGuest > figure {
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+md-datepicker {
+    padding-top: 3px;
+    > button.md-datepicker-button.md-icon-button.md-button {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        min-height: 30px;
+    }
+    > div.md-datepicker-input-container {
+        margin-left: 8px;
+        padding-bottom: 4px;
+    }
+    &.md-datepicker-open > div.md-datepicker-input-container > input.md-datepicker-input { // Stop the jumping on open
+        height: inherit;
+        margin-left: 20px;
+        // tabindex needs to be -1: https://github.com/angular/material/issues/4755
+    }
+}

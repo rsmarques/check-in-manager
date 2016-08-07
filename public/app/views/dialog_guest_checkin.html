@@ -1,0 +1,39 @@
+<md-dialog aria-label="Guest Check In" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Guest Check in</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                <md-icon md-font-set="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+
+            <form ng-submit="$event.preventDefault()">
+                <p>Enter Guest ID / Name / Email.</p>
+                <md-autocomplete
+                    md-no-cache=0
+                    md-selected-item="selectedItem"
+                    md-search-text="searchText"
+                    md-search-text-change="console.log(searchText)"
+                    md-selected-item-change="selectedItemChange(item)"
+                    md-items="item in searchGuests(searchText)"
+                    md-item-text="item.slug"
+                    md-min-length="3"
+                    placeholder="nb12345, John Doe..."
+                    background="url(images/search.icon.png)">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <br/>
+            </form>
+
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button aria-label="Done" ng-click="ctrl.finish($event)">Done</md-button>
+    </md-dialog-actions>
+</md-dialog>
