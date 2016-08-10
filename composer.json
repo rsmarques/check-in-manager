@@ -7,7 +7,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "league/fractal": "^0.13.0"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

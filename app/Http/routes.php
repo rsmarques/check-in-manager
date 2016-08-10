@@ -13,13 +13,19 @@
 
 // API endpoints
 Route::group(array('prefix' => 'api/v1'), function () {
+
+    // guest endpoints
+    Route::get('guests', 'GuestController@userGuests');
+    Route::post('guests/store', 'GuestController@store');
+    Route::post('guests/{id}/delete', 'GuestController@delete');
+    Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@guestCheckIn');
+
+    // event endpoints
     Route::get('events', 'EventController@userEvents');
     Route::get('events/{slug}', 'EventController@eventBySlug');
     Route::get('events/{slug}/guests', 'EventController@eventGuestsBySlug');
-    Route::post('events/create', 'EventController@store');
-    Route::post('events/{slug}/update', 'EventController@update');
-    Route::post('events/{slug}/delete', 'EventController@destroy');
-    Route::post('events/{slug}/guests/{guestId}/checkin', 'EventController@checkInGuest');
+    Route::post('events/store', 'EventController@store');
+    Route::post('events/{slug}/delete', 'EventController@delete');
 });
 
 // Angular routes

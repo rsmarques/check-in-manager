@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+use Validator;
+
+use App\Guest;
 use App\Event;
 use App\EventGuest;
 
 use Log;
+use DB;
+use Exception;
 
-class EventController extends Controller
+class EventController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -53,29 +60,11 @@ class EventController extends Controller
 
         $guests = $event->guests;
 
+        foreach ($guests as $guest) {
+            $guest->check_in    = $guest->pivot->check_in;
+        }
+
         return $guests;
-    }
-
-    public function checkInGuest($eventSlug, $guestId)
-    {
-        $event  = Event::findBySlug($eventSlug);
-
-        if (!$event) {
-            // TODO error page on event not found
-            return array();
-        }
-
-        $guest  = EventGuest::find($guestId);
-
-        if ($guest && $guest->event_id === $event->id) {
-            $guest->check_in    = !$guest->check_in;
-            $guest->save();
-
-            return $guest;
-
-        } else {
-            return array();
-        }
     }
 
     /**
@@ -85,19 +74,27 @@ class EventController extends Controller
      */
     public function store()
     {
+        $eventData  = Input::get('event', array());
 
-    }
+        $validator  = Validator::make($eventData, [
+            'name'      => 'required',
+            'category'  => 'required',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param int $slug
-     *
-     * @return Response
-     */
-    public function update($slug)
-    {
+        if ($validator->fails()) {
+            return $this->responseWithErrors($validator->errors()->all(), 422);
+        }
 
+        $event              = !empty($eventData['id']) ? Event::firstOrNew(array('id' => $eventData['id'])) : new Event;
+
+        $event->user_id     = 1;
+        $event->date        = Carbon::now();
+        $event->name        = $eventData['name'];
+        $event->category    = $eventData['category'];
+        $event->slug        = $event->calcSlug();
+        $event->save();
+
+        return $event;
     }
 
     /**
@@ -107,8 +104,29 @@ class EventController extends Controller
      *
      * @return Response
      */
-    public function destroy($slug)
+    public function delete($slug)
     {
+        $event      = Event::findBySlug($slug);
 
+        if (!$event) {
+            return $this->responseWithErrors("Event [$slug] not found!", 500);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            EventGuest::where('event_id', $event->id)->delete();
+            Event::where('slug', $slug)->delete();
+
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->responseWithErrors("Error deleting event! " . $e->getMessage(), 500);
+        }
+
+        DB::commit();
+
+
+        return $this->responseWithNoContent();
     }
 }
