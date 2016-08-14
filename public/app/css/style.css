@@ -69,3 +69,46 @@ md-datepicker {
         // tabindex needs to be -1: https://github.com/angular/material/issues/4755
     }
 }
+
+.vertical-container {
+    width: 100%;
+    height: 400px;
+    max-width: 1600px;
+}
+
+.repeated-item {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.guestList {
+    width: 100%;
+}
+
+.guestListHeader {
+    padding-left: 5px;
+}
+
+.searchEventsBar {
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 2px;
+    background-color: #f3f3f3;
+    padding-right: 12px !important;
+    height: 40px;
+}
+/*.virtualRepeatdemoDeferredLoading .repeated-item {
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 40px;
+  padding-top: 10px; }
+
+.virtualRepeatdemoDeferredLoading md-content {
+  margin: 16px; }
+
+.virtualRepeatdemoDeferredLoading md-virtual-repeat-container {
+  border: solid 1px grey; }
+
+.virtualRepeatdemoDeferredLoading .md-virtual-repeat-container .md-virtual-repeat-offsetter div {
+  padding-left: 16px; }*/

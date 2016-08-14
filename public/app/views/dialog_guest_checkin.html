@@ -16,16 +16,16 @@
                 <md-autocomplete
                     md-no-cache=0
                     md-selected-item="selectedItem"
-                    md-search-text="searchText"
-                    md-search-text-change="console.log(searchText)"
+                    md-search-text="searchGuest"
+                    md-search-text-change="console.log(searchGuest)"
                     md-selected-item-change="selectedItemChange(item)"
-                    md-items="item in searchGuests(searchText)"
+                    md-items="item in searchGuests(searchGuest)"
                     md-item-text="item.slug"
                     md-min-length="3"
                     placeholder="nb12345, John Doe..."
                     background="url(images/search.icon.png)">
                     <md-item-template>
-                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
+                        <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
                     </md-item-template>
                 </md-autocomplete>
                 <br/>

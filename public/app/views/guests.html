@@ -1,0 +1,231 @@
+<div>
+   <div ng-include="'./app/views/navbar.html'"></div>
+    <md-content>
+    <md-grid-list class="eventHeader"
+            md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+            md-row-height-gt-md="40px" md-row-height="40px"
+            md-gutter="12px" md-gutter-gt-sm="8px">
+        <md-grid-tile class="eventDescription"
+            md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+            <div layout="column" layout-align="center start">
+                <h1>Guest Main List</h1>
+                <h4><strong>5123</strong> Guests</h4>
+            </div>
+
+        </md-grid-tile>
+        <md-grid-tile class="eventButtons"
+            md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                <div layout="row" layout-align="end center">
+                <md-button class="md-icon-button" aria-label="Add" ng-click="openGuestEditDialog($event, 1)">
+                    <md-icon md-font-set="md">add</md-icon>
+                    <md-tooltip md-direction="bottom">
+                        Add Guest
+                    </md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Upload" ng-click="null" layout="row" layout-align="end center">
+                    <md-icon md-font-set="md">file_upload</md-icon>
+                    <md-tooltip md-direction="bottom">
+                        Upload CSV
+                    </md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Download" ng-click="null">
+                    <md-icon md-font-set="md">file_download</md-icon>
+                    <md-tooltip md-direction="bottom">
+                        Export CSV
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </md-grid-tile>
+    </md-grid-list>
+    </md-content>
+</div>
+<md-divider md-inset></md-divider>
+<md-content>
+<md-list-item>
+    <div class="md-list-item guestList" layout="row" layout-align="start center">
+        <span flex-gt-sm="10" flex-xs="30" flex-sm="20">ID</span>
+        <span flex-gt-sm="50" flex-xs="70" flex-sm="60">Name</span>
+        <span flex-gt-sm="40" hide-xs flex-sm="20">Degree</span>
+<!--         <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon>
+        <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon> -->
+    </div>
+    <div class="_md-secondary-container" style="width: 98px;"></div>
+    <!-- <div ></div> -->
+</md-list-item>
+</md-content>
+
+<md-content layout="column">
+<div ng-cloak class="virtualRepeatdemoDeferredLoading">
+        <md-virtual-repeat-container class="vertical-container">
+            <md-list ng-cloak>
+                <md-list-item md-virtual-repeat="guest in guests" class="repeated-item" ng-click="openGuestEditDialog($event, 0, guest)">
+                    <div class="md-list-item guestList" layout="row" layout-align="start center">
+                        <span flex-gt-sm="10" flex-xs="30" flex-sm="20">{{guest.slug}}</span>
+                        <span flex-gt-sm="50" flex-xs="70" flex-sm="60">{{guest.name}}</span>
+                        <span flex-gt-sm="40" hide-xs flex-sm="20">{{guest.degree}}</span>
+                        <md-icon class="md-secondary" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" md-font-set="md">mode_edit</md-icon>
+                        <md-icon class="md-secondary" aria-label="Delete" ng-click="showRemoveGuest($event, guest)" md-font-set="md">delete</md-icon>
+                    </div>
+
+<!--             <h4><strong>{{guest.slug}}</strong></h4>
+            <h4><strong>{{guest.name}}</strong></h4>
+            <h5 hide-xs hide-sm>{{guest.email}}</h5>
+            <md-icon class="md-secondary" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" md-font-set="md">mode_edit</md-icon>
+            <md-icon class="md-secondary" aria-label="Delete" ng-click="showRemoveGuest($event, guest)" md-font-set="md">delete</md-icon> -->
+                </md-list-item>
+            </md-list>
+        </md-virtual-repeat-container>
+</div>
+    </md-content>
+
+<!--     <div md-virtual-repeat="guest in guests" class="repeated-item">
+        <md-grid-list
+                md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                md-row-height-gt-md="25px" md-row-height="25px"
+                md-gutter="12px" md-gutter-gt-sm="8px">
+
+            <md-grid-tile class="eventGuest" ng-click="openGuestEditDialog($event, 0, guest)"
+                md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                <div layout="column" layout-align="center start" class="eventGuestId">
+                    <h4><strong>{{guest.slug}}</strong></h4>
+                </div>
+                <div layout="column" layout-align="center start">
+                    <h4><strong>{{guest.name}}</strong></h4>
+                    <h5 hide-xs hide-sm>{{guest.email}}</h5>
+                </div>
+
+            </md-grid-tile>
+            <md-grid-tile class="eventButtons"
+                md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                    <div layout="row" layout-align="end center">
+                    <md-button class="md-icon-button" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">mode_edit</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            Edit Guest
+                        </md-tooltip>
+                    </md-button>
+                    <md-button hide-xs hide-sm class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, guest)" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">delete</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            Delete Guest
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="null" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">more_horiz</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            More
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </md-grid-tile>
+        </md-grid-list>
+        <md-divider md-inset></md-divider>
+    </div> -->
+
+
+
+
+
+<!--     <md-virtual-repeat-container id="vertical-container">
+      <div md-virtual-repeat="guest in ctrl.dynamicItems" md-on-demand="" class="repeated-item" flex="">
+
+        <md-grid-list
+                md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                md-row-height-gt-md="25px" md-row-height="25px"
+                md-gutter="12px" md-gutter-gt-sm="8px">
+
+            <md-grid-tile class="eventGuest" ng-click="openGuestEditDialog($event, 0, guest)"
+                md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                <div layout="column" layout-align="center start" class="eventGuestId">
+                    <h4><strong>{{guest.slug}}</strong></h4>
+                </div>
+                <div layout="column" layout-align="center start">
+                    <h4><strong>{{guest.name}}</strong></h4>
+                    <h5 hide-xs hide-sm>{{guest.email}}</h5>
+                </div>
+
+            </md-grid-tile>
+            <md-grid-tile class="eventButtons"
+                md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                    <div layout="row" layout-align="end center">
+                    <md-button class="md-icon-button" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">mode_edit</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            Edit Guest
+                        </md-tooltip>
+                    </md-button>
+                    <md-button hide-xs hide-sm class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, guest)" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">delete</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            Delete Guest
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="null" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">more_horiz</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            More
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </md-grid-tile>
+        </md-grid-list>
+        <md-divider md-inset></md-divider>
+
+      </div>
+    </md-virtual-repeat-container> -->
+
+
+<!--     <md-list ng-cloak>
+        <md-list-item ng-repeat="guest in guests" ng-click="openGuestEditDialog($event, 0, guest)">
+            <h4><strong>{{guest.slug}}</strong></h4>
+            <h4><strong>{{guest.name}}</strong></h4>
+            <h5 hide-xs hide-sm>{{guest.email}}</h5>
+            <md-icon class="md-secondary" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" md-font-set="md">mode_edit</md-icon>
+            <md-icon class="md-secondary" aria-label="Delete" ng-click="showRemoveGuest($event, guest)" md-font-set="md">delete</md-icon>
+            <md-divider></md-divider>
+        </md-list-item>
+    </md-list> -->
+
+<!--     <div ng-repeat="guest in guests">
+        <md-grid-list
+                md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                md-row-height-gt-md="25px" md-row-height="25px"
+                md-gutter="12px" md-gutter-gt-sm="8px">
+
+            <md-grid-tile class="eventGuest" ng-click="openGuestEditDialog($event, 0, guest)"
+                md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                <div layout="column" layout-align="center start" class="eventGuestId">
+                    <h4><strong>{{guest.slug}}</strong></h4>
+                </div>
+                <div layout="column" layout-align="center start">
+                    <h4><strong>{{guest.name}}</strong></h4>
+                    <h5 hide-xs hide-sm>{{guest.email}}</h5>
+                </div>
+
+            </md-grid-tile>
+            <md-grid-tile class="eventButtons"
+                md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                    <div layout="row" layout-align="end center">
+                    <md-button class="md-icon-button" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">mode_edit</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            Edit Guest
+                        </md-tooltip>
+                    </md-button>
+                    <md-button hide-xs hide-sm class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, guest)" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">delete</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            Delete Guest
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="null" layout="row" layout-align="end center">
+                        <md-icon md-font-set="md">more_horiz</md-icon>
+                        <md-tooltip md-direction="bottom">
+                            More
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </md-grid-tile>
+        </md-grid-list>
+        <md-divider md-inset></md-divider>
+    </div> -->

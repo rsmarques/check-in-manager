@@ -26,6 +26,11 @@ angular.module('checkInManager', [
                 templateUrl: './app/views/home.html',
                 // controller: 'EventListController'
             })
+            .state('guests', {
+                url: '/guests',
+                templateUrl: './app/views/guests.html',
+                controller: 'GuestController'
+            })
             .state('events', {
                 url: '/events',
                 templateUrl: './app/views/events.html',

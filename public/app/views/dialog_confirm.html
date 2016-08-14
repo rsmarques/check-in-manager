@@ -21,7 +21,7 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Category</label>
                                 <md-select ng-model="currentEvent.category">
-                                    <md-option ng-repeat="category in ['Breakfast w/CEO', 'Discovery Week', 'Corporate Events']">
+                                    <md-option ng-repeat="category in ['Breakfast w/CEO', 'Discover Week', 'Corporate Events']">
                                         {{category}}
                                     </md-option>
                                 </md-select>
@@ -37,8 +37,6 @@
         </div>
     </md-dialog-content>
     <md-dialog-actions>
-        <md-button ng-hide="!currentEvent.id" class="md-raised md-warn" aria-label="Delete" ng-click="showRemoveEvent($event, currentEvent)">Delete Event</md-button>
-        <span flex></span>
         <md-button aria-label="Finished" ng-click="ctrl.finish($event)">Done</md-button>
     </md-dialog-actions>
 </md-dialog>

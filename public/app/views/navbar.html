@@ -10,11 +10,14 @@
         <md-button class="md-icon-button" aria-label="Home" href="#/">
             <md-icon md-font-set="md">home</md-icon>
         </md-button>
-        <md-button class="md-icon-button" aria-label="Users" href="#/">
+        <md-button class="md-icon-button" aria-label="Users" href="#/guests">
             <md-icon md-font-set="md">group</md-icon>
         </md-button>
         <md-button class="md-icon-button" aria-label="Events" href="#/events">
             <md-icon md-font-set="md">event</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Create Event" ng-click="openEventDialog($event)">
+            <md-icon md-font-set="md">event_available</md-icon>
         </md-button>
     </div>
 </md-toolbar>
