@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
+use Validator;
+
 use App\Guest;
 use App\Event;
 use App\EventGuest;
@@ -32,7 +35,7 @@ class GuestController extends ApiController
         return $guest;
     }
 
-    public function guestCheckIn($eventSlug, $guestId)
+    public function eventGuestCheckIn($eventSlug, $guestId)
     {
         $event      = Event::findBySlug($eventSlug);
 
@@ -53,6 +56,27 @@ class GuestController extends ApiController
         $eventGuest->save();
 
         return $eventGuest;
+    }
+
+    public function eventGuestRemove($eventSlug, $guestId)
+    {
+        $event      = Event::findBySlug($eventSlug);
+
+        if (!$event) {
+            return $this->responseWithErrors("Event [$slug] not found!", 500);
+        }
+
+        $guest      = Guest::find($guestId);
+
+        if (!$guest) {
+            return $this->responseWithErrors("Guest [$guest] not found!", 500);
+        }
+
+        Log::info("GuestController :: Removing Guest [$guestId] from event [$eventSlug]!");
+
+        $data       = EventGuest::where('event_id', $event->id)->where('guest_id', $guest->id)->delete();
+
+        return $this->responseWithNoContent();
     }
 
     /**

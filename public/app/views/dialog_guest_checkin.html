@@ -14,6 +14,8 @@
             <form ng-submit="$event.preventDefault()">
                 <p>Enter Guest ID / Name / Email.</p>
                 <md-autocomplete
+                    id="dialog_guest_checkin"
+                    md-autofocus
                     md-no-cache=0
                     md-selected-item="selectedItem"
                     md-search-text="searchGuest"
@@ -22,8 +24,7 @@
                     md-items="item in searchGuests(searchGuest)"
                     md-item-text="item.slug"
                     md-min-length="3"
-                    placeholder="nb12345, John Doe..."
-                    background="url(images/search.icon.png)">
+                    placeholder="nb12345, John Smith...">
                     <md-item-template>
                         <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
                     </md-item-template>
@@ -33,6 +34,11 @@
 
         </div>
     </md-dialog-content>
+    <div ng-if="dialogStatus" id="dialogStatus">
+        <p layout="row" layout-align="center center" class="md-padding">
+            {{dialogStatus}}
+        </p>
+    </div>
     <md-dialog-actions>
         <md-button aria-label="Done" ng-click="ctrl.finish($event)">Done</md-button>
     </md-dialog-actions>

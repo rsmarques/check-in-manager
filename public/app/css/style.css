@@ -11,9 +11,10 @@
     margin-top: 13px;
 }
 
-.eventDescription > figure {
-    justify-content: flex-start;
-    padding-left: 20px;
+.eventDescription {
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .eventDescription h1 {
@@ -47,6 +48,10 @@
 .eventGuest > figure {
     justify-content: flex-start;
     padding-left: 20px;
+}
+
+.checkInButton {
+    color: #5b5;
 }
 
 md-datepicker {
@@ -97,6 +102,11 @@ md-datepicker {
     background-color: #f3f3f3;
     padding-right: 12px !important;
     height: 40px;
+}
+
+.filterGuestsBar {
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
 /*.virtualRepeatdemoDeferredLoading .repeated-item {
   border-bottom: 1px solid #ddd;

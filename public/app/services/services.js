@@ -32,6 +32,16 @@ angular.module('checkInManager.services', ['ngResource'])
                 }
             },
 
+            remove: {
+                url: API_URL + "events/:eventSlug/guests/:guestId/:data",
+                method: 'POST',
+                params: {
+                    eventSlug: '@eventSlug',
+                    guestId: '@guestId',
+                    data: '@data',
+                }
+            },
+
             delete: {
                 url: API_URL + "guests/:guestId/delete",
                 method: 'POST',

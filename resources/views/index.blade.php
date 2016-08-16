@@ -23,6 +23,8 @@
     <base href="/">
 </head>
 <body ng-app="checkInManager">
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!-- Angular CDNs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-resource.min.js"></script>

@@ -21,11 +21,6 @@ angular.module('checkInManager', [
 
         $stateProvider
 
-            .state('home', {
-                url: '/',
-                templateUrl: './app/views/home.html',
-                // controller: 'EventListController'
-            })
             .state('guests', {
                 url: '/guests',
                 templateUrl: './app/views/guests.html',
@@ -37,7 +32,7 @@ angular.module('checkInManager', [
                 controller: 'EventListController'
             });
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/events');
     })
 
     .config(function($mdIconProvider) {
