@@ -23,7 +23,6 @@
                     md-selected-item-change="selectedItemChange(item)"
                     md-items="item in searchGuests(searchGuest)"
                     md-item-text="item.slug"
-                    md-min-length="3"
                     placeholder="nb12345, John Smith...">
                     <md-item-template>
                         <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
