@@ -229,7 +229,8 @@ angular.module('checkInManager.controllers', [])
 
                 if (eventIndex === -1) {
                     // guest not on list, creating entry
-                    var eventData       = (JSON.parse(JSON.stringify(event)));
+                    var eventData           = (JSON.parse(JSON.stringify(event)));
+                    eventData.guest_count   = 0;
                     $scope.events.unshift(eventData);
                 }
 
