@@ -37,24 +37,27 @@
     <md-divider></md-divider>
     <md-list-item id="guestTableHeader">
         <div class="md-list-item guestList" layout="row" layout-align="start center">
-            <span flex-gt-sm="10" flex-xs="30" flex-sm="20">ID</span>
-            <span flex-gt-sm="50" flex-xs="70" flex-sm="60">Name</span>
-            <span flex-gt-sm="40" hide-xs flex-sm="20">Degree</span>
+            <span flex-gt-sm="10" flex-sm="20" flex-xs="35">ID</span>
+            <span flex-gt-sm="30" flex-sm="45" flex-xs="65">Name</span>
+            <span flex-gt-sm="35" hide-sm hide-xs>Email</span>
+            <span flex-gt-sm="25" flex-sm="35" hide-xs>Degree</span>
 <!--         <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon>
         <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon> -->
         </div>
         <div class="_md-secondary-container" style="width: 98px;"></div>
     <!-- <div ></div> -->
     </md-list-item>
+
     <div layout="column">
         <div ng-cloak class="virtualRepeatdemoDeferredLoading">
             <md-virtual-repeat-container class="vertical-container" ng-style="getGuestRepeaterHeight()">
                 <md-list ng-cloak>
                     <md-list-item md-virtual-repeat="guest in guests | filter:filterGuest" class="repeated-item" ng-click="openGuestEditDialog($event, 0, guest)">
                         <div class="md-list-item guestList" layout="row" layout-align="start center">
-                            <span flex-gt-sm="10" flex-xs="30" flex-sm="20">{{guest.slug}}</span>
-                            <span flex-gt-sm="50" flex-xs="70" flex-sm="60">{{guest.name}}</span>
-                            <span flex-gt-sm="40" hide-xs flex-sm="20">{{guest.degree}}</span>
+                            <span flex-gt-sm="10" flex-sm="20" flex-xs="40">{{guest.slug}}</span>
+                            <span flex-gt-sm="30" flex-sm="45" flex-xs="60">{{guest.name}}</span>
+                            <span flex-gt-sm="35" hide-sm hide-xs>{{guest.email}}</span>
+                            <span flex-gt-sm="25" flex-sm="35" hide-xs>{{guest.degree}}</span>
                             <md-icon class="md-secondary" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" md-font-set="md">mode_edit</md-icon>
                             <md-icon class="md-secondary" aria-label="Delete" ng-click="showDeleteGuest($event, guest)" md-font-set="md">delete</md-icon>
                         </div>

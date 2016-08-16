@@ -64,8 +64,8 @@ angular.module('checkInManager.services', ['ngResource'])
         var guests  = Guests.query(function (result) {
 
         }, function (err) {
-            console.log("GuestsService :: Error getting guests!");
-            console.log(err);
+            // console.log("GuestsService :: Error getting guests!");
+            // console.log(err);
         });
 
         return guests;

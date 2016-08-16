@@ -47,7 +47,7 @@ angular.module('checkInManager.controllers', [])
 
         $scope.selectEvent  = function (event)
         {
-            console.log("EventListController :: Selecting Event " + event.slug);
+            // console.log("EventListController :: Selecting Event " + event.slug);
             $location.search({'p' : event.slug});
         }
 
@@ -172,7 +172,6 @@ angular.module('checkInManager.controllers', [])
         }
 
         $scope.showEventDeleted = function() {
-            console.log('showEventDeleted');
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Event Deleted!')
@@ -220,7 +219,10 @@ angular.module('checkInManager.controllers', [])
 
         $scope.$on('storeEvent', function (event) {
 
-            console.log('storeEvent!!');
+            if (typeof $scope.currentEvent.time !== "undefined" && typeof $scope.currentEvent.date !== "undefined") {
+                $scope.currentEvent.date.setHours($scope.currentEvent.time.getHours());
+                $scope.currentEvent.date.setMinutes($scope.currentEvent.time.getMinutes());
+            }
 
             Events.store({event: $scope.currentEvent}, function (result) {
 
@@ -231,40 +233,20 @@ angular.module('checkInManager.controllers', [])
                     // guest not on list, creating entry
                     var eventData           = (JSON.parse(JSON.stringify(event)));
                     eventData.guest_count   = 0;
+                    eventData.dateFormatted = moment($scope.currentEvent.date).format('YYYY-MM-DD HH:mm');
                     $scope.events.unshift(eventData);
                 }
 
             }, function (err) {
                 // TODO error treatment
-                console.log("Error creating event!")
-                console.log(err);
+                // console.log("Error creating event!")
+                // console.log(err);
             });
         });
 
         $scope.$on('openEventDialog', function (event, data) {
-            console.log("FROM BROADCASTING");
             $scope.openEventDialog(data.event, data.newEvent);
         });
-
-        // $scope.eventGuestRepeaterStyle = {
-        //     height: $scope.eventGuestRepeaterHeight + 'px'
-        // };
-
-        // $window.addEventListener('resize', onResize);
-
-        // function onResize() {
-
-        //     windowHeight        = $window.innerHeight;
-        //     navBarHeight        = angular.element('#navbar')[0].offsetHeight;
-        //     eventHeaderHeight   = angular.element('#eventHeader')[0].offsetHeight;
-
-        //     $scope.eventGuestRepeaterHeight = windowHeight - navBarHeight - eventHeaderHeight - 1;
-
-        //     console.log("SETTING HEIGHT " + $scope.eventGuestRepeaterHeight + "(" + windowHeight + ";" + navBarHeight+ ";" + eventHeaderHeight + ")");
-
-        //     $scope.eventGuestRepeaterStyle.height = $scope.eventGuestRepeaterHeight + 'px';
-        //     $scope.$digest();
-        // }
 
         $scope.getEventGuestRepeaterHeight = function() {
 
@@ -382,8 +364,8 @@ angular.module('checkInManager.controllers', [])
 
             }, function (err) {
                 // TODO error treatment
-                console.log("Error creating guest!")
-                console.log(err);
+                // console.log("Error creating guest!")
+                // console.log(err);
             });
         });
 
@@ -426,7 +408,7 @@ angular.module('checkInManager.controllers', [])
 
         $scope.searchGuests = function (searchKey)
         {
-            console.log("searching guests with " + searchKey);
+            // console.log("searching guests with " + searchKey);
             guests  = $scope.guests.filter(function (guest) {
                 return guest.email.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
                     guest.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||

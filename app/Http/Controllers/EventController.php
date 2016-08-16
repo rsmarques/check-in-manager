@@ -79,6 +79,7 @@ class EventController extends ApiController
         $validator  = Validator::make($eventData, [
             'name'      => 'required',
             'category'  => 'required',
+            'date'      => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -88,7 +89,7 @@ class EventController extends ApiController
         $event              = !empty($eventData['id']) ? Event::firstOrNew(array('id' => $eventData['id'])) : new Event;
 
         $event->user_id     = 1;
-        $event->date        = Carbon::now();
+        $event->date        = new Carbon($eventData['date']);
         $event->name        = $eventData['name'];
         $event->category    = $eventData['category'];
         $event->slug        = $event->calcSlug();
