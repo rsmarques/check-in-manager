@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class EventGuestController extends Controller
+class EventGuestController extends ApiController
 {
     /**
      * Display a listing of the resource.

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * Display a listing of the resource.

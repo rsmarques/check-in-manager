@@ -1,10 +1,13 @@
 angular.module('checkInManager', [
 
     //Dependancies
-    // 'ngRoute',   
+    // 'ngRoute',
     'ui.router',
     'checkInManager.controllers',
     'checkInManager.services',
+    'ngMaterial',
+    'ngMessages',
+    'mdPickers',
     // 'ngResource'
     // 'ngStorage',
     // 'ui.bootstrap',
@@ -18,40 +21,27 @@ angular.module('checkInManager', [
 
         $stateProvider
 
-            .state('home', { 
-                url: '/', 
-                templateUrl: './app/views/home.html',
-                controller: 'EventListController'
+            .state('guests', {
+                url: '/guests',
+                templateUrl: './app/views/guests.html',
+                controller: 'GuestController'
             })
-            .state('events', { 
-                url: '/events', 
+            .state('events', {
+                url: '/events',
                 templateUrl: './app/views/events.html',
                 controller: 'EventListController'
-            })
-            .state('event', { 
-                url: '/event/:eventId', 
-                templateUrl: './app/views/event.html',
-                controller: 'EventController'
             });
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/events');
+    })
+
+    .config(function($mdIconProvider) {
+        $mdIconProvider.fontSet('md', 'material-icons');
+    })
+
+    .config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+        $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+        $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+        $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
     });
-
-    // .config(function ($routeProvider) {
-
-    //     $routeProvider.
-    //         when('/', {
-    //             templateUrl: './app/views/home.html',
-    //         }).
-    //         when('/events', {
-    //             templateUrl: './app/views/events.html',
-    //             controller: 'EventListController'
-    //         }).
-    //         when('/event/:eventId', {
-    //             templateUrl: './app/views/event.html',
-    //             controller: 'EventController'
-    //         }).
-    //         otherwise({
-    //             redirectTo: '/'
-    //         });
-    // });

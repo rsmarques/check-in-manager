@@ -1,34 +1,52 @@
 <!doctype html>
-<html lang="en" ng-app="checkInManager">
+<html lang="en">
 <head>
     <title>Check-in Manager</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <meta charset="utf-8">
+    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"> -->
+
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link rel='stylesheet prefetch' href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic">
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="app/css/style.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/alenaksu/mdPickers/0.7.4/dist/mdPickers.min.css">
+
     <base href="/">
 </head>
-<body>
+<body ng-app="checkInManager">
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Angular CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-messages.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js"></script>
 
-    @include('navBar')
-    <div>
-        <!-- angular templating -->
-        <!-- this is where content will be injected -->
-        <div ui-view></div>
-    </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- angular material -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-resource.min.js') ?>"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+    <!-- custom -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://cdn.rawgit.com/alenaksu/mdPickers/0.7.4/dist/mdPickers.min.js"></script>
 
 
+    <!-- app files -->
     <script src="<?= asset('app/app.js') ?>"></script>
     <script src="<?= asset('app/controllers/controllers.js') ?>"></script>
     <script src="<?= asset('app/services/services.js') ?>"></script>
+
+    <div layout="column" layout-fill ui-view></div>
 
 </body>
 </html>
