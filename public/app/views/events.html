@@ -44,19 +44,19 @@
                         </md-input-container>
                         <md-button class="md-icon-button" aria-label="Add" ng-click="openGuestDialog($event)">
                             <md-icon md-font-set="md">add</md-icon>
-                            <md-tooltip md-direction="bottom">
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Add Guest
                             </md-tooltip>
                         </md-button>
                         <md-button class="md-icon-button" aria-label="Edit" ng-click="null">
                             <md-icon md-font-set="md">file_download</md-icon>
-                            <md-tooltip md-direction="bottom">
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Export CSV
                             </md-tooltip>
                         </md-button>
                         <md-button class="md-icon-button" aria-label="Edit" ng-click="openEventDialog($event)">
                             <md-icon md-font-set="md">mode_edit</md-icon>
-                            <md-tooltip md-direction="bottom">
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Edit Event
                             </md-tooltip>
                         </md-button>
@@ -98,19 +98,19 @@
                                         <div layout="row" layout-align="end center">
                                         <md-button ng-show="!guest.check_in" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row" layout-align="end center">
                                             <md-icon md-font-set="md">check_circle</md-icon>
-                                            <md-tooltip md-direction="bottom">
+                                            <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check In Guest
                                             </md-tooltip>
                                         </md-button>
                                         <md-button ng-show="guest.check_in" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row" layout-align="end center">
                                             <md-icon class="checkInButton" md-font-set="md">check_circle</md-icon>
-                                            <md-tooltip md-direction="bottom">
+                                            <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check Out Guest
                                             </md-tooltip>
                                         </md-button>
                                         <md-button hide-xs hide-sm class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)" layout="row" layout-align="end center">
                                             <md-icon md-font-set="md">remove_circle</md-icon>
-                                            <md-tooltip md-direction="bottom">
+                                            <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Remove Guest
                                             </md-tooltip>
                                         </md-button>
