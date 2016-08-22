@@ -5,7 +5,7 @@
 <md-content>
     <div layout="row" class="relative" layout-fill role="main">
 
-        <div flex="25" ng-cloak class="virtualRepeatdemoDeferredLoading">
+        <div flex="100" flex-gt-sm="25" ng-if="showEventListMobile()" ng-cloak class="virtualRepeatdemoDeferredLoading">
 
             <md-input-container id="eventSearchBar" md-no-float class="md-block searchEventsBar">
                 <md-icon md-font-set="md">search</md-icon>
@@ -18,8 +18,8 @@
                     <md-list-item class="md-3-line repeated-item" md-virtual-repeat="event in events | filter:filterEvent" ng-click="selectEvent(event)">
                         <div class="md-list-item-text" layout="column">
                             <h3>{{event.name}}</h3>
-                            <h4 hide-xs>Guests: {{event.guest_count}}</h4>
-                            <p hide-xs hide-sm>Date: {{event.dateFormatted}}</p>
+                            <h4>Guests: {{event.guest_count}}</h4>
+                            <p>Date: {{event.dateFormatted}}</p>
                         </div>
                     </md-list-item>
                 </md-list>
@@ -27,7 +27,7 @@
         </div>
         <md-divider></md-divider>
 
-        <div flex="75" class="eventDetailBackground">
+        <div flex="100" flex-gt-sm="75" ng-if="showGuestListMobile()" class="eventDetailBackground">
 
             <div ng-if="currentEvent.id">
 
@@ -108,7 +108,7 @@
                                                 Check Out Guest
                                             </md-tooltip>
                                         </md-button>
-                                        <md-button hide-xs hide-sm class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)" layout="row" layout-align="end center">
+                                        <md-button class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)" layout="row" layout-align="end center">
                                             <md-icon md-font-set="md">remove_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Remove Guest

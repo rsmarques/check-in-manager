@@ -1,6 +1,6 @@
 angular.module('checkInManager.controllers', [])
 
-    .controller('EventListController', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, API_URL, Events, Guests, GuestsService) {
+    .controller('EventListController', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdMedia, $mdToast, API_URL, Events, Guests, GuestsService) {
         // TODO change openDialogs location
         $scope.openGuestDialog = function ($event)
         {
@@ -24,8 +24,7 @@ angular.module('checkInManager.controllers', [])
         $scope.openEventDialog = function ($event, newEvent)
         {
             if (newEvent) {
-                $scope.currentEvent     = {};
-                $scope.currentGuests    = [];
+                $scope.uncheckCurrentEvent();
             }
 
             $mdDialog.show({
@@ -75,6 +74,16 @@ angular.module('checkInManager.controllers', [])
             }, function (error) {
                 // TODO error message
             });
+        }
+
+        $scope.uncheckCurrentEvent  = function ()
+        {
+            $scope.eventId              = null;
+            $scope.currentEvent         = 0;
+            $scope.loadingGuests        = false;
+            $scope.currentGuests        = [];
+
+            $location.search({});
         }
 
         $scope.checkCurrentEvent    = function ()
@@ -259,7 +268,7 @@ angular.module('checkInManager.controllers', [])
             return {height: '' + listHeight + 'px'};
         };
 
-        $scope.getEventRepeaterHeight = function() {
+        $scope.getEventRepeaterHeight = function () {
 
             windowHeight            = $window.innerHeight;
             navBarHeight            = $('#navbar').outerHeight(true);
@@ -269,6 +278,14 @@ angular.module('checkInManager.controllers', [])
 
             return {height: '' + listHeight + 'px'};
         };
+
+        $scope.showEventListMobile = function () {
+            return !$scope.currentEvent || $mdMedia('gt-sm');
+        }
+
+        $scope.showGuestListMobile = function () {
+            return $scope.currentEvent || $mdMedia('gt-sm');
+        }
 
         $window.addEventListener('resize', onResize);
 
