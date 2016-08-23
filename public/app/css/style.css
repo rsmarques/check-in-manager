@@ -20,6 +20,9 @@
 .eventDescription h1 {
     margin-top: 5px;
     margin-bottom: 5px;
+    overflow: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .eventDescription p, h4 {

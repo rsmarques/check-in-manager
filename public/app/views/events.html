@@ -18,8 +18,8 @@
                     <md-list-item class="md-3-line repeated-item" md-virtual-repeat="event in events | filter:filterEvent" ng-click="selectEvent(event)">
                         <div class="md-list-item-text" layout="column">
                             <h3>{{event.name}}</h3>
-                            <h4>Guests: {{event.guest_count}}</h4>
-                            <p>Date: {{event.date_formatted}}</p>
+                            <h4>{{event.guest_count}} Guests</h4>
+                            <p>{{event.date_formatted}}</p>
                         </div>
                     </md-list-item>
                 </md-list>
