@@ -103,6 +103,12 @@ class EventController extends ApiController
         $event->slug        = $event->calcSlug();
         $event->save();
 
+
+        // TODO put this data into transformer
+        $event["guest_count"]       = $event->guests()->count();
+        $date                       = new Carbon($event->date);
+        $event["date"]              = $date;
+        $event["date_formatted"]    = $date->format('d/m/y H:i');
         return $event;
     }
 

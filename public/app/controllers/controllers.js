@@ -233,18 +233,19 @@ angular.module('checkInManager.controllers', [])
                 $scope.currentEvent.date.setMinutes($scope.currentEvent.time.getMinutes());
             }
 
-            $scope.currentEvent.date_formatted    = moment($scope.currentEvent.date).format('DD/MM/YY HH:mm');
+            $scope.currentEvent.date_formatted  = moment($scope.currentEvent.date).format('DD/MM/YY HH:mm');
 
             Events.store({event: $scope.currentEvent}, function (result) {
 
-                var event       = result;
-                var eventIndex  = $scope.events.map(function (e) {return e.id; }).indexOf(event.id);
+                var event           = result;
+                var eventIndex      = $scope.events.map(function (e) {return e.id; }).indexOf(event.id);
 
                 if (eventIndex === -1) {
                     // event not on list, creating entry
                     var eventData           = (JSON.parse(JSON.stringify(event)));
                     eventData.guest_count   = 0;
                     $scope.events.unshift(eventData);
+                    $scope.currentEvent     = eventData;
                 }
 
             }, function (err) {
@@ -420,14 +421,18 @@ angular.module('checkInManager.controllers', [])
     function DialogController ($timeout, $q, $rootScope, $scope, $mdDialog, Events, guests, currentEvent, currentGuest) {
         var self = this;
 
-        $scope.guests       = guests;
+        $scope.allGuests    = guests;
         $scope.currentEvent = currentEvent;
         $scope.currentGuest = currentGuest;
 
         $scope.searchGuests = function (searchKey)
         {
+            if ($scope.allGuests === null || typeof $scope.allGuests === 'undefined') {
+                return [];
+            }
+
             // console.log("searching guests with " + searchKey);
-            guests  = $scope.guests.filter(function (guest) {
+            guests  = $scope.allGuests.filter(function (guest) {
                 return guest.email.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
                     guest.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
                     guest.slug.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
