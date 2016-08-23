@@ -19,7 +19,7 @@
                         <div class="md-list-item-text" layout="column">
                             <h3>{{event.name}}</h3>
                             <h4>Guests: {{event.guest_count}}</h4>
-                            <p>Date: {{event.dateFormatted}}</p>
+                            <p>Date: {{event.date_formatted}}</p>
                         </div>
                     </md-list-item>
                 </md-list>
@@ -35,7 +35,7 @@
                     <div layout="column" flex="50">
                         <h1>{{currentEvent.name}}</h1>
                         <h4><strong>{{currentEvent.guest_count}}</strong> Guests</h4>
-                        <p hide-xs hide-sm>Date: {{currentEvent.dateFormatted}}</p>
+                        <p hide-xs hide-sm>Date: {{currentEvent.date_formatted}}</p>
                     </div>
                     <div layout="row" layout-align="end center" flex="50">
                         <md-input-container hide-sm hide-xs md-no-float class="md-block filterGuestsBar">

@@ -54,26 +54,17 @@
     color: #5b5;
 }
 
-md-datepicker {
-    padding-top: 3px;
-    > button.md-datepicker-button.md-icon-button.md-button {
-        margin-left: 0px;
-        margin-right: 0px;
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        min-height: 30px;
+/*md-datepicker {
+    position: relative;
+    left: -16px;
+
+    .md-datepicker-input-container{
+        margin-left: 0;
     }
-    > div.md-datepicker-input-container {
-        margin-left: 8px;
-        padding-bottom: 4px;
+    .md-datepicker-button.md-icon-button {
+        margin-right: 0;
     }
-    &.md-datepicker-open > div.md-datepicker-input-container > input.md-datepicker-input { // Stop the jumping on open
-        height: inherit;
-        margin-left: 20px;
-        // tabindex needs to be -1: https://github.com/angular/material/issues/4755
-    }
-}
+}*/
 
 .vertical-container {
     width: 100%;

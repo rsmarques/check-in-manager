@@ -28,7 +28,10 @@ class EventController extends ApiController
 
         // TODO put this data into transformer
         foreach ($events as $event) {
-            $event["guest_count"]   = $event->guests()->count();
+            $event["guest_count"]       = $event->guests()->count();
+            $date                       = new Carbon($event->date);
+            $event["date"]              = $date;
+            $event["date_formatted"]    = $date->format('d/m/y H:i');
         }
 
         return $events;
@@ -44,7 +47,10 @@ class EventController extends ApiController
         }
 
         // TODO put this data into transformer
-        $event["guest_count"]   = $event->guests()->count();
+        $event["guest_count"]       = $event->guests()->count();
+        $date                       = new Carbon($event->date);
+        $event["date"]              = $date;
+        $event["date_formatted"]    = $date->format('d/m/y H:i');
 
         return $event;
     }
@@ -89,7 +95,9 @@ class EventController extends ApiController
         $event              = !empty($eventData['id']) ? Event::firstOrNew(array('id' => $eventData['id'])) : new Event;
 
         $event->user_id     = 1;
-        $event->date        = new Carbon($eventData['date']);
+        $date               = new Carbon($eventData['date']);
+        $date->setTimezone(config('app.timezone'));
+        $event->date        = $date;
         $event->name        = $eventData['name'];
         $event->category    = $eventData['category'];
         $event->slug        = $event->calcSlug();

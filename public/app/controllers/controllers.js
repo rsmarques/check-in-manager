@@ -137,10 +137,10 @@ angular.module('checkInManager.controllers', [])
 
             // TODO improve this
             angular.forEach($scope.events, function (event, key) {
-                $scope.events[key].date     = new Date($scope.events[key].date);
-                $scope.events[key].time     = new Date($scope.events[key].date);
 
-                $scope.events[key].dateFormatted    = moment($scope.events[key].date).format('YYYY-MM-DD HH:mm');
+                date                        = moment($scope.events[key].date.date);
+                $scope.events[key].date     = new Date(date);
+                $scope.events[key].time     = new Date(date);
             });
 
             $scope.checkCurrentEvent();
@@ -233,16 +233,17 @@ angular.module('checkInManager.controllers', [])
                 $scope.currentEvent.date.setMinutes($scope.currentEvent.time.getMinutes());
             }
 
+            $scope.currentEvent.date_formatted    = moment($scope.currentEvent.date).format('DD/MM/YY HH:mm');
+
             Events.store({event: $scope.currentEvent}, function (result) {
 
                 var event       = result;
                 var eventIndex  = $scope.events.map(function (e) {return e.id; }).indexOf(event.id);
 
                 if (eventIndex === -1) {
-                    // guest not on list, creating entry
+                    // event not on list, creating entry
                     var eventData           = (JSON.parse(JSON.stringify(event)));
                     eventData.guest_count   = 0;
-                    eventData.dateFormatted = moment($scope.currentEvent.date).format('YYYY-MM-DD HH:mm');
                     $scope.events.unshift(eventData);
                 }
 
