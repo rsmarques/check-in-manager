@@ -44,6 +44,11 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
+        $scope.openSortEventMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
+
         $scope.selectEvent  = function (event)
         {
             // console.log("EventListController :: Selecting Event " + event.slug);
@@ -104,6 +109,12 @@ angular.module('checkInManager.controllers', [])
             }
 
             return true;
+        }
+
+        $scope.sortEvents   = function (sort, reverse)
+        {
+            $scope.sortEvent        = sort;
+            $scope.sortEventReverse = reverse;
         }
 
         $scope.$on('checkInEvent', function(ev, data) {
