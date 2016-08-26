@@ -60,13 +60,15 @@ angular.module('checkInManager.services', ['ngResource'])
         });
     })
 
-    .service('GuestsService', function (Guests) {
-        var guests  = Guests.query(function (result) {
+    .service('GuestsService', function ($rootScope, Guests) {
+
+        var guests  = Guests.get(function (result) {
+
+            // TODO improve this
+            $rootScope.guests   = result.data;
 
         }, function (err) {
             // console.log("GuestsService :: Error getting guests!");
             // console.log(err);
         });
-
-        return guests;
     });

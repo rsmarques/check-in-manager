@@ -57,6 +57,10 @@ angular.module('checkInManager.controllers', [])
 
         $scope.findEvent    = function (eventSlug)
         {
+            if (!$scope.events) {
+                return false;
+            }
+
             result          = $scope.events.find(function (event) {
                 return event.slug == eventSlug;
             });
@@ -71,10 +75,10 @@ angular.module('checkInManager.controllers', [])
             $scope.loadingGuests        = true;
             $scope.currentGuests        = [];
 
-            var g                       = Events.query({eventSlug: event.slug, data: 'guests'}, function (result) {
+            var g                       = Events.get({eventSlug: event.slug, data: 'guests'}, function (result) {
 
                 $scope.loadingGuests    = false;
-                $scope.currentGuests    = result;
+                $scope.currentGuests    = result.data;
 
             }, function (error) {
                 // TODO error message
@@ -144,7 +148,8 @@ angular.module('checkInManager.controllers', [])
             return true;
         }
 
-        $scope.events   = Events.query(function (events) {
+        Events.get(function (result) {
+            $scope.events                   = result.data;
 
             // TODO improve this
             angular.forEach($scope.events, function (event, key) {
@@ -248,7 +253,7 @@ angular.module('checkInManager.controllers', [])
 
             Events.store({event: $scope.currentEvent}, function (result) {
 
-                var event           = result;
+                var event           = result.data;
                 var eventIndex      = $scope.events.map(function (e) {return e.id; }).indexOf(event.id);
 
                 if (eventIndex === -1) {
@@ -310,7 +315,6 @@ angular.module('checkInManager.controllers', [])
             $window.removeEventListener('resize', onResize);
         });
 
-        $scope.guests           = GuestsService;
         $scope.loadingGuests    = false;
     })
 
@@ -383,7 +387,7 @@ angular.module('checkInManager.controllers', [])
 
             Guests.store({guest: $scope.currentGuest}, function (result) {
 
-                var guest       = result;
+                var guest       = result.data;
                 var guestIndex  = $scope.guests.map(function (g) {return g.id; }).indexOf(guest.id);
 
                 if (guestIndex === -1) {
@@ -435,8 +439,6 @@ angular.module('checkInManager.controllers', [])
         $scope.$on('$destroy', function() {
             $window.removeEventListener('resize', onResize);
         });
-
-        $scope.guests       = GuestsService;
     })
 
     .controller('NavBarController', function ($timeout, $q, $rootScope, $scope) {

@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+
 use DB;
 use Log;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -26,6 +28,23 @@ class Event extends Model
     public function guests()
     {
         return $this->belongsToMany('Guest', 'event_guests', 'event_id', 'guest_id')->orderBy('slug', 'ASC')->withPivot('check_in');
+    }
+
+    public function getDate()
+    {
+        $date   = new Carbon($this->date);
+        return $date;
+    }
+
+    public function getDateFormatted()
+    {
+        $date   = $this->getDate();
+        return $date->format('d/m/y H:i');
+    }
+
+    public function getGuestCount()
+    {
+        return $this->guests()->count();
     }
 
     public function calcSlug()

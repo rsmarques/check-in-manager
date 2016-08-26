@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Validator;
-
-use Guest;
-use Event;
-use EventGuest;
-
 use Log;
 use DB;
 use Exception;
+
+// Models
+use Guest;
+use Event;
+use EventGuest;
+// Transformers
+use GuestTransformer;
+use EventTransformer;
 
 class EventController extends ApiController
 {
@@ -26,15 +29,7 @@ class EventController extends ApiController
         // TODO filter events by user
         $events = Event::get();
 
-        // TODO put this data into transformer
-        foreach ($events as $event) {
-            $event["guest_count"]       = $event->guests()->count();
-            $date                       = new Carbon($event->date);
-            $event["date"]              = $date;
-            $event["date_formatted"]    = $date->format('d/m/y H:i');
-        }
-
-        return $events;
+        return $this->respondWithCollection($events, new EventTransformer);
     }
 
     public function eventBySlug($slug)
@@ -42,17 +37,10 @@ class EventController extends ApiController
         $event  = Event::findBySlug($slug);
 
         if (!$event) {
-            // TODO error page on event not found
-            return array();
+            return $this->responseWithErrors("Event [$slug] not found!", 500);
         }
 
-        // TODO put this data into transformer
-        $event["guest_count"]       = $event->guests()->count();
-        $date                       = new Carbon($event->date);
-        $event["date"]              = $date;
-        $event["date_formatted"]    = $date->format('d/m/y H:i');
-
-        return $event;
+        return $this->respondWithItem($event, new EventTransformer);
     }
 
     public function eventGuestsBySlug($slug)
@@ -60,17 +48,12 @@ class EventController extends ApiController
         $event  = Event::findBySlug($slug);
 
         if (!$event) {
-            // TODO error page on event not found
-            return array();
+            return $this->responseWithErrors("Event [$slug] not found!", 500);
         }
 
         $guests = $event->guests;
 
-        foreach ($guests as $guest) {
-            $guest->check_in    = $guest->pivot->check_in;
-        }
-
-        return $guests;
+        return $this->respondWithCollection($guests, new GuestTransformer);
     }
 
     /**
@@ -103,13 +86,7 @@ class EventController extends ApiController
         $event->slug        = $event->calcSlug();
         $event->save();
 
-
-        // TODO put this data into transformer
-        $event["guest_count"]       = $event->guests()->count();
-        $date                       = new Carbon($event->date);
-        $event["date"]              = $date;
-        $event["date_formatted"]    = $date->format('d/m/y H:i');
-        return $event;
+        return $this->respondWithItem($event, new EventTransformer);
     }
 
     /**
