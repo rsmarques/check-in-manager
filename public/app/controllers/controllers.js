@@ -411,6 +411,21 @@ angular.module('checkInManager.controllers', [])
             return {height: '' + listHeight + 'px'};
         };
 
+        $scope.sortGuests   = function (sort)
+        {
+            if (sort === $scope.sortGuest) {
+                $scope.sortGuestReverse     = !$scope.sortGuestReverse;
+                $scope.sortGuest            = $scope.sortGuestReverse === false ? null : $scope.sortGuest;
+            } else {
+                $scope.sortGuest            = sort;
+                $scope.sortGuestReverse     = false;
+            }
+
+            $scope.sortIcon                 = $scope.sortGuestReverse ? 'arrow_drop_down' : 'arrow_drop_up';
+
+            return true
+        }
+
         $window.addEventListener('resize', onResize);
 
         function onResize() {
