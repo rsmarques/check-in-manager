@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -25,7 +25,7 @@ class Event extends Model
 
     public function guests()
     {
-        return $this->belongsToMany('App\Guest', 'event_guests', 'event_id', 'guest_id')->orderBy('slug', 'ASC')->withPivot('check_in');
+        return $this->belongsToMany('Guest', 'event_guests', 'event_id', 'guest_id')->orderBy('slug', 'ASC')->withPivot('check_in');
     }
 
     public function calcSlug()

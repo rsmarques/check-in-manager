@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
-use App\Guest;
-use App\Event;
-use App\EventGuest;
+use Guest;
+use Event;
+use EventGuest;
 
 use Log;
 use DB;

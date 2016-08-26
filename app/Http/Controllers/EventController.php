@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Validator;
 
-use App\Guest;
-use App\Event;
-use App\EventGuest;
+use Guest;
+use Event;
+use EventGuest;
 
 use Log;
 use DB;
