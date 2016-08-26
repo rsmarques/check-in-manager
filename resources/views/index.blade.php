@@ -7,6 +7,7 @@
 
     <!-- App Icon -->
     <link rel="icon" href="/app/assets/novasbe_logo.png">
+    <link rel="apple-touch-icon" href="/app/assets/novasbe_logo.png">
 
     <meta charset="utf-8">
     <!--Let browser know website is optimized for mobile-->
