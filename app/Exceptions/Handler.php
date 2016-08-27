@@ -45,7 +45,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($this->isHttpException($e) && $e->getStatusCode() == 404) {
+        if ($e instanceof Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } else if ($e instanceof Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } else if ($this->isHttpException($e) && $e->getStatusCode() == 404) {
             return response("Oops, route not found!", 404);
         }
 

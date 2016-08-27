@@ -156,6 +156,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Additional Providers
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+
     ],
 
     /*
@@ -201,6 +205,9 @@ return [
         'URL'                       => Illuminate\Support\Facades\URL::class,
         'Validator'                 => Illuminate\Support\Facades\Validator::class,
         'View'                      => Illuminate\Support\Facades\View::class,
+
+        // Lib aliases
+        'JWTAuth'                   => Tymon\JWTAuth\Facades\JWTAuth::class,
 
         // Model aliases
         'Event'                     => App\Models\Event::class,

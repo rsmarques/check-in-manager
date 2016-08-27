@@ -14,6 +14,13 @@
 // API endpoints
 Route::group(array('prefix' => 'api/v1'), function () {
 
+    // authentication endpoints
+    Route::post('/users/signin', array('uses' => 'UserController@signIn'));
+    Route::post('/users/signup', array('uses' => 'UserController@signUp'));
+
+    // User endpoints
+    Route::get('/me', array('middleware' => 'jwt.auth', 'uses' => 'UserController@me'));
+
     // guest endpoints
     Route::get('guests', 'GuestController@userGuests');
     Route::post('guests/store', 'GuestController@store');
