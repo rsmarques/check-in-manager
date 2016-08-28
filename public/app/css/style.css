@@ -114,6 +114,25 @@
 .md-toolbar-tools {
     background-color: #009FE3;
 }
+
+.loginForm {
+    width: 80%
+}
+
+.loginButton {
+    margin: auto;
+    display: block;
+    background-color: #009FE3 !important;
+}
+
+.loginArea {
+    width: 400px;
+}
+
+.loginImage {
+    width: 100px;
+}
+
 /*.virtualRepeatdemoDeferredLoading .repeated-item {
   border-bottom: 1px solid #ddd;
   box-sizing: border-box;

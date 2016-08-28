@@ -18,22 +18,25 @@ Route::group(array('prefix' => 'api/v1'), function () {
     Route::post('/users/signin', array('uses' => 'UserController@signIn'));
     Route::post('/users/signup', array('uses' => 'UserController@signUp'));
 
-    // User endpoints
-    Route::get('/me', array('middleware' => 'jwt.auth', 'uses' => 'UserController@me'));
+    Route::group(array('middleware' => 'jwt.auth'), function () {
 
-    // guest endpoints
-    Route::get('guests', 'GuestController@userGuests');
-    Route::post('guests/store', 'GuestController@store');
-    Route::post('guests/{id}/delete', 'GuestController@delete');
-    Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@eventGuestCheckIn');
-    Route::post('events/{slug}/guests/{guestId}/remove', 'GuestController@eventGuestRemove');
+        // User endpoints
+        Route::get('/me', 'UserController@me');
 
-    // event endpoints
-    Route::get('events', 'EventController@userEvents');
-    Route::get('events/{slug}', 'EventController@eventBySlug');
-    Route::get('events/{slug}/guests', 'EventController@eventGuestsBySlug');
-    Route::post('events/store', 'EventController@store');
-    Route::post('events/{slug}/delete', 'EventController@delete');
+        // guest endpoints
+        Route::get('guests', 'GuestController@userGuests');
+        Route::post('guests/store', 'GuestController@store');
+        Route::post('guests/{id}/delete', 'GuestController@delete');
+        Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@eventGuestCheckIn');
+        Route::post('events/{slug}/guests/{guestId}/remove', 'GuestController@eventGuestRemove');
+
+        // event endpoints
+        Route::get('events', 'EventController@userEvents');
+        Route::get('events/{slug}', 'EventController@eventBySlug');
+        Route::get('events/{slug}/guests', 'EventController@eventGuestsBySlug');
+        Route::post('events/store', 'EventController@store');
+        Route::post('events/{slug}/delete', 'EventController@delete');
+    });
 });
 
 // Angular routes

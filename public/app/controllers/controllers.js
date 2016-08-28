@@ -1,5 +1,48 @@
 angular.module('checkInManager.controllers', [])
 
+   .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, Auth) {
+        function successAuth(res) {
+            $localStorage.token = res.token;
+            window.location = "#/events";
+        }
+
+        $scope.signin = function () {
+            var formData = {
+                email: $scope.credentials.email,
+                password: $scope.credentials.password
+            };
+
+            Auth.signin(formData, successAuth, function () {
+                $rootScope.error = 'Invalid credentials.';
+            })
+        };
+
+        $scope.signup = function () {
+            var formData = {
+                email: $scope.credentials.email,
+                password: $scope.credentials.password
+            };
+
+            Auth.signup(formData, successAuth, function () {
+                $rootScope.error = 'Failed to signup';
+            })
+        };
+
+        $scope.logout = function () {
+            Auth.logout(function () {
+                window.location = "/";
+            });
+        };
+
+         $scope.$on('$stateChangeSuccess', function () {
+            $scope.register     = $state.current.register;
+            $scope.loginText    = $scope.register ? 'Register' : 'Login';
+         });
+
+        $scope.token         = $localStorage.token;
+        $scope.tokenClaims   = Auth.getTokenClaims();
+    })
+
     .controller('EventListController', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdMedia, $mdToast, API_URL, Events, Guests, GuestsService) {
         // TODO change openDialogs location
         $scope.openGuestDialog = function ($event)

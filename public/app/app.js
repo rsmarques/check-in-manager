@@ -7,6 +7,7 @@ angular.module('checkInManager', [
     'checkInManager.services',
     'ngMaterial',
     'ngMessages',
+    'ngStorage',
     'mdPickers',
     // 'ngResource'
     // 'ngStorage',
@@ -17,10 +18,22 @@ angular.module('checkInManager', [
 
     .constant('API_URL', 'api/v1/')
 
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
         $stateProvider
 
+            .state('signup', {
+                url: '/signup',
+                templateUrl: './app/views/login.html',
+                controller: 'HomeController',
+                register: 1
+            })
+            .state('signin', {
+                url: '/signin',
+                templateUrl: './app/views/login.html',
+                controller: 'HomeController',
+                register: 0
+            })
             .state('guests', {
                 url: '/guests',
                 templateUrl: './app/views/guests.html',
@@ -33,6 +46,24 @@ angular.module('checkInManager', [
             });
 
         $urlRouterProvider.otherwise('/events');
+
+        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+           return {
+               'request': function (config) {
+                   config.headers = config.headers || {};
+                   if ($localStorage.token) {
+                       config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                   }
+                   return config;
+               },
+               'responseError': function (response) {
+                   if (response.status === 400 || response.status === 403) {
+                       $location.path('/signin');
+                   }
+                   return $q.reject(response);
+               }
+           };
+        }]);
     })
 
     .config(function($mdIconProvider) {

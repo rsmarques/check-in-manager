@@ -13,6 +13,8 @@ use Exception;
 use Guest;
 use Event;
 use EventGuest;
+use User;
+
 // Transformers
 use GuestTransformer;
 use EventTransformer;

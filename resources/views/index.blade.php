@@ -37,6 +37,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular-messages.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js"></script>
 
+    <!-- ngStorage -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+
     <!-- angular material -->
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
