@@ -25,7 +25,7 @@
  -->
                 <img class="loginImage" ng-src="/app/assets/novasbe_logo.png" class="md-card-image" alt="Nova SBE">
                 <h3>Login to Check-In Manager</h3>
-                <form name="loginForm" class="loginForm" ng-submit="loginForm.$valid && signin(credentials)">
+                <form name="loginForm" class="loginForm" ng-submit="loginForm.$valid && performLogin()">
                     <md-input-container class="md-icon-float md-block">
                         <label>Email</label>
                         <md-icon md-font-set="md">email</md-icon>

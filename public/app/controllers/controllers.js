@@ -6,6 +6,14 @@ angular.module('checkInManager.controllers', [])
             window.location = "#/events";
         }
 
+        $scope.performLogin = function () {
+            if ($scope.register) {
+                return $scope.signup();
+            } else {
+                return $scope.signin();
+            }
+        }
+
         $scope.signin = function () {
             var formData = {
                 email: $scope.credentials.email,
