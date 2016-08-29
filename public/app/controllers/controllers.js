@@ -20,8 +20,10 @@ angular.module('checkInManager.controllers', [])
                 password: $scope.credentials.password
             };
 
+            $rootScope.error    = null;
+
             Auth.signin(formData, successAuth, function () {
-                $rootScope.error = 'Invalid credentials.';
+                $rootScope.error = 'Invalid email/password.';
             })
         };
 
@@ -31,8 +33,14 @@ angular.module('checkInManager.controllers', [])
                 password: $scope.credentials.password
             };
 
-            Auth.signup(formData, successAuth, function () {
-                $rootScope.error = 'Failed to signup';
+            $rootScope.error            = null;
+
+            Auth.signup(formData, successAuth, function (err) {
+                if (err['errors'] && err['errors'][0]) {
+                    $rootScope.error    = err['errors'][0];
+                } else {
+                    $rootScope.error    = 'Failed to signup';
+                }
             })
         };
 
@@ -45,6 +53,7 @@ angular.module('checkInManager.controllers', [])
          $scope.$on('$stateChangeSuccess', function () {
             $scope.register     = $state.current.register;
             $scope.loginText    = $scope.register ? 'Register' : 'Login';
+            $rootScope.error    = null;
          });
 
         $scope.token         = $localStorage.token;

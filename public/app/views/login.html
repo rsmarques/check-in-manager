@@ -57,7 +57,8 @@
 
                     <md-button class="md-raised md-primary loginButton" type="submit" aria-label="Login">{{ loginText }}</md-button>
                 </form>
-                <p ng-show="!register">No account yet? Create one <a href="#/signup">here</a></p>
+                <p ng-show="error" class="error">{{ error }}</p>
+                <!-- <p ng-show="!register">No account yet? Create one <a href="#/signup">here</a></p> -->
             </div>
 
         </div>
