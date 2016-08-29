@@ -1,9 +1,14 @@
 angular.module('checkInManager.controllers', [])
 
-   .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, Auth) {
-        function successAuth(res) {
+   .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, Auth, GuestsService) {
+
+        function successAuth (res) {
             $localStorage.token = res.token;
             window.location = "#/events";
+
+            // TODO remove this from here
+            // reload guests after successful login
+            GuestsService.getGuests();
         }
 
         $scope.performLogin = function () {
@@ -41,7 +46,7 @@ angular.module('checkInManager.controllers', [])
                 } else {
                     $rootScope.error    = 'Failed to signup';
                 }
-            })
+            });
         };
 
         $scope.logout = function () {

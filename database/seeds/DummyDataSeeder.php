@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Event;
-use App\EventGuest;
-use App\Guest;
+use App\Models\Event;
+use App\Models\EventGuest;
+use App\Models\Guest;
 
 use Carbon\Carbon;
 
@@ -671,6 +671,8 @@ class DummyDataSeeder extends Seeder
 
             $guest->save();
         }
+
+        $events     = Event::get();
 
         // Creating event/guest data
         foreach ($events as $event) {

@@ -18,7 +18,7 @@ Route::group(array('prefix' => 'api/v1'), function () {
     Route::post('/users/signin', array('uses' => 'UserController@signIn'));
     Route::post('/users/signup', array('uses' => 'UserController@signUp'));
 
-    Route::group(array('middleware' => 'jwt.auth'), function () {
+    Route::group(array('middleware' => ['jwt.auth']), function () {
 
         // User endpoints
         Route::get('/me', 'UserController@me');
