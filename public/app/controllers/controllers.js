@@ -527,12 +527,21 @@ angular.module('checkInManager.controllers', [])
                 return [];
             }
 
-            // console.log("searching guests with " + searchKey);
-            guests  = $scope.allGuests.filter(function (guest) {
-                return guest.email.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
-                    guest.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
-                    guest.slug.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
-                    guest.short_name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            // TODO put this to function
+            searchKeyNormalized = searchKey.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
+
+            console.log("searching guests with " + searchKeyNormalized);
+            guests              = $scope.allGuests.filter(function (guest) {
+
+                // TODO put this to function
+                guestNameNormalized         = guest.name.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
+                guestShortNameNormalized    = guest.short_name.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
+
+
+                return guest.email.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1 ||
+                    guestNameNormalized.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1 ||
+                    guest.slug.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1 ||
+                    guestShortNameNormalized.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1;
             });
 
             return guests.slice(0, 10);
