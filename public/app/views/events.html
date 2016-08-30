@@ -120,38 +120,39 @@
 
 
                             <md-grid-list
-                                    md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                                    md-cols-xs="6" md-cols-sm="6" md-cols-md="6" md-cols-gt-md="6"
                                     md-row-height-gt-md="25px" md-row-height="25px"
                                     md-gutter="12px" md-gutter-gt-sm="8px">
 
                                 <md-grid-tile class="eventGuest"
-                                    md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
-                                    <div layout="column" layout-align="center start" class="eventGuestId">
+                                    md-rowspan="2" md-colspan="4" md-colspan-sm="4" md-colspan-xs="4">
+                                    <div layout="column"  class="eventGuestId">
                                         <h4><strong>{{guest.slug}}</strong></h4>
                                     </div>
-                                    <div layout="column" layout-align="center start">
+                                    <div layout="column">
                                         <h4 hide-xs><strong>{{guest.name}}</strong></h4>
                                         <h4 hide-gt-xs><strong>{{guest.short_name}}</strong></h4>
                                         <h5 hide-xs hide-sm>{{guest.email}}</h5>
                                     </div>
-
+                                    <span flex></span>
                                 </md-grid-tile>
                                 <md-grid-tile class="eventButtons"
                                     md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
-                                        <div layout="row" layout-align="end center">
-                                        <md-button ng-show="!guest.check_in" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row" layout-align="end center">
+                                    <span flex></span>
+                                    <div layout="row">
+                                        <md-button ng-show="!guest.check_in" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row">
                                             <md-icon md-font-set="md">check_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check In Guest
                                             </md-tooltip>
                                         </md-button>
-                                        <md-button ng-show="guest.check_in" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row" layout-align="end center">
+                                        <md-button ng-show="guest.check_in" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row">
                                             <md-icon class="checkInButton" md-font-set="md">check_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check Out Guest
                                             </md-tooltip>
                                         </md-button>
-                                        <md-button class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)" layout="row" layout-align="end center">
+                                        <md-button class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)" layout="row">
                                             <md-icon md-font-set="md">remove_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Remove Guest
