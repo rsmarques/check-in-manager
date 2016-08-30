@@ -107,18 +107,13 @@
                 <md-divider></md-divider>
 
 
-                <div ng-show="loadingGuests" layout="row" layout-align="center center" layout-sm="column" layout-align="space-around">
+                <div ng-show="loadingGuests" class="guestLoader" layout="row" layout-align="center center" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                 </div>
                 <div ng-show="!loadingGuests" class="virtualRepeatdemoDeferredLoading">
                     <md-virtual-repeat-container class="vertical-container" ng-style="getEventGuestRepeaterHeight()">
                     <md-list ng-cloak>
                         <div class="repeated-item" md-virtual-repeat="guest in currentGuests | filter:filterGuest" ng-cloak>
-
-
-                        <!-- <div ng-repeat="guest in currentGuests" ng-cloak> -->
-
-
                             <md-grid-list
                                     md-cols-xs="5" md-cols-sm="6" md-cols-md="6" md-cols-gt-md="6"
                                     md-row-height-gt-md="25px" md-row-height="25px"
@@ -158,23 +153,13 @@
                                                 Remove Guest
                                             </md-tooltip>
                                         </md-button>
-<!--                                         <md-button class="md-icon-button" aria-label="More" ng-click="null" layout="row" layout-align="end center">
-                                            <md-icon md-font-set="md">more_horiz</md-icon>
-                                            <md-tooltip md-direction="bottom">
-                                                More
-                                            </md-tooltip>
-                                        </md-button> -->
                                     </div>
                                 </md-grid-tile>
                             </md-grid-list>
-
-
                         </div>
                     </md-list>
                     </md-virtual-repeat-container>
                 </div>
-
-
             </div>
             <div ng-if="!currentEvent.id" layout="column" layout-align="center center" style="color: #888; padding-top: 50px">
                 <h2>Please select an event,</h2>
