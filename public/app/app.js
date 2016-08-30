@@ -23,29 +23,29 @@ angular.module('checkInManager', [
         $stateProvider
 
             .state('signup', {
-                url: '/signup',
+                url: '/',
                 templateUrl: './app/views/login.html',
                 controller: 'HomeController',
                 register: 1
-            })
-            .state('signin', {
-                url: '/signin',
-                templateUrl: './app/views/login.html',
-                controller: 'HomeController',
-                register: 0
-            })
-            .state('guests', {
-                url: '/guests',
-                templateUrl: './app/views/guests.html',
-                controller: 'GuestController'
-            })
-            .state('events', {
-                url: '/events',
-                templateUrl: './app/views/events.html',
-                controller: 'EventListController'
             });
+            // .state('signin', {
+            //     url: '/signin',
+            //     templateUrl: './app/views/login.html',
+            //     controller: 'HomeController',
+            //     register: 0
+            // })
+            // .state('guests', {
+            //     url: '/guests',
+            //     templateUrl: './app/views/guests.html',
+            //     controller: 'GuestController'
+            // })
+            // .state('events', {
+            //     url: '/events',
+            //     templateUrl: './app/views/events.html',
+            //     controller: 'EventListController'
+            // });
 
-        $urlRouterProvider.otherwise('/events');
+        $urlRouterProvider.otherwise('/');
 
         $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
             return {

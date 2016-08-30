@@ -1,6 +1,8 @@
 angular.module('checkInManager.controllers', [])
 
-   .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, Auth, GuestsService) {
+   .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, $window, Auth, GuestsService) {
+
+        $window.location.href = 'http://www.novasbecheckinapp.pt';
 
         function successAuth (res) {
             $localStorage.token = res.token;
