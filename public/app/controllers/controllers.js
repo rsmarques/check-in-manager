@@ -69,6 +69,8 @@ angular.module('checkInManager.controllers', [])
         // TODO change openDialogs location
         $scope.openGuestDialog = function ($event)
         {
+            $scope.checkInStatus    = null;
+
             $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'ctrl',
@@ -514,9 +516,10 @@ angular.module('checkInManager.controllers', [])
     function DialogController ($timeout, $q, $rootScope, $scope, $mdDialog, Events, guests, currentEvent, currentGuest) {
         var self = this;
 
-        $scope.allGuests    = guests;
-        $scope.currentEvent = currentEvent;
-        $scope.currentGuest = currentGuest;
+        $scope.allGuests        = guests;
+        $scope.currentEvent     = currentEvent;
+        $scope.currentGuest     = currentGuest;
+        $scope.checkInStatus    = null;
 
         $scope.searchGuests = function (searchKey)
         {
@@ -528,10 +531,11 @@ angular.module('checkInManager.controllers', [])
             guests  = $scope.allGuests.filter(function (guest) {
                 return guest.email.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
                     guest.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
-                    guest.slug.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+                    guest.slug.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
+                    guest.short_name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
             });
 
-            return guests.slice(0, 3);
+            return guests.slice(0, 10);
         }
 
         $scope.selectedItemChange = function (item)
@@ -543,7 +547,8 @@ angular.module('checkInManager.controllers', [])
             // broadcasting event to eventController
             $rootScope.$broadcast('checkInEvent', {'event' : $scope.currentEvent, 'guest' : $scope.selectedItem});
 
-            $scope.searchGuest  = null;
+            $scope.searchGuest      = null;
+            $scope.checkInStatus    = $scope.selectedItem.short_name + ' added!';
 
             return true;
         }
