@@ -530,7 +530,7 @@ angular.module('checkInManager.controllers', [])
             // TODO put this to function
             searchKeyNormalized = searchKey.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
 
-            console.log("searching guests with " + searchKeyNormalized);
+            // console.log("searching guests with " + searchKeyNormalized);
             guests              = $scope.allGuests.filter(function (guest) {
 
                 // TODO put this to function
