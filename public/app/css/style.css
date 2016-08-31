@@ -32,7 +32,7 @@
 .eventDescription h1 {
     margin-top: 5px;
     margin-bottom: 5px;
-    overflow: auto;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }

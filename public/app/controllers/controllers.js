@@ -197,8 +197,14 @@ angular.module('checkInManager.controllers', [])
         });
 
         $scope.checkInGuest = function(event, eventGuest) {
-            // clearing search guests field
-            Guests.checkIn({eventSlug: event.slug, guestId: eventGuest.id, data: 'checkin'});
+
+            Guests.checkIn({eventSlug: event.slug, guestId: eventGuest.id, data: 'checkin'}, function (result) {
+
+                $scope.currentEvent.guest_count = $scope.currentGuests.length;
+
+            }, function (err) {
+
+            });
 
             var guestIndex      = $scope.currentGuests.map(function (g) {return g.id; }).indexOf(eventGuest.id);
 
@@ -211,6 +217,9 @@ angular.module('checkInManager.controllers', [])
                 guestData.check_in  = 1;
                 $scope.currentGuests.unshift(guestData);
             }
+
+            // forcing window resize to update virtual repeater
+            angular.element(window).triggerHandler('resize');
 
             return true;
         }
@@ -287,9 +296,14 @@ angular.module('checkInManager.controllers', [])
                 var guestIndex  = $scope.currentGuests.indexOf(guest);
 
                 if (guestIndex !== -1) {
-                    $scope.currentGuests.splice(guestIndex, 1);
 
-                    Guests.remove({eventSlug: event.slug, guestId: guest.id, data: 'remove'});
+                    Guests.remove({eventSlug: event.slug, guestId: guest.id, data: 'remove'}, function (result) {
+                        $scope.currentEvent.guest_count = $scope.currentGuests.length;
+                    }, function (err) {
+
+                    });
+
+                    $scope.currentGuests.splice(guestIndex, 1);
                     $scope.currentGuest = null;
                     $scope.showGuestRemoved();
                     $scope.status       = 'Guest Removed.';
