@@ -14,7 +14,7 @@ class UserTransformer extends Fractal\TransformerAbstract
             'updated_at'        => $user->updated_at,
             'slug'              => $user->slug,
             'email'             => $user->email,
-            'admin'             => $user->admin,
+            'admin'             => (bool) $user->admin,
         ];
     }
 }
