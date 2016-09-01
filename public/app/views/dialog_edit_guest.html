@@ -68,7 +68,7 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions>
-            <md-button ng-hide="!currentGuest.id" class="md-raised md-warn" aria-label="Delete" ng-click="showDeleteGuest($event, currentGuest)">Delete Guest</md-button>
+            <md-button ng-if="currentGuest.id && hasAdminAccess()" class="md-raised md-warn" aria-label="Delete" ng-click="showDeleteGuest($event, currentGuest)">Delete Guest</md-button>
             <span flex></span>
             <md-button type="submit" aria-label="Finished">Done</md-button>
         </md-dialog-actions>

@@ -66,6 +66,14 @@ angular.module('checkInManager', [
         }]);
     })
 
+    // TODO temp solution, remove this from here
+    .run(function ($rootScope) {
+
+        $rootScope.hasAdminAccess   = function () {
+            return $rootScope.authUser ? $rootScope.authUser.admin : 0;
+        }
+    })
+
     .config(function($mdIconProvider) {
         $mdIconProvider.fontSet('md', 'material-icons');
     })

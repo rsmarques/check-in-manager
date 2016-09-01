@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 // use League\Fractal\Resource\Collection;
 use User;
-use Social;
+use UserTransformer;
 
 use JWTAuth;
 use Response;
@@ -66,58 +66,64 @@ class UserController extends ApiController
         return Response::json(compact('token'));
     }
 
-    public function socialSignIn(Request $request)
-    {
-        $validator  = Validator::make($request->all(), [
-            'name'          => 'required',
-            'provider'      => 'required',
-            'uid'           => 'required',
-        ]);
+    // public function socialSignIn(Request $request)
+    // {
+    //     $validator  = Validator::make($request->all(), [
+    //         'name'          => 'required',
+    //         'provider'      => 'required',
+    //         'uid'           => 'required',
+    //     ]);
 
-        if ($validator->fails()) {
-            return $this->responseWithErrors($validator->errors()->all(), 422);
-        }
+    //     if ($validator->fails()) {
+    //         return $this->responseWithErrors($validator->errors()->all(), 422);
+    //     }
 
-        $uid        = $request->input('uid');
-        $provider   = $request->input('provider');
+    //     $uid        = $request->input('uid');
+    //     $provider   = $request->input('provider');
 
-        $social     = Social::firstOrNew(array('uid' => $uid, 'provider' => $provider));
+    //     $social     = Social::firstOrNew(array('uid' => $uid, 'provider' => $provider));
 
-        if (empty($social->user_id)) {
+    //     if (empty($social->user_id)) {
 
-            // Splitting name string into first_name and last_name
-            $name               = $request->input('name');
-            $firstName          = strrpos($name, ' ') ? substr($name, 0, strrpos($name, ' '))   : $name;
-            $lastName           = strrpos($name, ' ') ? substr($name, strrpos($name, ' ') + 1)  : '';
+    //         // Splitting name string into first_name and last_name
+    //         $name               = $request->input('name');
+    //         $firstName          = strrpos($name, ' ') ? substr($name, 0, strrpos($name, ' '))   : $name;
+    //         $lastName           = strrpos($name, ' ') ? substr($name, strrpos($name, ' ') + 1)  : '';
 
-            $email              = $request->input('email', "$uid@$provider");
+    //         $email              = $request->input('email', "$uid@$provider");
 
-            $user               = User::firstOrNew(array('email' => $email));
-            $user->password     = $user->password   ? : $email;
-            $user->first_name   = $user->first_name ? : $firstName;
-            $user->last_name    = $user->last_name  ? : $lastName;
-            $user->country      = $user->country    ? : $request->input('country', '--');
-            $user->address      = $user->address    ? : $request->input('address', null);
-            $user->slug         = $user->slug       ? : $user->calcSlug();
+    //         $user               = User::firstOrNew(array('email' => $email));
+    //         $user->password     = $user->password   ? : $email;
+    //         $user->first_name   = $user->first_name ? : $firstName;
+    //         $user->last_name    = $user->last_name  ? : $lastName;
+    //         $user->country      = $user->country    ? : $request->input('country', '--');
+    //         $user->address      = $user->address    ? : $request->input('address', null);
+    //         $user->slug         = $user->slug       ? : $user->calcSlug();
 
-            $user->save();
+    //         $user->save();
 
-            $social->user_id    = $user->id;
+    //         $social->user_id    = $user->id;
 
-        } else {
-            $user               = User::find($social->user_id);
-        }
+    //     } else {
+    //         $user               = User::find($social->user_id);
+    //     }
 
-        $social->access_token   = $request->input('social_token', null);
-        $social->save();
+    //     $social->access_token   = $request->input('social_token', null);
+    //     $social->save();
 
-        $token                  = JWTAuth::fromUser($user);
+    //     $token                  = JWTAuth::fromUser($user);
 
-        return Response::json(compact('token'));
-    }
+    //     return Response::json(compact('token'));
+    // }
 
     public function me(Request $request)
     {
-        return User::getAuthenticatedUser();
+        $user   = JWTAuth::parseToken()->toUser();
+
+        if (!$user) {
+            return $this->responseWithErrors("User not authenticated!");
+        }
+
+        return $this->respondWithItem($user, new UserTransformer);
     }
 }

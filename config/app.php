@@ -218,6 +218,7 @@ return [
         // Transformer aliases
         'EventTransformer'          => App\Models\EventTransformer::class,
         'GuestTransformer'          => App\Models\GuestTransformer::class,
+        'UserTransformer'           => App\Models\UserTransformer::class,
     ],
 
 ];

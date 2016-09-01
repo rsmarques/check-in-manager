@@ -96,7 +96,7 @@
                                 Export CSV
                             </md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button" aria-label="Edit" ng-click="openEventDialog($event)">
+                        <md-button ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Edit" ng-click="openEventDialog($event)">
                             <md-icon md-font-set="md">mode_edit</md-icon>
                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Edit Event

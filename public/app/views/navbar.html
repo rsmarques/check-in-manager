@@ -19,7 +19,7 @@
         <md-button class="md-icon-button" aria-label="Events" href="#/events">
             <md-icon md-font-set="md">event</md-icon>
         </md-button>
-        <md-button class="md-icon-button" aria-label="Create Event" ng-click="openEventDialog($event, 1)">
+        <md-button ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Create Event" ng-click="openEventDialog($event, 1)">
             <md-icon md-font-set="md">note_add</md-icon>
         </md-button>
     </div>

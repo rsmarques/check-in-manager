@@ -108,9 +108,18 @@ angular.module('checkInManager.services', ['ngResource'])
         });
     })
 
+    .factory('Users', function ($resource, API_URL) {
+        return $resource(API_URL + "me", {}, {
+            me: {
+                url: API_URL + "me",
+                method: 'GET'
+            },
+        });
+    })
+
     .service('GuestsService', function ($rootScope, Guests) {
 
-        this.getGuests   = function () {
+        this.getGuests  = function () {
             var guests  = Guests.get(function (result) {
                 // TODO improve this
                 $rootScope.guests   = result.data;
@@ -122,4 +131,20 @@ angular.module('checkInManager.services', ['ngResource'])
         }
 
         this.getGuests();
+    })
+
+    .service('UsersService', function ($rootScope, Users) {
+
+        this.getCurrentUser = function () {
+            var user    = Users.me(function (result) {
+                // TODO improve this
+                $rootScope.authUser = result.data;
+
+            }, function (err) {
+                // console.log("GuestsService :: Error getting guests!");
+                // console.log(err);
+            });
+        }
+
+        this.getCurrentUser();
     });
