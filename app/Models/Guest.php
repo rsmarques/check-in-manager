@@ -27,6 +27,6 @@ class Guest extends Model
 
     public function getCheckInData()
     {
-        return isset($this->pivot->check_in) ? $this->pivot->check_in : null;
+        return isset($this->pivot->check_in) ? ((bool) $this->pivot->check_in) : null;
     }
 }

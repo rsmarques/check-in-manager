@@ -144,13 +144,13 @@
                                     md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
                                     <span flex></span>
                                     <div layout="row">
-                                        <md-button ng-show="!guest.check_in" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row">
+                                        <md-button ng-show="guest.check_in == false" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row">
                                             <md-icon md-font-set="md">check_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check In Guest
                                             </md-tooltip>
                                         </md-button>
-                                        <md-button ng-show="guest.check_in" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row">
+                                        <md-button ng-show="guest.check_in == true" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row">
                                             <md-icon class="checkInButton" md-font-set="md">check_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check Out Guest
