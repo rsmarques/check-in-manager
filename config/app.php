@@ -209,6 +209,9 @@ return [
         // Lib aliases
         'JWTAuth'                   => Tymon\JWTAuth\Facades\JWTAuth::class,
 
+        // Helpers
+        'GeneralHelper'             => App\Helpers\GeneralHelper::class,
+
         // Model aliases
         'Event'                     => App\Models\Event::class,
         'EventGuest'                => App\Models\EventGuest::class,
@@ -218,6 +221,7 @@ return [
         // Transformer aliases
         'EventTransformer'          => App\Models\EventTransformer::class,
         'GuestTransformer'          => App\Models\GuestTransformer::class,
+        'GuestCsvTransformer'       => App\Models\GuestCsvTransformer::class,
         'UserTransformer'           => App\Models\UserTransformer::class,
     ],
 

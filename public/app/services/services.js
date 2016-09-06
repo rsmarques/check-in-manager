@@ -55,6 +55,7 @@ angular.module('checkInManager.services', ['ngResource'])
                 method: 'POST',
                 params: {
                     eventSlug: '@eventSlug',
+                    csv: '@csv',
                 }
             },
 

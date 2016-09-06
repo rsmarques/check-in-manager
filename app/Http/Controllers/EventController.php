@@ -9,6 +9,13 @@ use Log;
 use DB;
 use Exception;
 
+// Fractal
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+
+// Helpers
+use GeneralHelper;
+
 // Models
 use Guest;
 use Event;
@@ -17,6 +24,7 @@ use User;
 
 // Transformers
 use GuestTransformer;
+use GuestCsvTransformer;
 use EventTransformer;
 
 class EventController extends ApiController
@@ -54,6 +62,18 @@ class EventController extends ApiController
         }
 
         $guests = $event->guests;
+
+        if (Input::get('csv')) {
+
+            Log::info('CSV');
+            $fractal    = new Manager();
+            $resource   = new Collection($guests, new GuestCsvTransformer);
+
+            $guestData  = $fractal->createData($resource)->toArray()['data'];
+            $csvData    = GeneralHelper::arrayToCsv($guestData);
+            Log::info($csvData);
+            return $this->respondWithArray(array('data' => $csvData));
+        }
 
         return $this->respondWithCollection($guests, new GuestTransformer);
     }

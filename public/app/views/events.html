@@ -63,7 +63,7 @@
             <md-virtual-repeat-container class="vertical-container" ng-style="getEventRepeaterHeight()">
                 <md-list ng-cloak>
                     <div md-virtual-repeat="event in events | filter:filterEvent | orderBy:eventSortComparator:sortEventReverse">
-                        <md-subheader ng-if="event.upcoming_index == 0 && sortEvent === 'upcoming'" class="md-no-sticky">Upcoming</md-subheader>
+                        <md-subheader ng-if="event.upcoming_index == 0 && sortEvent === 'upcoming' && $index === 0" class="md-no-sticky">Upcoming</md-subheader>
                         <md-subheader ng-if="event.upcoming_index == -1 && sortEvent === 'upcoming'" class="md-no-sticky">Past</md-subheader>
                         <md-list-item class="md-3-line repeated-item" ng-click="selectEvent(event)">
                             <div class="md-list-item-text" layout="column">
@@ -99,7 +99,7 @@
                                 Add Guest
                             </md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button" aria-label="Edit" ng-click="null">
+                        <md-button class="md-icon-button" aria-label="Edit" ng-click="downloadGuestsCsv(currentEvent)">
                             <md-icon md-font-set="md">file_download</md-icon>
                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Export CSV
