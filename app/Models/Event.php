@@ -114,4 +114,13 @@ class Event extends Model
 
         return $slug;
     }
+
+    public function getUpcomingIndex()
+    {
+        // TODO put these queries to cache
+        $eventIds       = Event::orderBy('date', 'ASC')->orderBy('id', 'ASC')->lists('id')->all();
+        $pastEventCount = Event::where('date', '<', new Carbon('today'))->count();
+
+        return (array_search($this->id, $eventIds) - $pastEventCount);
+    }
 }

@@ -21,6 +21,7 @@ class EventTransformer extends Fractal\TransformerAbstract
             'guest_count'       => $event->getGuestCount(),
             'date'              => $event->getDate(),
             'date_formatted'    => $event->getDateFormatted(),
+            'upcoming_index'    => $event->getUpcomingIndex(),
         ];
     }
 }

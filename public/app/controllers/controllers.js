@@ -189,7 +189,8 @@ angular.module('checkInManager.controllers', [])
             $scope.sortEventReverse = reverse;
         }
 
-        $scope.checkInGuest = function(event, eventGuest) {
+        $scope.checkInGuest = function(event, eventGuest)
+        {
 
             Guests.checkIn({eventSlug: event.slug, guestId: eventGuest.id, data: 'checkin'}, function (result) {
 
@@ -217,7 +218,8 @@ angular.module('checkInManager.controllers', [])
             return true;
         }
 
-        $scope.showRemoveEvent = function (ev, event) {
+        $scope.showRemoveEvent = function (ev, event)
+        {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm     = $mdDialog.confirm()
                 .title('Are you sure you want to delete this event?')
@@ -247,7 +249,8 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
-        $scope.showEventDeleted = function() {
+        $scope.showEventDeleted = function()
+        {
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Event Deleted!')
@@ -256,7 +259,8 @@ angular.module('checkInManager.controllers', [])
             );
         };
 
-        $scope.showRemoveGuest = function (ev, event, guest) {
+        $scope.showRemoveGuest = function (ev, event, guest)
+        {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm     = $mdDialog.confirm()
                 .title('Are you sure you want to remove this guest?')
@@ -289,7 +293,8 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
-        $scope.showGuestRemoved = function() {
+        $scope.showGuestRemoved = function()
+        {
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Guest Removed!')
@@ -298,7 +303,8 @@ angular.module('checkInManager.controllers', [])
             );
         };
 
-        $scope.getEventGuestRepeaterHeight = function() {
+        $scope.getEventGuestRepeaterHeight = function()
+        {
 
             windowHeight        = $window.innerHeight;
             navBarHeight        = $('#navbar').outerHeight(true);
@@ -309,7 +315,8 @@ angular.module('checkInManager.controllers', [])
             return {height: '' + listHeight + 'px'};
         };
 
-        $scope.getEventRepeaterHeight = function () {
+        $scope.getEventRepeaterHeight = function ()
+        {
 
             windowHeight            = $window.innerHeight;
             navBarHeight            = $('#navbar').outerHeight(true);
@@ -320,17 +327,37 @@ angular.module('checkInManager.controllers', [])
             return {height: '' + listHeight + 'px'};
         };
 
-        $scope.showEventListMobile = function () {
+        $scope.showEventListMobile = function ()
+        {
             return !$scope.currentEvent || $mdMedia('gt-sm');
         }
 
-        $scope.showGuestListMobile = function () {
+        $scope.showGuestListMobile = function ()
+        {
             return $scope.currentEvent || $mdMedia('gt-sm');
+        }
+
+        $scope.eventSortComparator = function (event)
+        {
+            switch ($scope.sortEvent) {
+                case 'date':
+                    return event.date;
+                    break;
+
+                case 'name':
+                    return event.name;
+                    break;
+
+                default:
+                    // upcoming / past sort
+                    return event.upcoming_index >= 0 ? event.upcoming_index : (-1) * event.upcoming_index + $scope.events.length;
+            }
         }
 
         $window.addEventListener('resize', onResize);
 
-        function onResize() {
+        function onResize()
+        {
             $scope.$digest();
         }
 
@@ -384,7 +411,8 @@ angular.module('checkInManager.controllers', [])
         });
 
         Events.get(function (result) {
-            $scope.events                   = result.data;
+
+            $scope.events   = result.data;
 
             // TODO improve this
             angular.forEach($scope.events, function (event, key) {
@@ -398,6 +426,7 @@ angular.module('checkInManager.controllers', [])
         });
 
         $scope.loadingGuests    = false;
+        $scope.sortEvent        = 'upcoming';
     })
 
     .controller('GuestController', function ($rootScope, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, $window, API_URL, Events, Guests, GuestsService, UsersService) {
