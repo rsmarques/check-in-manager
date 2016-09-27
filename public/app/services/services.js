@@ -1,5 +1,53 @@
 angular.module('checkInManager.services', ['ngResource'])
 
+    .factory('Auth', function ($http, $localStorage, API_URL) {
+        function urlBase64Decode(str) {
+            var output = str.replace('-', '+').replace('_', '/');
+            switch (output.length % 4) {
+                case 0:
+                    break;
+                case 2:
+                    output += '==';
+                    break;
+                case 3:
+                    output += '=';
+                    break;
+                default:
+                    throw 'Illegal base64url string!';
+            }
+            return window.atob(output);
+        }
+
+        function getClaimsFromToken() {
+            var token = $localStorage.token;
+            var user = {};
+            if (typeof token !== 'undefined') {
+                var encoded = token.split('.')[1];
+                user = JSON.parse(urlBase64Decode(encoded));
+            }
+            return user;
+        }
+
+        var tokenClaims = getClaimsFromToken();
+
+        return {
+            signup: function (data, success, error) {
+                $http.post(API_URL + 'users/signup', data).success(success).error(error)
+            },
+            signin: function (data, success, error) {
+                $http.post(API_URL + 'users/signin', data).success(success).error(error)
+            },
+            logout: function (success) {
+                tokenClaims = {};
+                delete $localStorage.token;
+                success();
+            },
+            getTokenClaims: function () {
+                return tokenClaims;
+            }
+        };
+    })
+
     .factory('Events', function ($resource, API_URL) {
         return $resource(API_URL + "events/:eventSlug/:data", {}, {
             delete: {
@@ -7,6 +55,7 @@ angular.module('checkInManager.services', ['ngResource'])
                 method: 'POST',
                 params: {
                     eventSlug: '@eventSlug',
+                    csv: '@csv',
                 }
             },
 
@@ -60,13 +109,43 @@ angular.module('checkInManager.services', ['ngResource'])
         });
     })
 
-    .service('GuestsService', function (Guests) {
-        var guests  = Guests.query(function (result) {
-
-        }, function (err) {
-            // console.log("GuestsService :: Error getting guests!");
-            // console.log(err);
+    .factory('Users', function ($resource, API_URL) {
+        return $resource(API_URL + "me", {}, {
+            me: {
+                url: API_URL + "me",
+                method: 'GET'
+            },
         });
+    })
 
-        return guests;
+    .service('GuestsService', function ($rootScope, Guests) {
+
+        this.getGuests  = function () {
+            var guests  = Guests.get(function (result) {
+                // TODO improve this
+                $rootScope.guests   = result.data;
+
+            }, function (err) {
+                // console.log("GuestsService :: Error getting guests!");
+                // console.log(err);
+            });
+        }
+
+        this.getGuests();
+    })
+
+    .service('UsersService', function ($rootScope, Users) {
+
+        this.getCurrentUser = function () {
+            var user    = Users.me(function (result) {
+                // TODO improve this
+                $rootScope.authUser = result.data;
+
+            }, function (err) {
+                // console.log("GuestsService :: Error getting guests!");
+                // console.log(err);
+            });
+        }
+
+        this.getCurrentUser();
     });

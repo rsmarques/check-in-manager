@@ -1,9 +1,77 @@
 angular.module('checkInManager.controllers', [])
 
-    .controller('EventListController', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, API_URL, Events, Guests, GuestsService) {
+   .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, Auth, GuestsService, UsersService) {
+
+        function successAuth (res) {
+            $localStorage.token = res.token;
+            window.location = "#/events";
+
+            // TODO remove this from here
+            // reload guests after successful login
+            GuestsService.getGuests();
+            UsersService.getCurrentUser();
+        }
+
+        $scope.performLogin = function () {
+            if ($scope.register) {
+                return $scope.signup();
+            } else {
+                return $scope.signin();
+            }
+        }
+
+        $scope.signin = function () {
+            var formData = {
+                email: $scope.credentials.email,
+                password: $scope.credentials.password
+            };
+
+            $rootScope.error    = null;
+
+            Auth.signin(formData, successAuth, function () {
+                $rootScope.error = 'Invalid email/password.';
+            })
+        };
+
+        $scope.signup = function () {
+            var formData = {
+                email: $scope.credentials.email,
+                password: $scope.credentials.password
+            };
+
+            $rootScope.error            = null;
+
+            Auth.signup(formData, successAuth, function (err) {
+                if (err['errors'] && err['errors'][0]) {
+                    $rootScope.error    = err['errors'][0];
+                } else {
+                    $rootScope.error    = 'Failed to signup';
+                }
+            });
+        };
+
+        $scope.logout = function () {
+            Auth.logout(function () {
+                window.location = "/";
+            });
+        };
+
+         $scope.$on('$stateChangeSuccess', function () {
+            $scope.register     = $state.current.register;
+            $scope.loginText    = $scope.register ? 'Register' : 'Login';
+            $rootScope.error    = null;
+         });
+
+        $scope.token         = $localStorage.token;
+        $scope.tokenClaims   = Auth.getTokenClaims();
+    })
+
+    .controller('EventListController', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdMedia, $mdToast, API_URL, Events, Guests, GuestsService, UsersService) {
         // TODO change openDialogs location
         $scope.openGuestDialog = function ($event)
         {
+            $scope.checkInStatus    = null;
+
             $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'ctrl',
@@ -24,8 +92,7 @@ angular.module('checkInManager.controllers', [])
         $scope.openEventDialog = function ($event, newEvent)
         {
             if (newEvent) {
-                $scope.currentEvent     = {};
-                $scope.currentGuests    = [];
+                $scope.uncheckCurrentEvent();
             }
 
             $mdDialog.show({
@@ -45,6 +112,11 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
+        $scope.openSortEventMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
+
         $scope.selectEvent  = function (event)
         {
             // console.log("EventListController :: Selecting Event " + event.slug);
@@ -53,6 +125,10 @@ angular.module('checkInManager.controllers', [])
 
         $scope.findEvent    = function (eventSlug)
         {
+            if (!$scope.events) {
+                return false;
+            }
+
             result          = $scope.events.find(function (event) {
                 return event.slug == eventSlug;
             });
@@ -67,14 +143,24 @@ angular.module('checkInManager.controllers', [])
             $scope.loadingGuests        = true;
             $scope.currentGuests        = [];
 
-            var g                       = Events.query({eventSlug: event.slug, data: 'guests'}, function (result) {
+            var g                       = Events.get({eventSlug: event.slug, data: 'guests'}, function (result) {
 
                 $scope.loadingGuests    = false;
-                $scope.currentGuests    = result;
+                $scope.currentGuests    = result.data;
 
             }, function (error) {
                 // TODO error message
             });
+        }
+
+        $scope.uncheckCurrentEvent  = function ()
+        {
+            $scope.eventId              = null;
+            $scope.currentEvent         = 0;
+            $scope.loadingGuests        = false;
+            $scope.currentGuests        = [];
+
+            $location.search({});
         }
 
         $scope.checkCurrentEvent    = function ()
@@ -97,17 +183,22 @@ angular.module('checkInManager.controllers', [])
             return true;
         }
 
-        $scope.$on('checkInEvent', function(ev, data) {
+        $scope.sortEvents   = function (sort, reverse)
+        {
+            $scope.sortEvent        = sort;
+            $scope.sortEventReverse = reverse;
+        }
 
-            var event   = data.event;
-            var guest   = data.guest;
+        $scope.checkInGuest = function(event, eventGuest)
+        {
 
-            $scope.checkInGuest(event, guest);
-        });
+            Guests.checkIn({eventSlug: event.slug, guestId: eventGuest.id, data: 'checkin'}, function (result) {
 
-        $scope.checkInGuest = function(event, eventGuest) {
-            // clearing search guests field
-            Guests.checkIn({eventSlug: event.slug, guestId: eventGuest.id, data: 'checkin'});
+                $scope.currentEvent.guest_count = $scope.currentGuests.length;
+
+            }, function (err) {
+
+            });
 
             var guestIndex      = $scope.currentGuests.map(function (g) {return g.id; }).indexOf(eventGuest.id);
 
@@ -121,27 +212,14 @@ angular.module('checkInManager.controllers', [])
                 $scope.currentGuests.unshift(guestData);
             }
 
+            // forcing window resize to update virtual repeater
+            angular.element(window).triggerHandler('resize');
+
             return true;
         }
 
-        $scope.events   = Events.query(function (events) {
-
-            // TODO improve this
-            angular.forEach($scope.events, function (event, key) {
-                $scope.events[key].date     = new Date($scope.events[key].date);
-                $scope.events[key].time     = new Date($scope.events[key].date);
-
-                $scope.events[key].dateFormatted    = moment($scope.events[key].date).format('YYYY-MM-DD HH:mm');
-            });
-
-            $scope.checkCurrentEvent();
-        });
-
-        $scope.$watch(function() { return $location.search() }, function (params) {
-            $scope.checkCurrentEvent();
-        });
-
-        $scope.showRemoveEvent = function (ev, event) {
+        $scope.showRemoveEvent = function (ev, event)
+        {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm     = $mdDialog.confirm()
                 .title('Are you sure you want to delete this event?')
@@ -171,7 +249,8 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
-        $scope.showEventDeleted = function() {
+        $scope.showEventDeleted = function()
+        {
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Event Deleted!')
@@ -180,7 +259,8 @@ angular.module('checkInManager.controllers', [])
             );
         };
 
-        $scope.showRemoveGuest = function (ev, event, guest) {
+        $scope.showRemoveGuest = function (ev, event, guest)
+        {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm     = $mdDialog.confirm()
                 .title('Are you sure you want to remove this guest?')
@@ -195,9 +275,14 @@ angular.module('checkInManager.controllers', [])
                 var guestIndex  = $scope.currentGuests.indexOf(guest);
 
                 if (guestIndex !== -1) {
-                    $scope.currentGuests.splice(guestIndex, 1);
 
-                    Guests.remove({eventSlug: event.slug, guestId: guest.id, data: 'remove'});
+                    Guests.remove({eventSlug: event.slug, guestId: guest.id, data: 'remove'}, function (result) {
+                        $scope.currentEvent.guest_count = $scope.currentGuests.length;
+                    }, function (err) {
+
+                    });
+
+                    $scope.currentGuests.splice(guestIndex, 1);
                     $scope.currentGuest = null;
                     $scope.showGuestRemoved();
                     $scope.status       = 'Guest Removed.';
@@ -208,7 +293,8 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
-        $scope.showGuestRemoved = function() {
+        $scope.showGuestRemoved = function()
+        {
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Guest Removed!')
@@ -217,38 +303,8 @@ angular.module('checkInManager.controllers', [])
             );
         };
 
-        $scope.$on('storeEvent', function (event) {
-
-            if (typeof $scope.currentEvent.time !== "undefined" && typeof $scope.currentEvent.date !== "undefined") {
-                $scope.currentEvent.date.setHours($scope.currentEvent.time.getHours());
-                $scope.currentEvent.date.setMinutes($scope.currentEvent.time.getMinutes());
-            }
-
-            Events.store({event: $scope.currentEvent}, function (result) {
-
-                var event       = result;
-                var eventIndex  = $scope.events.map(function (e) {return e.id; }).indexOf(event.id);
-
-                if (eventIndex === -1) {
-                    // guest not on list, creating entry
-                    var eventData           = (JSON.parse(JSON.stringify(event)));
-                    eventData.guest_count   = 0;
-                    eventData.dateFormatted = moment($scope.currentEvent.date).format('YYYY-MM-DD HH:mm');
-                    $scope.events.unshift(eventData);
-                }
-
-            }, function (err) {
-                // TODO error treatment
-                // console.log("Error creating event!")
-                // console.log(err);
-            });
-        });
-
-        $scope.$on('openEventDialog', function (event, data) {
-            $scope.openEventDialog(data.event, data.newEvent);
-        });
-
-        $scope.getEventGuestRepeaterHeight = function() {
+        $scope.getEventGuestRepeaterHeight = function()
+        {
 
             windowHeight        = $window.innerHeight;
             navBarHeight        = $('#navbar').outerHeight(true);
@@ -259,7 +315,8 @@ angular.module('checkInManager.controllers', [])
             return {height: '' + listHeight + 'px'};
         };
 
-        $scope.getEventRepeaterHeight = function() {
+        $scope.getEventRepeaterHeight = function ()
+        {
 
             windowHeight            = $window.innerHeight;
             navBarHeight            = $('#navbar').outerHeight(true);
@@ -270,21 +327,130 @@ angular.module('checkInManager.controllers', [])
             return {height: '' + listHeight + 'px'};
         };
 
+        $scope.showEventListMobile = function ()
+        {
+            return !$scope.currentEvent || $mdMedia('gt-sm');
+        }
+
+        $scope.showGuestListMobile = function ()
+        {
+            return $scope.currentEvent || $mdMedia('gt-sm');
+        }
+
+        $scope.eventSortComparator = function (event)
+        {
+            switch ($scope.sortEvent) {
+                case 'date':
+                    return event.date;
+                    break;
+
+                case 'name':
+                    return event.name;
+                    break;
+
+                default:
+                    // upcoming / past sort
+                    return event.upcoming_index >= 0 ? event.upcoming_index : (-1) * event.upcoming_index + $scope.events.length;
+            }
+        }
+
+        $scope.downloadGuestsCsv = function (event)
+        {
+            Events.get({eventSlug: event.slug, data: 'guests', csv: 1}, function (result) {
+
+                var file = new Blob([ result.data ], {
+                    type : 'application/csv'
+                });
+
+                //trick to download store a file having its URL
+                var fileURL     = URL.createObjectURL(file);
+                var a           = document.createElement('a');
+                a.href          = fileURL;
+                a.target        = '_blank';
+                a.download      = event.slug +'_guests.csv';
+                document.body.appendChild(a);
+                a.click();
+
+            }, function (error) {
+                // TODO error message
+            });
+        }
+
         $window.addEventListener('resize', onResize);
 
-        function onResize() {
+        function onResize()
+        {
             $scope.$digest();
         }
+
+        $scope.$on('storeEvent', function (event) {
+
+            if (typeof $scope.currentEvent.time !== "undefined" && typeof $scope.currentEvent.date !== "undefined") {
+                $scope.currentEvent.date.setHours($scope.currentEvent.time.getHours());
+                $scope.currentEvent.date.setMinutes($scope.currentEvent.time.getMinutes());
+            }
+
+            $scope.currentEvent.date_formatted  = moment($scope.currentEvent.date).format('DD/MM/YY HH:mm');
+
+            Events.store({event: $scope.currentEvent}, function (result) {
+
+                var event           = result.data;
+                var eventIndex      = $scope.events.map(function (e) {return e.id; }).indexOf(event.id);
+
+                if (eventIndex === -1) {
+                    // event not on list, creating entry
+                    var eventData           = (JSON.parse(JSON.stringify(event)));
+                    $scope.events.unshift(eventData);
+                    $scope.currentEvent     = eventData;
+                }
+
+            }, function (err) {
+                // TODO error treatment
+                // console.log("Error creating event!")
+                // console.log(err);
+            });
+        });
+
+        $scope.$on('checkInEvent', function(ev, data) {
+
+            var event   = data.event;
+            var guest   = data.guest;
+
+            $scope.checkInGuest(event, guest);
+        });
+
+        $scope.$watch(function() { return $location.search() }, function (params) {
+            $scope.checkCurrentEvent();
+        });
 
         $scope.$on('$destroy', function() {
             $window.removeEventListener('resize', onResize);
         });
 
-        $scope.guests           = GuestsService;
+        $scope.$on('openEventDialog', function (event, data) {
+            $scope.openEventDialog(data.event, data.newEvent);
+        });
+
+        Events.get(function (result) {
+
+            $scope.events   = result.data;
+
+            // TODO improve this
+            angular.forEach($scope.events, function (event, key) {
+
+                date                        = moment($scope.events[key].date.date);
+                $scope.events[key].date     = new Date(date);
+                $scope.events[key].time     = new Date(date);
+            });
+
+            $scope.checkCurrentEvent();
+        });
+
         $scope.loadingGuests    = false;
+        $scope.sortEvent        = 'upcoming';
     })
 
-    .controller('GuestController', function ($rootScope, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, $window, API_URL, Events, Guests, GuestsService) {
+    .controller('GuestController', function ($rootScope, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, $window, API_URL, Events, Guests, GuestsService, UsersService) {
 
         $scope.openGuestEditDialog = function ($event, editMode, guest)
         {
@@ -349,11 +515,44 @@ angular.module('checkInManager.controllers', [])
             );
         };
 
+        $scope.getGuestRepeaterHeight = function() {
+
+            windowHeight            = $window.innerHeight;
+            navBarHeight            = $('#navbar').outerHeight(true);
+            guestListHeaderHeight   = $('#guestListHeader').outerHeight(true);
+            guestTableHeaderHeight  = $('#guestTableHeader').outerHeight(true);
+
+            listHeight              = windowHeight - navBarHeight - guestListHeaderHeight - guestTableHeaderHeight - 10;
+
+            return {height: '' + listHeight + 'px'};
+        };
+
+        $scope.sortGuests   = function (sort)
+        {
+            if (sort === $scope.sortGuest) {
+                $scope.sortGuestReverse     = !$scope.sortGuestReverse;
+                $scope.sortGuest            = $scope.sortGuestReverse === false ? null : $scope.sortGuest;
+            } else {
+                $scope.sortGuest            = sort;
+                $scope.sortGuestReverse     = false;
+            }
+
+            $scope.sortIcon                 = $scope.sortGuestReverse ? 'arrow_drop_down' : 'arrow_drop_up';
+
+            return true
+        }
+
+        $window.addEventListener('resize', onResize);
+
+        function onResize() {
+            $scope.$digest();
+        }
+
         $scope.$on('storeGuest', function (event) {
 
             Guests.store({guest: $scope.currentGuest}, function (result) {
 
-                var guest       = result;
+                var guest       = result.data;
                 var guestIndex  = $scope.guests.map(function (g) {return g.id; }).indexOf(guest.id);
 
                 if (guestIndex === -1) {
@@ -369,29 +568,9 @@ angular.module('checkInManager.controllers', [])
             });
         });
 
-        $scope.getGuestRepeaterHeight = function() {
-
-            windowHeight            = $window.innerHeight;
-            navBarHeight            = $('#navbar').outerHeight(true);
-            guestListHeaderHeight   = $('#guestListHeader').outerHeight(true);
-            guestTableHeaderHeight  = $('#guestTableHeader').outerHeight(true);
-
-            listHeight              = windowHeight - navBarHeight - guestListHeaderHeight - guestTableHeaderHeight - 10;
-
-            return {height: '' + listHeight + 'px'};
-        };
-
-        $window.addEventListener('resize', onResize);
-
-        function onResize() {
-            $scope.$digest();
-        }
-
         $scope.$on('$destroy', function() {
             $window.removeEventListener('resize', onResize);
         });
-
-        $scope.guests       = GuestsService;
     })
 
     .controller('NavBarController', function ($timeout, $q, $rootScope, $scope) {
@@ -402,20 +581,35 @@ angular.module('checkInManager.controllers', [])
     function DialogController ($timeout, $q, $rootScope, $scope, $mdDialog, Events, guests, currentEvent, currentGuest) {
         var self = this;
 
-        $scope.guests       = guests;
-        $scope.currentEvent = currentEvent;
-        $scope.currentGuest = currentGuest;
+        $scope.allGuests        = guests;
+        $scope.currentEvent     = currentEvent;
+        $scope.currentGuest     = currentGuest;
+        $scope.checkInStatus    = null;
 
         $scope.searchGuests = function (searchKey)
         {
-            // console.log("searching guests with " + searchKey);
-            guests  = $scope.guests.filter(function (guest) {
-                return guest.email.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
-                    guest.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
-                    guest.slug.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            if ($scope.allGuests === null || typeof $scope.allGuests === 'undefined') {
+                return [];
+            }
+
+            // TODO put this to function
+            searchKeyNormalized = searchKey.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
+
+            // console.log("searching guests with " + searchKeyNormalized);
+            guests              = $scope.allGuests.filter(function (guest) {
+
+                // TODO put this to function
+                guestNameNormalized         = guest.name.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
+                guestShortNameNormalized    = guest.short_name.replace(/[áàãâä]/gi,"a").replace(/[éè¨ê]/gi,"e").replace(/[íìïî]/gi,"i").replace(/[óòöôõ]/gi,"o").replace(/[úùüû]/gi, "u").replace(/[ç]/gi, "c").replace(/[ñ]/gi, "n");
+
+
+                return guest.email.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1 ||
+                    guestNameNormalized.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1 ||
+                    guest.slug.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1 ||
+                    guestShortNameNormalized.toLowerCase().indexOf(searchKeyNormalized.toLowerCase()) > -1;
             });
 
-            return guests.slice(0, 3);
+            return guests.slice(0, 10);
         }
 
         $scope.selectedItemChange = function (item)
@@ -427,7 +621,8 @@ angular.module('checkInManager.controllers', [])
             // broadcasting event to eventController
             $rootScope.$broadcast('checkInEvent', {'event' : $scope.currentEvent, 'guest' : $scope.selectedItem});
 
-            $scope.searchGuest  = null;
+            $scope.searchGuest      = null;
+            $scope.checkInStatus    = $scope.selectedItem.short_name + ' added!';
 
             return true;
         }

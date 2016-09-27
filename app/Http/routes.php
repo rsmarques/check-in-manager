@@ -14,19 +14,29 @@
 // API endpoints
 Route::group(array('prefix' => 'api/v1'), function () {
 
-    // guest endpoints
-    Route::get('guests', 'GuestController@userGuests');
-    Route::post('guests/store', 'GuestController@store');
-    Route::post('guests/{id}/delete', 'GuestController@delete');
-    Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@eventGuestCheckIn');
-    Route::post('events/{slug}/guests/{guestId}/remove', 'GuestController@eventGuestRemove');
+    // authentication endpoints
+    Route::post('/users/signin', array('uses' => 'UserController@signIn'));
+    Route::post('/users/signup', array('uses' => 'UserController@signUp'));
 
-    // event endpoints
-    Route::get('events', 'EventController@userEvents');
-    Route::get('events/{slug}', 'EventController@eventBySlug');
-    Route::get('events/{slug}/guests', 'EventController@eventGuestsBySlug');
-    Route::post('events/store', 'EventController@store');
-    Route::post('events/{slug}/delete', 'EventController@delete');
+    Route::group(array('middleware' => ['jwt.auth']), function () {
+
+        // User endpoints
+        Route::get('/me', 'UserController@me');
+
+        // guest endpoints
+        Route::get('guests', 'GuestController@userGuests');
+        Route::post('guests/store', 'GuestController@store');
+        Route::post('guests/{id}/delete', 'GuestController@delete');
+        Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@eventGuestCheckIn');
+        Route::post('events/{slug}/guests/{guestId}/remove', 'GuestController@eventGuestRemove');
+
+        // event endpoints
+        Route::get('events', 'EventController@userEvents');
+        Route::get('events/{slug}', 'EventController@eventBySlug');
+        Route::get('events/{slug}/guests', 'EventController@eventGuestsBySlug');
+        Route::post('events/store', 'EventController@store');
+        Route::post('events/{slug}/delete', 'EventController@delete');
+    });
 });
 
 // Angular routes

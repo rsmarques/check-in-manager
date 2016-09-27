@@ -5,14 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Validator;
-
-use App\Guest;
-use App\Event;
-use App\EventGuest;
-
 use Log;
 use DB;
 use Exception;
+
+// Fractal
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+
+// Helpers
+use GeneralHelper;
+
+// Models
+use Guest;
+use Event;
+use EventGuest;
+use User;
+
+// Transformers
+use GuestTransformer;
+use GuestCsvTransformer;
+use EventTransformer;
 
 class EventController extends ApiController
 {
@@ -26,12 +39,7 @@ class EventController extends ApiController
         // TODO filter events by user
         $events = Event::get();
 
-        // TODO put this data into transformer
-        foreach ($events as $event) {
-            $event["guest_count"]   = $event->guests()->count();
-        }
-
-        return $events;
+        return $this->respondWithCollection($events, new EventTransformer);
     }
 
     public function eventBySlug($slug)
@@ -39,14 +47,10 @@ class EventController extends ApiController
         $event  = Event::findBySlug($slug);
 
         if (!$event) {
-            // TODO error page on event not found
-            return array();
+            return $this->responseWithErrors("Event [$slug] not found!", 500);
         }
 
-        // TODO put this data into transformer
-        $event["guest_count"]   = $event->guests()->count();
-
-        return $event;
+        return $this->respondWithItem($event, new EventTransformer);
     }
 
     public function eventGuestsBySlug($slug)
@@ -54,17 +58,24 @@ class EventController extends ApiController
         $event  = Event::findBySlug($slug);
 
         if (!$event) {
-            // TODO error page on event not found
-            return array();
+            return $this->responseWithErrors("Event [$slug] not found!", 500);
         }
 
         $guests = $event->guests;
 
-        foreach ($guests as $guest) {
-            $guest->check_in    = $guest->pivot->check_in;
+        if (Input::get('csv')) {
+
+            Log::info('CSV');
+            $fractal    = new Manager();
+            $resource   = new Collection($guests, new GuestCsvTransformer);
+
+            $guestData  = $fractal->createData($resource)->toArray()['data'];
+            $csvData    = GeneralHelper::arrayToCsv($guestData);
+            Log::info($csvData);
+            return $this->respondWithArray(array('data' => $csvData));
         }
 
-        return $guests;
+        return $this->respondWithCollection($guests, new GuestTransformer);
     }
 
     /**
@@ -89,13 +100,15 @@ class EventController extends ApiController
         $event              = !empty($eventData['id']) ? Event::firstOrNew(array('id' => $eventData['id'])) : new Event;
 
         $event->user_id     = 1;
-        $event->date        = new Carbon($eventData['date']);
+        $date               = new Carbon($eventData['date']);
+        $date->setTimezone(config('app.timezone'));
+        $event->date        = $date;
         $event->name        = $eventData['name'];
         $event->category    = $eventData['category'];
         $event->slug        = $event->calcSlug();
         $event->save();
 
-        return $event;
+        return $this->respondWithItem($event, new EventTransformer);
     }
 
     /**

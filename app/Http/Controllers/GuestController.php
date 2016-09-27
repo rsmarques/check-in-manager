@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
-use App\Guest;
-use App\Event;
-use App\EventGuest;
+use Guest;
+use GuestTransformer;
+use Event;
+use EventGuest;
 
 use Log;
 use DB;
@@ -19,9 +20,8 @@ class GuestController extends ApiController
     {
         // TODO filter guests by user
         $guests     = Guest::orderBy('slug')->get()->all();
-
-        // TODO put this data into transformer
-        return $this->respondWithArray($guests);
+        // return $guests;
+        return $this->respondWithCollection($guests, new GuestTransformer);
     }
 
     public function guestBySlug($slug)
@@ -32,7 +32,7 @@ class GuestController extends ApiController
             return $this->responseWithErrors("Guest [$slug] not found!", 500);
         }
 
-        return $guest;
+        return $this->respondWithItem($guest, new GuestTransformer);
     }
 
     public function eventGuestCheckIn($eventSlug, $guestId)
@@ -113,7 +113,7 @@ class GuestController extends ApiController
         $guest->degree      = $guestData['degree'];
         $guest->save();
 
-        return $guest;
+        return $this->respondWithItem($guest, new GuestTransformer);
     }
 
     /**

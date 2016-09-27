@@ -9,7 +9,7 @@
         </div>
     </md-toolbar>
     <md-dialog-content>
-        <div class="md-dialog-content">
+        <div class="md-dialog-content checkInForm">
 
             <form ng-submit="$event.preventDefault()">
                 <p>Enter Guest ID / Name / Email.</p>
@@ -30,14 +30,11 @@
                 </md-autocomplete>
                 <br/>
             </form>
-
+            <p ng-if="checkInStatus" layout="row" layout-align="center center" class="success">
+                {{checkInStatus}}
+            </p>
         </div>
     </md-dialog-content>
-    <div ng-if="dialogStatus" id="dialogStatus">
-        <p layout="row" layout-align="center center" class="md-padding">
-            {{dialogStatus}}
-        </p>
-    </div>
     <md-dialog-actions>
         <md-button aria-label="Done" ng-click="ctrl.finish($event)">Done</md-button>
     </md-dialog-actions>

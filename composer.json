@@ -8,7 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "fzaninotto/faker": "^1.6",
-        "league/fractal": "^0.13.0"
+        "league/fractal": "^0.13.0",
+        "tymon/jwt-auth": "^0.5.9",
+        "barryvdh/laravel-cors": "^0.8.2"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
