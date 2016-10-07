@@ -19,6 +19,7 @@ class GuestTransformer extends Fractal\TransformerAbstract
             'degree'        => $guest->degree,
             'st_number'     => $guest->st_number,
             'origin'        => $guest->origin,
+            'phone_number'  => $guest->getPhoneNumber(),
             'short_name'    => $guest->getShortName(),
             'check_in'      => $guest->getCheckInData(),
         ];

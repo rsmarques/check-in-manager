@@ -19,7 +19,7 @@
                 </md-tooltip>
             </md-button> -->
             <md-menu>
-                <md-button class="md-icon-button filterEventsButton" aria-label="Filter" ng-click="openSortEventMenu($mdOpenMenu, $event)">
+                <md-button class="md-icon-button filterEventsButton" aria-label="Filter" ng-click="openEventMenu($mdOpenMenu, $event)">
                     <md-icon md-font-set="md">sort_by_alpha</md-icon>
                     <md-tooltip hide-xs hide-sm md-direction="bottom">
                         Sort
@@ -140,10 +140,10 @@
                                     </div>
                                     <span flex></span>
                                 </md-grid-tile>
-                                <md-grid-tile class="eventButtons"
+                                <md-grid-tile
                                     md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
                                     <span flex></span>
-                                    <div layout="row">
+                                    <div layout="row" layout-align="center center">
                                         <md-button ng-show="guest.check_in == false" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row">
                                             <md-icon md-font-set="md">check_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
@@ -156,12 +156,29 @@
                                                 Check Out Guest
                                             </md-tooltip>
                                         </md-button>
-                                        <md-button class="md-icon-button" aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)" layout="row">
-                                            <md-icon md-font-set="md">remove_circle</md-icon>
-                                            <md-tooltip hide-xs hide-sm md-direction="bottom">
-                                                Remove Guest
-                                            </md-tooltip>
-                                        </md-button>
+                                        <md-menu>
+                                            <md-button class="md-icon-button" aria-label="Options" ng-click="openEventMenu($mdOpenMenu, $event)">
+                                                <md-icon md-font-set="md">more_vert</md-icon>
+                                                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                                    More Options
+                                                </md-tooltip>
+                                            </md-button>
+                                            <md-menu-content width="3">
+                                                <md-menu-item>
+                                                    <md-button aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)">
+                                                        <md-icon md-font-set="md">remove_circle</md-icon>
+                                                        Remove Guest
+                                                    </md-button>
+                                                </md-menu-item>
+                                                <md-menu-divider ng-if="guest.phone_number"></md-menu-divider>
+                                                <md-menu-item ng-if="guest.phone_number">
+                                                    <md-button aria-label="Call" href="tel:{{guest.phone_number}}">
+                                                        <md-icon md-font-set="md">phone</md-icon>
+                                                        Call Guest
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </div>
                                 </md-grid-tile>
                             </md-grid-list>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class Guest extends Model
 {
@@ -12,6 +13,17 @@ class Guest extends Model
     public function event()
     {
         return $this->belongsTo('Event');
+    }
+
+    public function getPhoneNumber()
+    {
+        if (empty($this->phone_country)) {
+            return null;
+        }
+
+        $countryCode    = Config::get("country_phones.$this->phone_country");
+
+        return $countryCode && $this->phone_number ? ('+' . $countryCode . $this->phone_number) : null;
     }
 
     public function getShortName()

@@ -112,7 +112,7 @@ angular.module('checkInManager.controllers', [])
             });
         }
 
-        $scope.openSortEventMenu = function ($mdOpenMenu, ev) {
+        $scope.openEventMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
         };
