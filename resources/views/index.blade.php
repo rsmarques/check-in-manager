@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{!! asset('css/all.css') !!}">
     <!-- endbuild -->
 </head>
-<body ng-app="checkInManager">
+<body ng-app="check_in_app">
 
     <!-- gulp build -->
     <script src="{!! asset('js/vendor.js') !!}"></script>

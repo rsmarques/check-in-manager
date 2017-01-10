@@ -1,4 +1,4 @@
-angular.module('checkInManager.controllers', [])
+angular.module('check_in_app.controllers', [])
 
    .controller('HomeController', function ($rootScope, $scope, $state, $location, $localStorage, Auth, GuestsService, UsersService) {
 
@@ -18,7 +18,7 @@ angular.module('checkInManager.controllers', [])
             } else {
                 return $scope.signin();
             }
-        }
+        };
 
         $scope.signin = function () {
             var formData = {
@@ -30,7 +30,7 @@ angular.module('checkInManager.controllers', [])
 
             Auth.signin(formData, successAuth, function () {
                 $rootScope.error = 'Invalid email/password.';
-            })
+            });
         };
 
         $scope.signup = function () {
@@ -42,8 +42,8 @@ angular.module('checkInManager.controllers', [])
             $rootScope.error            = null;
 
             Auth.signup(formData, successAuth, function (err) {
-                if (err['errors'] && err['errors'][0]) {
-                    $rootScope.error    = err['errors'][0];
+                if (err.errors && err.errors[0]) {
+                    $rootScope.error    = err.errors[0];
                 } else {
                     $rootScope.error    = 'Failed to signup';
                 }
@@ -87,7 +87,7 @@ angular.module('checkInManager.controllers', [])
                 targetEvent: $event,
                 clickOutsideToClose:true
             });
-        }
+        };
 
         $scope.openEventDialog = function ($event, newEvent)
         {
@@ -110,7 +110,7 @@ angular.module('checkInManager.controllers', [])
                 targetEvent: $event,
                 clickOutsideToClose:true
             });
-        }
+        };
 
         $scope.openEventMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
@@ -121,7 +121,7 @@ angular.module('checkInManager.controllers', [])
         {
             // console.log("EventListController :: Selecting Event " + event.slug);
             $location.search({'p' : event.slug});
-        }
+        };
 
         $scope.findEvent    = function (eventSlug)
         {
@@ -134,7 +134,7 @@ angular.module('checkInManager.controllers', [])
             });
 
             return result;
-        }
+        };
 
         $scope.setCurrentEvent  = function (event)
         {
@@ -151,7 +151,7 @@ angular.module('checkInManager.controllers', [])
             }, function (error) {
                 // TODO error message
             });
-        }
+        };
 
         $scope.uncheckCurrentEvent  = function ()
         {
@@ -161,7 +161,7 @@ angular.module('checkInManager.controllers', [])
             $scope.currentGuests        = [];
 
             $location.search({});
-        }
+        };
 
         $scope.checkCurrentEvent    = function ()
         {
@@ -181,13 +181,13 @@ angular.module('checkInManager.controllers', [])
             }
 
             return true;
-        }
+        };
 
         $scope.sortEvents   = function (sort, reverse)
         {
             $scope.sortEvent        = sort;
             $scope.sortEventReverse = reverse;
-        }
+        };
 
         $scope.checkInGuest = function(event, eventGuest)
         {
@@ -216,7 +216,7 @@ angular.module('checkInManager.controllers', [])
             angular.element(window).triggerHandler('resize');
 
             return true;
-        }
+        };
 
         $scope.showRemoveEvent = function (ev, event)
         {
@@ -247,7 +247,7 @@ angular.module('checkInManager.controllers', [])
             }, function() {
 
             });
-        }
+        };
 
         $scope.showEventDeleted = function()
         {
@@ -291,7 +291,7 @@ angular.module('checkInManager.controllers', [])
             }, function() {
 
             });
-        }
+        };
 
         $scope.showGuestRemoved = function()
         {
@@ -330,29 +330,27 @@ angular.module('checkInManager.controllers', [])
         $scope.showEventListMobile = function ()
         {
             return !$scope.currentEvent || $mdMedia('gt-sm');
-        }
+        };
 
         $scope.showGuestListMobile = function ()
         {
             return $scope.currentEvent || $mdMedia('gt-sm');
-        }
+        };
 
         $scope.eventSortComparator = function (event)
         {
             switch ($scope.sortEvent) {
                 case 'date':
                     return event.date;
-                    break;
 
                 case 'name':
                     return event.name;
-                    break;
 
                 default:
                     // upcoming / past sort
                     return event.upcoming_index >= 0 ? event.upcoming_index : (-1) * event.upcoming_index + $scope.events.length;
             }
-        }
+        };
 
         $scope.downloadGuestsCsv = function (event)
         {
@@ -374,7 +372,7 @@ angular.module('checkInManager.controllers', [])
             }, function (error) {
                 // TODO error message
             });
-        }
+        };
 
         $window.addEventListener('resize', onResize);
 
@@ -419,7 +417,7 @@ angular.module('checkInManager.controllers', [])
             $scope.checkInGuest(event, guest);
         });
 
-        $scope.$watch(function() { return $location.search() }, function (params) {
+        $scope.$watch(function() { return $location.search(); }, function (params) {
             $scope.checkCurrentEvent();
         });
 
@@ -476,7 +474,7 @@ angular.module('checkInManager.controllers', [])
                 targetEvent: $event,
                 clickOutsideToClose:true
             });
-        }
+        };
 
         $scope.showDeleteGuest = function (ev, guest) {
             // Appending dialog to document.body to cover sidenav in docs app
@@ -539,8 +537,8 @@ angular.module('checkInManager.controllers', [])
 
             $scope.sortIcon                 = $scope.sortGuestReverse ? 'arrow_drop_down' : 'arrow_drop_up';
 
-            return true
-        }
+            return true;
+        };
 
         $window.addEventListener('resize', onResize);
 
@@ -610,7 +608,7 @@ angular.module('checkInManager.controllers', [])
             });
 
             return guests.slice(0, 10);
-        }
+        };
 
         $scope.selectedItemChange = function (item)
         {
@@ -625,17 +623,17 @@ angular.module('checkInManager.controllers', [])
             $scope.checkInStatus    = $scope.selectedItem.short_name + ' added!';
 
             return true;
-        }
+        };
 
         self.finishEditGuest = function ($event) {
             $rootScope.$broadcast('storeGuest');
             self.finish();
-        }
+        };
 
         self.finishEditEvent = function ($event) {
             $rootScope.$broadcast('storeEvent');
             self.finish();
-        }
+        };
 
         self.cancel = function($event) {
             $mdDialog.cancel();

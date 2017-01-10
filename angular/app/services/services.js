@@ -1,4 +1,4 @@
-angular.module('checkInManager.services', ['ngResource'])
+angular.module('check_in_app.services', ['ngResource'])
 
     .factory('Auth', function ($http, $localStorage, API_URL) {
         function urlBase64Decode(str) {
@@ -32,10 +32,10 @@ angular.module('checkInManager.services', ['ngResource'])
 
         return {
             signup: function (data, success, error) {
-                $http.post(API_URL + 'users/signup', data).success(success).error(error)
+                $http.post(API_URL + 'users/signup', data).success(success).error(error);
             },
             signin: function (data, success, error) {
-                $http.post(API_URL + 'users/signin', data).success(success).error(error)
+                $http.post(API_URL + 'users/signin', data).success(success).error(error);
             },
             logout: function (success) {
                 tokenClaims = {};
@@ -129,7 +129,7 @@ angular.module('checkInManager.services', ['ngResource'])
                 // console.log("GuestsService :: Error getting guests!");
                 // console.log(err);
             });
-        }
+        };
 
         this.getGuests();
     })
@@ -145,7 +145,7 @@ angular.module('checkInManager.services', ['ngResource'])
                 // console.log("GuestsService :: Error getting guests!");
                 // console.log(err);
             });
-        }
+        };
 
         this.getCurrentUser();
     });
