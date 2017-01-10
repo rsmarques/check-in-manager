@@ -11,7 +11,7 @@
 
     angular.module('check_in_app.routes', ['ui.router', 'ngStorage']);
     angular.module('check_in_app.controllers', ['ui.router', 'ngMaterial', 'ngMessages', 'ngStorage', 'mdPickers']);
-    angular.module('check_in_app.services', []);
+    angular.module('check_in_app.services', ['ngResource']);
     angular.module('check_in_app.config', ['ngMaterial']);
 
 })();

@@ -9,25 +9,25 @@
         $stateProvider
             .state('signup', {
                 url: '/signup',
-                templateUrl: './views/app/views/login.html',
-                controller: 'HomeController',
+                templateUrl: './views/app/auth/auth.html',
+                controller: 'AuthCtrl',
                 register: 1
             })
             .state('signin', {
                 url: '/signin',
-                templateUrl: './views/app/views/login.html',
-                controller: 'HomeController',
+                templateUrl: './views/app/auth/auth.html',
+                controller: 'AuthCtrl',
                 register: 0
             })
             .state('guests', {
                 url: '/guests',
-                templateUrl: './views/app/views/guests.html',
-                controller: 'GuestController'
+                templateUrl: './views/app/guests/guests.html',
+                controller: 'GuestCtrl'
             })
             .state('events', {
                 url: '/events',
-                templateUrl: './views/app/views/events.html',
-                controller: 'EventListController'
+                templateUrl: './views/app/events/events.html',
+                controller: 'EventCtrl'
             });
 
         $urlRouterProvider.otherwise('/events');
