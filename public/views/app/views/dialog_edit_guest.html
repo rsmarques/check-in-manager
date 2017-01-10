@@ -1,0 +1,76 @@
+<md-dialog aria-label="Edit Guest" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit Guest</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                <md-icon md-font-set="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="userForm" ng-submit="userForm.$valid && ctrl.finishEditGuest($event)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-content layout-padding>
+                    <div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Guest ID</label>
+                                <input required name="slug" ng-model="currentGuest.slug" ng-disabled="!editMode"/>
+                                <div ng-messages="userForm.slug.$error">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Degree</label>
+                                <md-select required name="degree" ng-model="currentGuest.degree" ng-disabled="!editMode">
+                                    <md-option ng-repeat="category in ['MSc in Economics', 'MSc in Management', 'MSc in Finance', 'BSc in Economics', 'BSc in Management', 'BSc in Finance']">
+                                        {{category}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="userForm.degree.$error" ng-show="userForm.$submitted">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Gender</label>
+                                <md-select required name="gender" ng-model="currentGuest.gender" ng-disabled="!editMode">
+                                    <md-option ng-repeat="category in ['M', 'F']">
+                                        {{category}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="userForm.gender.$error" ng-show="userForm.$submitted">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Guest Name</label>
+                                <input required name="name" ng-model="currentGuest.name" ng-disabled="!editMode"/>
+                                <div ng-messages="userForm.name.$error">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-xs >
+                                <label>Guest Email</label>
+                                <input required name="email" ng-model="currentGuest.email" ng-disabled="!editMode" ng-pattern="/^.+@.+\..+$/"/>
+                                <div ng-messages="userForm.email.$error">
+                                    <div ng-message="pattern">This is not a valid email address.</div>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-if="currentGuest.id && hasAdminAccess()" class="md-raised md-warn" aria-label="Delete" ng-click="showDeleteGuest($event, currentGuest)">Delete Guest</md-button>
+            <span flex></span>
+            <md-button type="submit" aria-label="Finished">Done</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,167 @@
+.error {
+    color: #c60008;
+}
+
+.success {
+    color: #00c608;
+}
+
+.checkInForm {
+    padding-bottom: 0px !important;
+}
+
+.eventDetailBackground {
+    /*background: #f5f5f5;*/
+}
+
+.eventButtons > figure {
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.eventHeader {
+    margin-top: 13px;
+}
+
+.eventDescription {
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.eventDescription h1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.eventDescription p, h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #888;
+}
+
+.eventGuestId {
+    padding-right: 20px;
+    color: #555;
+}
+
+.eventGuest h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #111;
+}
+
+.eventGuest h5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #888;
+}
+
+.eventGuest > figure {
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.checkInButton {
+    color: #5b5;
+}
+
+/*md-datepicker {
+    position: relative;
+    left: -16px;
+
+    .md-datepicker-input-container{
+        margin-left: 0;
+    }
+    .md-datepicker-button.md-icon-button {
+        margin-right: 0;
+    }
+}*/
+
+.vertical-container {
+    width: 100%;
+    height: 400px;
+    max-width: 1600px;
+}
+
+.repeated-item {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.guestList {
+    width: 100%;
+}
+
+.guestListHeader {
+    padding-left: 5px;
+}
+
+.searchEventsBar {
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 2px;
+    background-color: #f3f3f3;
+    padding-right: 12px !important;
+    height: 40px;
+    width: 100%;
+}
+
+.filterEventsButton {
+    margin-top: 18px !important;
+    right: 10px;
+/*    padding-top: 15px !important;
+    padding-right: 32px !important;*/
+}
+
+.filterGuestsBar {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
+.guestLoader {
+    height: 100px;
+}
+
+.md-toolbar-tools {
+    background-color: #009FE3;
+}
+
+.loginForm {
+    width: 80%
+}
+
+.loginButton {
+    margin: auto;
+    display: block;
+    background-color: #009FE3 !important;
+}
+
+.loginArea {
+    width: 400px;
+}
+
+.loginImage {
+    width: 100px;
+}
+
+/*.virtualRepeatdemoDeferredLoading .repeated-item {
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 40px;
+  padding-top: 10px; }
+
+.virtualRepeatdemoDeferredLoading md-content {
+  margin: 16px; }
+
+.virtualRepeatdemoDeferredLoading md-virtual-repeat-container {
+  border: solid 1px grey; }
+
+.virtualRepeatdemoDeferredLoading .md-virtual-repeat-container .md-virtual-repeat-offsetter div {
+  padding-left: 16px; }*/
+
+/*# sourceMappingURL=all.css.map */

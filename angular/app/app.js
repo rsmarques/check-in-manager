@@ -18,30 +18,31 @@ angular.module('checkInManager', [
 
     .constant('API_URL', 'api/v1/')
 
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+        // preventing "!"" from appearing in url
+        $locationProvider.hashPrefix('');
 
         $stateProvider
-
             .state('signup', {
                 url: '/signup',
-                templateUrl: './app/views/login.html',
+                templateUrl: './views/app/views/login.html',
                 controller: 'HomeController',
                 register: 1
             })
             .state('signin', {
                 url: '/signin',
-                templateUrl: './app/views/login.html',
+                templateUrl: './views/app/views/login.html',
                 controller: 'HomeController',
                 register: 0
             })
             .state('guests', {
                 url: '/guests',
-                templateUrl: './app/views/guests.html',
+                templateUrl: './views/app/views/guests.html',
                 controller: 'GuestController'
             })
             .state('events', {
                 url: '/events',
-                templateUrl: './app/views/events.html',
+                templateUrl: './views/app/views/events.html',
                 controller: 'EventListController'
             });
 

@@ -75,7 +75,7 @@ angular.module('checkInManager.controllers', [])
             $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'ctrl',
-                templateUrl: 'app/views/dialog_guest_checkin.html',
+                templateUrl: './views/app/views/dialog_guest_checkin.html',
                 parent: angular.element(document.body),
                 // scope: $scope,
                 // preserveScope: true,
@@ -98,7 +98,7 @@ angular.module('checkInManager.controllers', [])
             $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'ctrl',
-                templateUrl: 'app/views/dialog_edit_event.html',
+                templateUrl: './views/app/views/dialog_edit_event.html',
                 locals: {
                     guests: null,
                     currentEvent: $scope.currentEvent,
@@ -464,7 +464,7 @@ angular.module('checkInManager.controllers', [])
             $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'ctrl',
-                templateUrl: 'app/views/dialog_edit_guest.html',
+                templateUrl: './views/app/views/dialog_edit_guest.html',
                 locals: {
                     guests: $scope.guests,
                     currentEvent: null,

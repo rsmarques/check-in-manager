@@ -1,0 +1,60 @@
+<md-dialog aria-label="Edit Event" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit Event</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                <md-icon md-font-set="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="eventForm" ng-submit="eventForm.$valid && ctrl.finishEditEvent($event)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-content layout-padding>
+                    <div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Event Name</label>
+                                <input name="name" required ng-model="currentEvent.name"/>
+                                <div ng-messages="eventForm.name.$error">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Category</label>
+                                <md-select name="category" required ng-model="currentEvent.category">
+                                    <md-option ng-repeat="category in ['Breakfast w/CEO', 'Discovery Week', 'Corporate Events', 'Career Workshop', 'Company Day', 'Campus Presentation']">
+                                        {{category}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="eventForm.category.$error" ng-show="eventForm.$submitted">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <mdp-date-picker name="date" required mdp-placeholder="Date" mdp-open-on-click ng-model="currentEvent.date">
+                                <div ng-messages="eventForm.date.$error" ng-show="eventForm.$submitted">
+                                    <div ng-message="format">Invalid format.</div>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </mdp-date-picker>
+                            <mdp-time-picker name="time" required mdp-placeholder="Time" mdp-auto-switch="true" ng-model="currentEvent.time">
+                                <div ng-messages="eventForm.time.$error" ng-show="eventForm.$submitted">
+                                    <div ng-message="format">Invalid format.</div>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </mdp-time-picker>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-hide="!currentEvent.id || !hasAdminAccess()" class="md-raised md-warn" aria-label="Delete" ng-click="showRemoveEvent($event, currentEvent)">Delete Event</md-button>
+            <span flex></span>
+            <md-button type="submit" aria-label="Finished">Done</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

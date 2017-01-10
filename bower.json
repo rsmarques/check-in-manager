@@ -1,0 +1,35 @@
+{
+  "name": "ricardo-de-sousa-marques",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Ricardo Marques <ricardo.ds.marques@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "ui-router#^0.3.1",
+    "angular-animate": "^1.4.0",
+    "angular-aria": "^1.4.0",
+    "angular-cookies": "^1.4.0",
+    "angular-messages": "^1.4.0",
+    "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-sanitize": "^1.4.0",
+    "angular-touch": "^1.4.0",
+    "moment": "^2.15.1",
+    "angular-material": "^1.1.1",
+    "ngGeolocation": "^0.0.8",
+    "ngstorage": "^0.3.11",
+    "jquery": "^3.1.1",
+    "mdPickers": "^0.7.5"
+  }
+}
