@@ -2,14 +2,14 @@
     <div ng-include="'./views/app/navbar/navbar.html'"></div>
 </div>
 <md-content>
-    <div id="guestListHeader" layout="row" layout-align="center center" class="eventDescription" flex>
+    <div id="guestListHeader" layout="row" layout-align="center center" class="content-header" flex>
         <div layout="column" flex="50">
             <h1>Guest Main List</h1>
             <h4><strong>{{guests.length}}</strong> Guests</h4>
         </div>
 
-        <div layout="row" layout-align="end center" class="eventButtons" flex="50">
-            <md-input-container hide-xs md-no-float class="md-block filterGuestsBar">
+        <div layout="row" layout-align="end center" flex="50">
+            <md-input-container hide-xs md-no-float class="md-block search-guests-bar">
                 <md-icon md-font-set="md">search</md-icon>
                 <input ng-model="filterGuest" type="text" placeholder="Search">
             </md-input-container>
@@ -36,7 +36,7 @@
 
     <md-divider></md-divider>
     <md-list-item id="guestTableHeader">
-        <div class="md-list-item guestList" layout="row" layout-align="start center">
+        <div class="md-list-item guest-list" layout="row" layout-align="start center">
             <div flex-gt-sm="10" flex-sm="15" flex-xs="35">
                 <md-button ng-click="sortGuests('slug')">
                     <span>ID</span>
@@ -75,7 +75,7 @@
             <md-virtual-repeat-container class="vertical-container" ng-style="getGuestRepeaterHeight()">
                 <md-list ng-cloak>
                     <md-list-item md-virtual-repeat="guest in guests | filter:filterGuest | orderBy:sortGuest:sortGuestReverse" class="repeated-item" ng-click="openGuestEditDialog($event, 0, guest)">
-                        <div class="md-list-item guestList" layout="row" layout-align="start center">
+                        <div class="md-list-item guest-list" layout="row" layout-align="start center">
                             <span flex-gt-sm="10" flex-sm="15" flex-xs="40">{{guest.slug}}</span>
                             <span flex-gt-sm="45" flex-sm="50" hide-xs>{{guest.name}}</span>
                             <span flex-xs="60" hide-gt-xs>{{guest.short_name}}</span>

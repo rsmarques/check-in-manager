@@ -1,3 +1,7 @@
+.md-toolbar-tools {
+    background-color: #009FE3;
+}
+
 .error {
     color: #c60008;
 }
@@ -6,30 +10,13 @@
     color: #00c608;
 }
 
-.checkInForm {
-    padding-bottom: 0px !important;
-}
-
-.eventDetailBackground {
-    /*background: #f5f5f5;*/
-}
-
-.eventButtons > figure {
-    justify-content: flex-end;
-    padding-right: 20px;
-}
-
-.eventHeader {
-    margin-top: 13px;
-}
-
-.eventDescription {
+.content-header {
     margin-left: 20px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
-.eventDescription h1 {
+.content-header h1 {
     margin-top: 5px;
     margin-bottom: 5px;
     overflow: hidden;
@@ -37,49 +24,11 @@
     white-space: nowrap;
 }
 
-.eventDescription p, h4 {
+.content-header p, h4 {
     margin-top: 5px;
     margin-bottom: 5px;
     color: #888;
 }
-
-.eventGuestId {
-    padding-right: 20px;
-    color: #555;
-}
-
-.eventGuest h4 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: #111;
-}
-
-.eventGuest h5 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: #888;
-}
-
-.eventGuest > figure {
-    justify-content: flex-start;
-    padding-left: 20px;
-}
-
-.checkInButton {
-    color: #5b5;
-}
-
-/*md-datepicker {
-    position: relative;
-    left: -16px;
-
-    .md-datepicker-input-container{
-        margin-left: 0;
-    }
-    .md-datepicker-button.md-icon-button {
-        margin-right: 0;
-    }
-}*/
 
 .vertical-container {
     width: 100%;
@@ -93,15 +42,62 @@
     height: 100%;
 }
 
-.guestList {
+.search-guests-bar {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
+.login-form {
+    width: 80%
+}
+
+.login-button {
+    margin: auto;
+    display: block;
+    background-color: #009FE3 !important;
+}
+
+.login-area {
+    width: 400px;
+}
+
+.login-image {
+    width: 100px;
+}
+.guest-list {
     width: 100%;
 }
-
-.guestListHeader {
-    padding-left: 5px;
+.event-guest-id {
+    padding-right: 20px;
+    color: #555;
 }
 
-.searchEventsBar {
+.event-divider {
+    background-color: #f3f3f3;
+}
+
+.event-guest h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #111;
+}
+
+.event-guest h5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #888;
+}
+
+.event-guest > figure {
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.check-in-button {
+    color: #5b5;
+}
+
+.search-events-bar {
     margin-left: 12px;
     margin-right: 12px;
     margin-bottom: 2px;
@@ -111,57 +107,20 @@
     width: 100%;
 }
 
-.filterEventsButton {
+.filter-events-button {
     margin-top: 18px !important;
     right: 10px;
 /*    padding-top: 15px !important;
     padding-right: 32px !important;*/
 }
 
-.filterGuestsBar {
-    margin-top: 30px;
-    margin-bottom: 5px;
-}
-
-.guestLoader {
+.guest-loader {
     height: 100px;
 }
 
-.md-toolbar-tools {
-    background-color: #009FE3;
+.check-in-form {
+    padding-bottom: 0px !important;
 }
 
-.loginForm {
-    width: 80%
-}
-
-.loginButton {
-    margin: auto;
-    display: block;
-    background-color: #009FE3 !important;
-}
-
-.loginArea {
-    width: 400px;
-}
-
-.loginImage {
-    width: 100px;
-}
-
-/*.virtualRepeatdemoDeferredLoading .repeated-item {
-  border-bottom: 1px solid #ddd;
-  box-sizing: border-box;
-  height: 40px;
-  padding-top: 10px; }
-
-.virtualRepeatdemoDeferredLoading md-content {
-  margin: 16px; }
-
-.virtualRepeatdemoDeferredLoading md-virtual-repeat-container {
-  border: solid 1px grey; }
-
-.virtualRepeatdemoDeferredLoading .md-virtual-repeat-container .md-virtual-repeat-offsetter div {
-  padding-left: 16px; }*/
 
 /*# sourceMappingURL=all.css.map */

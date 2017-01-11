@@ -8,18 +8,18 @@
         <div flex="100" flex-gt-sm="25" ng-if="showEventListMobile()" ng-cloak class="virtualRepeatdemoDeferredLoading">
 
         <div layout="row" layout-align="center center">
-            <md-input-container id="eventSearchBar" md-no-float class="md-block searchEventsBar">
+            <md-input-container id="eventSearchBar" md-no-float class="md-block search-events-bar">
                 <md-icon md-font-set="md">search</md-icon>
                 <input ng-model="filterEvent" type="text" placeholder="Search">
             </md-input-container>
-<!--             <md-button class="md-icon-button filterEventsButton" aria-label="Filter">
+<!--             <md-button class="md-icon-button filter-events-button" aria-label="Filter">
                 <md-icon md-font-set="md">filter_list</md-icon>
                 <md-tooltip hide-xs hide-sm md-direction="bottom">
                     Filter
                 </md-tooltip>
             </md-button> -->
             <md-menu>
-                <md-button class="md-icon-button filterEventsButton" aria-label="Filter" ng-click="openEventMenu($mdOpenMenu, $event)">
+                <md-button class="md-icon-button filter-events-button" aria-label="Filter" ng-click="openEventMenu($mdOpenMenu, $event)">
                     <md-icon md-font-set="md">sort_by_alpha</md-icon>
                     <md-tooltip hide-xs hide-sm md-direction="bottom">
                         Sort
@@ -63,8 +63,8 @@
             <md-virtual-repeat-container class="vertical-container" ng-style="getEventRepeaterHeight()">
                 <md-list ng-cloak>
                     <div md-virtual-repeat="event in events | filter:filterEvent | orderBy:eventSortComparator:sortEventReverse">
-                        <md-subheader ng-if="event.upcoming_index == 0 && sortEvent === 'upcoming' && $index === 0" class="md-no-sticky">Upcoming</md-subheader>
-                        <md-subheader ng-if="event.upcoming_index == -1 && sortEvent === 'upcoming'" class="md-no-sticky">Past</md-subheader>
+                        <md-subheader class="event-divider" ng-if="event.upcoming_index == 0 && sortEvent === 'upcoming' && $index === 0" class="md-no-sticky">Upcoming</md-subheader>
+                        <md-subheader class="event-divider" ng-if="event.upcoming_index == -1 && sortEvent === 'upcoming'" class="md-no-sticky">Past</md-subheader>
                         <md-list-item class="md-3-line repeated-item" ng-click="selectEvent(event)">
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{event.name}}</h3>
@@ -78,18 +78,18 @@
         </div>
         <md-divider></md-divider>
 
-        <div flex="100" flex-gt-sm="75" ng-if="showGuestListMobile()" class="eventDetailBackground">
+        <div flex="100" flex-gt-sm="75" ng-if="showGuestListMobile()">
 
             <div ng-if="currentEvent.id">
 
-                <div id="eventHeader" layout="row" class="eventDescription" layout-align="center center" flex>
+                <div id="eventHeader" layout="row" class="content-header" layout-align="center center" flex>
                     <div layout="column" flex="50">
                         <h1>{{currentEvent.name}}</h1>
                         <h4><strong>{{currentGuests.length}}</strong> Guests</h4>
                         <p hide-xs hide-sm>Date: {{currentEvent.date_formatted}}</p>
                     </div>
                     <div layout="row" layout-align="end center" flex="50">
-                        <md-input-container hide-sm hide-xs md-no-float class="md-block filterGuestsBar">
+                        <md-input-container hide-sm hide-xs md-no-float class="md-block search-guests-bar">
                             <md-icon md-font-set="md">search</md-icon>
                             <input ng-model="filterGuest" type="text" placeholder="Search">
                         </md-input-container>
@@ -116,7 +116,7 @@
                 <md-divider></md-divider>
 
 
-                <div ng-show="loadingGuests" class="guestLoader" layout="row" layout-align="center center" layout-sm="column" layout-align="space-around">
+                <div ng-show="loadingGuests" class="guest-loader" layout="row" layout-align="center center" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                 </div>
                 <div ng-show="!loadingGuests" class="virtualRepeatdemoDeferredLoading">
@@ -128,9 +128,9 @@
                                     md-row-height-gt-md="25px" md-row-height="25px"
                                     md-gutter="12px" md-gutter-gt-sm="8px">
 
-                                <md-grid-tile class="eventGuest"
+                                <md-grid-tile class="event-guest"
                                     md-rowspan="2" md-colspan="4" md-colspan-sm="4" md-colspan-xs="3">
-                                    <div layout="column"  class="eventGuestId">
+                                    <div layout="column"  class="event-guest-id">
                                         <h4><strong>{{guest.slug}}</strong></h4>
                                     </div>
                                     <div layout="column">
@@ -151,7 +151,7 @@
                                             </md-tooltip>
                                         </md-button>
                                         <md-button ng-show="guest.check_in == true" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row">
-                                            <md-icon class="checkInButton" md-font-set="md">check_circle</md-icon>
+                                            <md-icon class="check-in-button" md-font-set="md">check_circle</md-icon>
                                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                                 Check Out Guest
                                             </md-tooltip>

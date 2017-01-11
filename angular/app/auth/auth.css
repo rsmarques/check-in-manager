@@ -1,0 +1,17 @@
+.login-form {
+    width: 80%
+}
+
+.login-button {
+    margin: auto;
+    display: block;
+    background-color: #009FE3 !important;
+}
+
+.login-area {
+    width: 400px;
+}
+
+.login-image {
+    width: 100px;
+}
