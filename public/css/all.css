@@ -64,9 +64,6 @@
 .login-image {
     width: 100px;
 }
-.guest-list {
-    width: 100%;
-}
 .event-guest-id {
     padding-right: 20px;
     color: #555;
@@ -123,4 +120,7 @@
 }
 
 
+.guest-list {
+    width: 100%;
+}
 /*# sourceMappingURL=all.css.map */

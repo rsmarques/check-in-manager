@@ -41,7 +41,7 @@
             $mdDialog.show({
                 controller: 'DialogCtrl',
                 controllerAs: 'ctrl',
-                templateUrl: './views/app/dialogs/dialog_edit_event.html',
+                templateUrl: './views/app/dialogs/edit_event.html',
                 locals: {
                     guests: null,
                     currentEvent: $scope.currentEvent,

@@ -64,7 +64,7 @@
         this.getCurrentUser = function () {
             var user    = Auth.me(function (result) {
                 // TODO improve this
-                $rootScope.authUser = result.data;
+                $rootScope.authUser = result.data.data;
 
             }, function (err) {
                 // console.log(err);
