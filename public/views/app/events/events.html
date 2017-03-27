@@ -99,10 +99,16 @@
                                 Add Guest
                             </md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button" aria-label="Edit" ng-click="downloadGuestsCsv(currentEvent)">
+                        <md-button hide-xs ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Edit" ng-click="downloadGuestsCsv(currentEvent)">
                             <md-icon md-font-set="md">file_download</md-icon>
                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Export CSV
+                            </md-tooltip>
+                        </md-button>
+                        <md-button hide-xs ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Stats" ng-click="openStatsDialog($event)">
+                            <md-icon md-font-set="md">trending_up</md-icon>
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                Stats
                             </md-tooltip>
                         </md-button>
                         <md-button ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Edit" ng-click="openEventDialog($event)">

@@ -28,6 +28,11 @@
                 url: '/events',
                 templateUrl: './views/app/events/events.html',
                 controller: 'EventCtrl'
+            })
+            .state('stats', {
+                url: '/stats',
+                templateUrl: './views/app/stats/stats.html',
+                controller: 'StatsCtrl'
             });
 
         $urlRouterProvider.otherwise('/events');

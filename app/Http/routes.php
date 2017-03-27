@@ -17,6 +17,7 @@ Route::group(array('prefix' => 'api/v1'), function () {
     // authentication endpoints
     Route::post('/users/signin', array('uses' => 'UserController@signIn'));
     Route::post('/users/signup', array('uses' => 'UserController@signUp'));
+    Route::get('/stats/global', array('uses' => 'StatsController@globalStats'));
 
     Route::group(array('middleware' => ['jwt.auth']), function () {
 

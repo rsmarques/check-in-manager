@@ -5,7 +5,7 @@
             <div class="login-area" layout="column" layout-align="center center">
                 <img class="login-image" ng-src="/images/logo/novasbe_logo.png" class="md-card-image" alt="Nova SBE">
                 <h3>Login to Check-In Manager</h3>
-                <form name="login-form" class="login-form" ng-submit="login-form.$valid && performLogin()">
+                <form name="login-form" class="login-form" ng-submit="performLogin()">
                     <md-input-container class="md-icon-float md-block">
                         <label>Email</label>
                         <md-icon md-font-set="md">email</md-icon>
@@ -29,7 +29,7 @@
                     <md-input-container ng-if="register" class="md-icon-float md-block">
                         <label>Confirm Password</label>
                         <md-icon md-font-set="md">lock_outline</md-icon>
-                        <input type="password" md-no-asterisk required name="password" ng-model="credentials.confirm_password">
+                        <input type="password" md-no-asterisk name="password" ng-model="credentials.confirm_password">
                         <div ng-messages="login-form.confirm_password.$error">
                             <div ng-message="pattern">Passwords dont' match.</div>
                         </div>

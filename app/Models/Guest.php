@@ -15,6 +15,17 @@ class Guest extends Model
         return $this->belongsTo('Event');
     }
 
+    public function getCourse()
+    {
+        if (strpos($this->degree, 'MSc') !== false) {
+            return 'Masters';
+        } else if (strpos($this->degree, 'BSc') !== false) {
+            return 'Bachelor';
+        } else {
+            return 'Other';
+        }
+    }
+
     public function getPhoneNumber()
     {
         if (empty($this->phone_country)) {
