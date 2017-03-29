@@ -123,4 +123,8 @@
 .guest-list {
     width: 100%;
 }
+svg {
+    overflow: inherit;
+}
+
 /*# sourceMappingURL=all.css.map */
