@@ -1,0 +1,51 @@
+{
+  "name": "ricardo-de-sousa-marques",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Ricardo Marques <ricardo.ds.marques@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.1",
+    "angular-ui-router": "ui-router#~0.3.0",
+    "angular-animate": "~1.5.1",
+    "angular-aria": "~1.5.1",
+    "angular-cookies": "~1.5.1",
+    "angular-messages": "~1.5.1",
+    "angular-resource": "~1.5.1",
+    "angular-route": "~1.5.1",
+    "angular-sanitize": "~1.5.1",
+    "angular-touch": "~1.5.1",
+    "moment": "~2.13.0",
+    "angular-material": "1.1.0-rc2",
+    "ngGeolocation": "~0.0.8",
+    "ngstorage": "~0.3.11",
+    "jquery": "~3.1.1",
+    "mdPickers": "~0.7.4",
+    "nvd3": "^1.8.5",
+    "datatables": "^1.10.13",
+    "angular-nvd3": "^1.0.9"
+  },
+  "resolutions": {
+    "angular": "~1.5.1",
+    "angular-animate": "~1.5.1",
+    "angular-aria": "~1.5.1",
+    "angular-cookies": "~1.5.1",
+    "angular-messages": "~1.5.1",
+    "angular-resource": "~1.5.1",
+    "angular-route": "~1.5.1",
+    "angular-sanitize": "~1.5.1",
+    "angular-touch": "~1.5.1",
+    "moment": "~2.13.0",
+    "angular-material": "1.1.0-rc2"
+  }
+}

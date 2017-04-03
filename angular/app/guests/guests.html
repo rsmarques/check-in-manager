@@ -1,0 +1,92 @@
+<div id="navbar">
+    <div ng-include="'./views/app/navbar/navbar.html'"></div>
+</div>
+<md-content>
+    <div id="guestListHeader" layout="row" layout-align="center center" class="content-header" flex>
+        <div layout="column" flex="50">
+            <h1>Guest Main List</h1>
+            <h4><strong>{{guests.length}}</strong> Guests</h4>
+        </div>
+
+        <div layout="row" layout-align="end center" flex="50">
+            <md-input-container hide-xs md-no-float class="md-block search-guests-bar">
+                <md-icon md-font-set="md">search</md-icon>
+                <input ng-model="filterGuest" type="text" placeholder="Search">
+            </md-input-container>
+            <md-button class="md-icon-button" aria-label="Add" ng-click="openGuestEditDialog($event, 1)">
+                <md-icon md-font-set="md">add</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    Add Guest
+                </md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Upload" ng-click="null" layout="row" layout-align="end center">
+                <md-icon md-font-set="md">file_upload</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    Upload CSV
+                </md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Download" ng-click="null">
+                <md-icon md-font-set="md">file_download</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    Export CSV
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
+
+    <md-divider></md-divider>
+    <md-list-item id="guestTableHeader">
+        <div class="md-list-item guest-list" layout="row" layout-align="start center">
+            <div flex-gt-sm="10" flex-sm="15" flex-xs="35">
+                <md-button ng-click="sortGuests('slug')">
+                    <span>ID</span>
+                    <md-icon ng-show="sortGuest === 'slug'" md-font-set="md">{{sortIcon}}</md-icon>
+                </md-button>
+            </div>
+            <div flex-gt-sm="45" flex-sm="50" flex-xs="65" ng-click="sortGuests('name')">
+                <md-button>
+                    <span>Name</span>
+                    <md-icon ng-show="sortGuest === 'name'" md-font-set="md">{{sortIcon}}</md-icon>
+                </md-button>
+            </div>
+            <div flex-gt-sm="20" hide-sm hide-xs ng-click="sortGuests('email')">
+                <md-button>
+                    <span>Email</span>
+                    <md-icon ng-show="sortGuest === 'email'" md-font-set="md">{{sortIcon}}</md-icon>
+                </md-button>
+            </div>
+            <div flex-gt-sm="25" flex-sm="35" hide-xs ng-click="sortGuests('degree')">
+                <md-button>
+                    <span>Degree</span>
+                    <md-icon ng-show="sortGuest === 'degree'" md-font-set="md">{{sortIcon}}</md-icon>
+                </md-button>
+            </div>
+<!--         <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon>
+        <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon> -->
+        </div>
+        <div ng-if="hasAdminAccess()" class="_md-secondary-container" style="width: 49px;"></div>
+        <div class="_md-secondary-container" style="width: 49px;"></div>
+    <!-- <div ></div> -->
+    </md-list-item>
+    <md-divider></md-divider>
+
+    <div layout="column">
+        <div ng-cloak class="virtualRepeatdemoDeferredLoading">
+            <md-virtual-repeat-container class="vertical-container" ng-style="getGuestRepeaterHeight()">
+                <md-list ng-cloak>
+                    <md-list-item md-virtual-repeat="guest in guests | filter:filterGuest | orderBy:sortGuest:sortGuestReverse" class="repeated-item" ng-click="openGuestEditDialog($event, 0, guest)">
+                        <div class="md-list-item guest-list" layout="row" layout-align="start center">
+                            <span flex-gt-sm="10" flex-sm="15" flex-xs="40">{{guest.slug}}</span>
+                            <span flex-gt-sm="45" flex-sm="50" hide-xs>{{guest.name}}</span>
+                            <span flex-xs="60" hide-gt-xs>{{guest.short_name}}</span>
+                            <span flex-gt-sm="20" hide-sm hide-xs>{{guest.email}}</span>
+                            <span flex-gt-sm="25" flex-sm="35" hide-xs>{{guest.degree}}</span>
+                            <md-icon class="md-secondary" aria-label="Edit Guest" ng-click="openGuestEditDialog($event, 1, guest)" md-font-set="md">mode_edit</md-icon>
+                            <md-icon ng-if="hasAdminAccess()" class="md-secondary" aria-label="Delete" ng-click="showDeleteGuest($event, guest)" md-font-set="md">delete</md-icon>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-virtual-repeat-container>
+        </div>
+    </div>
+</md-content>

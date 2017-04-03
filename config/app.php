@@ -217,12 +217,14 @@ return [
         'EventGuest'                => App\Models\EventGuest::class,
         'Guest'                     => App\Models\Guest::class,
         'User'                      => App\Models\User::class,
+        'Item'                      => App\Models\Item::class,
 
         // Transformer aliases
         'EventTransformer'          => App\Models\EventTransformer::class,
         'GuestTransformer'          => App\Models\GuestTransformer::class,
         'GuestCsvTransformer'       => App\Models\GuestCsvTransformer::class,
         'UserTransformer'           => App\Models\UserTransformer::class,
+        'ItemTransformer'           => App\Models\ItemTransformer::class,
     ],
 
 ];

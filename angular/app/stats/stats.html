@@ -1,0 +1,123 @@
+<div id="navbar">
+    <div ng-include="'./views/app/navbar/navbar.html'"></div>
+</div>
+<md-content>
+    <div layout="row" layout-align="start center" class="content-header" flex>
+        <div layout="column">
+            <h1>Stats Dashboard</h1>
+            <h4><strong>{{globalStats.total_events}}</strong> Events</h4>
+        </div>
+
+        <span flex></span>
+
+        <div layout="row" class="date-filter" layout-align="start center">
+            <md-input-container ng-show="!customRangeActive" class="md-block">
+                <label>Filter Date</label>
+                <md-select name="Date Range" md-on-open="setDefaultDateRangeFilters()" md-on-close="dateRangeChanged()" ng-model="dateRange">
+                    <md-option ng-value="range" ng-repeat="range in dateRanges">
+                        {{range.description}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <mdp-date-picker class="date-picker" ng-show="customRangeActive" name="date" mdp-placeholder="Filter From" mdp-open-on-click ng-model="filters.start_date"></mdp-date-picker>
+            <mdp-date-picker class="date-picker" ng-show="customRangeActive" name="date" mdp-placeholder="Filter To" mdp-open-on-click ng-model="filters.end_date"></mdp-date-picker>
+            <md-button class="date-range-button md-raised md-primary" ng-show="customRangeActive" ng-click="setCustomDateRange()" aria-label="Done">Done</md-button>
+        </div>
+    </div>
+
+    <md-divider></md-divider>
+
+    <div class="md-padding" layout="row" layout-wrap>
+        <md-card md-theme-watch flex="100" flex-gt-sm="40" flex-gt-md="45">
+            <md-card-header>
+                <md-card-avatar>
+                    <md-icon md-font-set="md">work</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                    <span class="md-title">Top Industry</span>
+                    <span class="md-subhead">Students Participation (#)</span>
+                </md-card-header-text>
+            </md-card-header>
+            <nvd3 options="options.industry_abs" data="data.industry_abs"></nvd3>
+        </md-card>
+        <md-card md-theme-watch flex="100" flex-gt-sm="40">
+            <md-card-header>
+                <md-card-avatar>
+                    <md-icon md-font-set="md">work</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                    <span class="md-title">Top Industry</span>
+                    <span class="md-subhead">Students Participation (%)</span>
+                </md-card-header-text>
+            </md-card-header>
+            <nvd3 options="options.industry_percentage" data="data.industry_percentage"></nvd3>
+        </md-card>
+        <div layout="row" layout-gt-sm="column" flex>
+            <md-card md-theme-watch class="stat-card">
+                <md-card-title>
+                    <md-card-title-text>
+                        <h1 class="stat-card-value stat-industries">{{globalStats.total_industries}}</h1>
+                        <h3 class="stat-card-label">INDUSTRIES</h3>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+            <md-card md-theme-watch class="stat-card">
+                <md-card-title>
+                    <md-card-title-text>
+                        <h1 class="stat-card-value stat-companies">{{globalStats.total_companies}}</h1>
+                        <h3 class="stat-card-label">COMPANIES</h3>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+        </div>
+    </div>
+    <md-divider></md-divider>
+    <div class="md-padding" layout="row" layout-wrap>
+        <md-card md-theme-watch flex="100" flex-gt-sm="40" flex-gt-md="45">
+            <md-card-header>
+                <md-card-avatar>
+                    <md-icon md-font-set="md">date_range</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                    <span class="md-title">Monthly Attendance</span>
+                    <span class="md-subhead">Students Participation (#)</span>
+                </md-card-header-text>
+            </md-card-header>
+            <nvd3 options="options.time" data="data.time"></nvd3>
+        </md-card>
+        <md-card md-theme-watch flex="100" flex-gt-sm="40">
+            <md-card-header>
+                <md-card-avatar>
+                    <md-icon md-font-set="md">flag</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                    <span class="md-title">Top Countries</span>
+                    <span class="md-subhead">Students Participation (%)</span>
+                </md-card-header-text>
+            </md-card-header>
+            <nvd3 options="options.countries" data="data.countries"></nvd3>
+        </md-card>
+        <div layout="row" layout-gt-sm="column" flex>
+            <md-card md-theme-watch class="stat-card">
+                <md-card-title>
+                    <md-card-title-text>
+                        <h1 class="stat-card-value stat-check-ins">{{globalStats.total_guests}}</h1>
+                        <h3 class="stat-card-label">CHECK-INS</h3>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+            <md-card md-theme-watch class="stat-card">
+                <md-card-title>
+                    <md-card-title-text>
+                        <h1 class="stat-card-value stat-countries">{{globalStats.total_countries}}</h1>
+                        <h3 class="stat-card-label">COUNTRIES</h3>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+        </div>
+    </div>
+
+
+
+</md-content>

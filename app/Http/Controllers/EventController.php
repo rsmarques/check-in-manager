@@ -105,6 +105,8 @@ class EventController extends ApiController
         $event->date        = $date;
         $event->name        = $eventData['name'];
         $event->category    = $eventData['category'];
+        $event->industry    = empty($eventData['industry']) ? null  : $eventData['industry'];
+        $event->company     = empty($eventData['company'])  ? null  : eventData['company'];
         $event->slug        = $event->calcSlug();
         $event->save();
 

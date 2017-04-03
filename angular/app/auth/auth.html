@@ -1,0 +1,46 @@
+<div ng-cloak style="margin:auto">
+    <!-- <md-content> -->
+        <div style="background:#009FE3; height:20%"></div>
+        <div layout="row" layout-align="center center">
+            <div class="login-area" layout="column" layout-align="center center">
+                <img class="login-image" ng-src="/images/logo/novasbe_logo.png" class="md-card-image" alt="Nova SBE">
+                <h3>Login to Check-In Manager</h3>
+                <form name="login-form" class="login-form" ng-submit="performLogin()">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Email</label>
+                        <md-icon md-font-set="md">email</md-icon>
+                        <input md-no-asterisk required name="email" ng-model="credentials.email" ng-pattern="/^.+@.+\..+$/"/>
+                        <div ng-messages="login-form.email.$error">
+                            <div ng-message="pattern">This is not a valid email address.</div>
+                            <div ng-message="required">This field is required.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Password</label>
+                        <md-icon md-font-set="md">lock</md-icon>
+                        <input type="password" md-no-asterisk required name="password" ng-model="credentials.password">
+                        <div ng-messages="login-form.password.$error">
+                            <div ng-message="pattern">Password has to be at least 6 characters long.</div>
+                            <div ng-message="required">This field is required.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container ng-if="register" class="md-icon-float md-block">
+                        <label>Confirm Password</label>
+                        <md-icon md-font-set="md">lock_outline</md-icon>
+                        <input type="password" md-no-asterisk name="password" ng-model="credentials.confirm_password">
+                        <div ng-messages="login-form.confirm_password.$error">
+                            <div ng-message="pattern">Passwords dont' match.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-button class="md-raised md-primary login-button" type="submit" aria-label="Login">{{ loginText }}</md-button>
+                </form>
+                <p ng-show="error" class="error">{{ error }}</p>
+                <!-- <p ng-show="!register">No account yet? Create one <a href="#/signup">here</a></p> -->
+            </div>
+
+        </div>
+    <!-- </md-content> -->
+</div>

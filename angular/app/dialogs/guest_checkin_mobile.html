@@ -1,0 +1,36 @@
+<md-dialog aria-label="Guest Check In" class="mobile-dialog-checkin" ng-cloak flex="100">
+    <md-dialog-content>
+        <div class="md-dialog-content check-in-form">
+            <form class="mobile-form" ng-submit="$event.preventDefault()">
+                <p>Enter Guest ID / Name / Email.</p>
+                <md-autocomplete
+                    id="guest_checkin"
+                    md-autofocus
+                    md-no-cache=0
+                    md-selected-item="selectedItem"
+                    md-search-text="searchGuest"
+                    md-selected-item-change="selectedItemChange(item)"
+                    md-items="item in searchGuests(searchGuest)"
+                    md-item-text="item.slug"
+                    placeholder="nb12345, John Smith...">
+                    <md-item-template>
+                        <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <br/>
+            </form>
+        </div>
+        <div layout="row" layout-align="end start">
+            <span flex></span>
+            <md-button class="md-icon-button mobile-close-button" ng-click="ctrl.finish($event)" layout="row">
+                <md-icon md-font-set="md">check_circle</md-icon>
+            </md-button>
+        </div>
+        <p ng-if="checkInStatus" layout="row" layout-align="center center" class="success">
+            {{checkInStatus}}
+        </p>
+    </md-dialog-content>
+<!--     <md-dialog-actions>
+        <md-button aria-label="Done" ng-click="ctrl.finish($event)">Done</md-button>
+    </md-dialog-actions> -->
+</md-dialog>

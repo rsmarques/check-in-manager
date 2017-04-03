@@ -4,6 +4,23 @@ namespace App\Helpers;
 
 class GeneralHelper
 {
+    // Math Functions
+    public static function arrayAverage($arr)
+    {
+        return count($arr) > 0 ? array_sum($arr) / count($arr) : 0;
+    }
+    public static function arrayMedian($arr)
+    {
+        if (count($arr) == 0) {
+            return 0;
+        }
+
+        rsort($arr);
+        $middle = round(count($arr) / 2);
+        return $arr[$middle - 1];
+    }
+
+    // CSV Utils Functions
     public static function isAssociativeArray($arr)
     {
         return array_keys($arr) !== range(0, count($arr) - 1);

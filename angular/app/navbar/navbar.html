@@ -1,0 +1,62 @@
+<md-toolbar ng-controller="NavbarCtrl">
+    <div class="md-toolbar-tools">
+        <!-- <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-font-set="md">menu</md-icon>
+        </md-button> -->
+        <md-button class="md-icon-button" aria-label="Back" ng-if="showGuestListMobile()" ng-click="uncheckCurrentEvent()">
+            <md-icon md-font-set="md">chevron_left</md-icon>
+        </md-button>
+        <h2>
+            <span>Check In Manager</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Stats" href="#/stats">
+            <md-icon md-font-set="md">insert_chart</md-icon>
+            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                Stats
+            </md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Users" href="#/guests">
+            <md-icon md-font-set="md">group</md-icon>
+            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                Guests
+            </md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Events" href="#/events">
+            <md-icon md-font-set="md">event</md-icon>
+            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                Events
+            </md-tooltip>
+        </md-button>
+
+        <md-menu>
+            <md-button class="md-icon-button" aria-label="Filter" ng-click="$mdOpenMenu()">
+                <md-icon md-font-set="md">settings</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    Settings
+                </md-tooltip>
+            </md-button>
+            <md-menu-content width="3">
+                <md-menu-item>
+                    <md-button ng-click="openCategoriesDialog($event)">
+                        <md-icon md-font-set="md">list</md-icon>
+                        Edit Categories
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="openIndustriesDialog($event)">
+                        <md-icon md-font-set="md">work</md-icon>
+                        Edit Industries
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="logout()">
+                        <md-icon md-font-set="md">exit_to_app</md-icon>
+                        Logout
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>

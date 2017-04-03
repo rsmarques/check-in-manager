@@ -1,0 +1,202 @@
+<div id="navbar">
+   <div ng-include="'./views/app/navbar/navbar.html'"></div>
+</div>
+
+<md-content>
+    <div layout="row" class="relative" layout-fill role="main">
+
+        <div flex="100" flex-gt-sm="25" ng-if="showEventListMobile()" ng-cloak class="virtualRepeatdemoDeferredLoading">
+
+        <div layout="row" layout-align="center center">
+            <md-input-container id="eventSearchBar" md-no-float class="md-block search-events-bar">
+                <md-icon md-font-set="md">search</md-icon>
+                <input ng-model="filterEvent" type="text" placeholder="Search">
+            </md-input-container>
+<!--             <md-button class="md-icon-button filter-events-button" aria-label="Filter">
+                <md-icon md-font-set="md">filter_list</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    Filter
+                </md-tooltip>
+            </md-button> -->
+            <md-menu>
+                <md-button class="md-icon-button filter-events-button" aria-label="Filter" ng-click="openEventMenu($mdOpenMenu, $event)">
+                    <md-icon md-font-set="md">sort_by_alpha</md-icon>
+                    <md-tooltip hide-xs hide-sm md-direction="bottom">
+                        Sort
+                    </md-tooltip>
+                </md-button>
+                <md-menu-content width="3">
+                    <md-menu-item>
+                        <md-button ng-click="sortEvents('upcoming' , 0)">
+                            Upcoming
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="sortEvents('date' , 0)">
+                            <md-icon md-font-set="md">arrow_drop_up</md-icon>
+                            <md-icon md-font-set="md">date_range</md-icon>
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="sortEvents('date' , 1)">
+                            <md-icon md-font-set="md">arrow_drop_down</md-icon>
+                            <md-icon md-font-set="md">date_range</md-icon>
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="sortEvents('name' , 0)">
+                            <md-icon md-font-set="md">arrow_drop_up</md-icon>
+                            A-Z
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="sortEvents('name' , 1)">
+                            <md-icon md-font-set="md">arrow_drop_down</md-icon>
+                            Z-A
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+            <md-virtual-repeat-container class="vertical-container" ng-style="getEventRepeaterHeight()">
+                <md-list ng-cloak>
+                    <div md-virtual-repeat="event in events | filter:filterEvent | orderBy:eventSortComparator:sortEventReverse">
+                        <md-subheader class="event-divider" ng-if="event.upcoming_index == 0 && sortEvent === 'upcoming' && $index === 0" class="md-no-sticky">Upcoming</md-subheader>
+                        <md-subheader class="event-divider" ng-if="event.upcoming_index == -1 && sortEvent === 'upcoming'" class="md-no-sticky">Past</md-subheader>
+                        <md-list-item class="md-3-line repeated-item" ng-click="selectEvent(event)">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{event.name}}</h3>
+                                <h4>{{event.guest_count}} Guests</h4>
+                                <p>{{event.date_formatted}}</p>
+                            </div>
+                        </md-list-item>
+                    </div>
+                </md-list>
+            </md-virtual-repeat-container class="vertical-container">
+        </div>
+        <md-divider></md-divider>
+
+        <div flex="100" flex-gt-sm="75" ng-if="showGuestListMobile()">
+
+            <div ng-if="currentEvent.id">
+
+                <div id="eventHeader" layout="row" class="content-header" layout-align="center center" flex>
+                    <div layout="column" flex="50">
+                        <h1>{{currentEvent.name}}</h1>
+                        <h4><strong>{{currentGuests.length}}</strong> Guests</h4>
+                        <p hide-xs hide-sm>Date: {{currentEvent.date_formatted}}</p>
+                    </div>
+                    <div layout="row" layout-align="end center" flex="50">
+                        <md-input-container hide-sm hide-xs md-no-float class="md-block search-guests-bar">
+                            <md-icon md-font-set="md">search</md-icon>
+                            <input ng-model="filterGuest" type="text" placeholder="Search">
+                        </md-input-container>
+                        <md-button class="md-icon-button" aria-label="Add" ng-click="openGuestDialog($event)">
+                            <md-icon md-font-set="md">add</md-icon>
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                Add Guest
+                            </md-tooltip>
+                        </md-button>
+                        <md-button hide-xs ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Edit" ng-click="downloadGuestsCsv(currentEvent)">
+                            <md-icon md-font-set="md">file_download</md-icon>
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                Export CSV
+                            </md-tooltip>
+                        </md-button>
+                        <md-button hide hide-xs ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Stats" ng-click="openStatsDialog($event)">
+                            <md-icon md-font-set="md">trending_up</md-icon>
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                Stats
+                            </md-tooltip>
+                        </md-button>
+                        <md-button ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Edit" ng-click="openEventDialog($event)">
+                            <md-icon md-font-set="md">mode_edit</md-icon>
+                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                Edit Event
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+
+
+                <div ng-show="loadingGuests" class="guest-loader" layout="row" layout-align="center center" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <div ng-show="!loadingGuests" class="virtualRepeatdemoDeferredLoading">
+                    <md-virtual-repeat-container class="vertical-container" ng-style="getEventGuestRepeaterHeight()">
+                    <md-list ng-cloak>
+                        <div class="repeated-item" md-virtual-repeat="guest in currentGuests | filter:filterGuest" ng-cloak>
+                            <md-grid-list
+                                    md-cols-xs="5" md-cols-sm="6" md-cols-md="6" md-cols-gt-md="6"
+                                    md-row-height-gt-md="25px" md-row-height="25px"
+                                    md-gutter="12px" md-gutter-gt-sm="8px">
+
+                                <md-grid-tile class="event-guest"
+                                    md-rowspan="2" md-colspan="4" md-colspan-sm="4" md-colspan-xs="3">
+                                    <div layout="column"  class="event-guest-id">
+                                        <h4><strong>{{guest.slug}}</strong></h4>
+                                    </div>
+                                    <div layout="column">
+                                        <h4 hide-xs><strong>{{guest.name}}</strong></h4>
+                                        <h4 hide-gt-xs><strong>{{guest.short_name}}</strong></h4>
+                                        <h5 hide-xs hide-sm>{{guest.email}}</h5>
+                                    </div>
+                                    <span flex></span>
+                                </md-grid-tile>
+                                <md-grid-tile
+                                    md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="2">
+                                    <span flex></span>
+                                    <div layout="row" layout-align="center center">
+                                        <md-button ng-show="guest.check_in == false" class="md-icon-button" aria-label="Check In" ng-click="checkInGuest(currentEvent, guest)" layout="row">
+                                            <md-icon md-font-set="md">check_circle</md-icon>
+                                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                                Check In Guest
+                                            </md-tooltip>
+                                        </md-button>
+                                        <md-button ng-show="guest.check_in == true" class="md-icon-button" aria-label="Check Out" ng-click="checkInGuest(currentEvent, guest)" layout="row">
+                                            <md-icon class="check-in-button" md-font-set="md">check_circle</md-icon>
+                                            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                                Check Out Guest
+                                            </md-tooltip>
+                                        </md-button>
+                                        <md-menu>
+                                            <md-button class="md-icon-button" aria-label="Options" ng-click="openEventMenu($mdOpenMenu, $event)">
+                                                <md-icon md-font-set="md">more_vert</md-icon>
+                                                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                                                    More Options
+                                                </md-tooltip>
+                                            </md-button>
+                                            <md-menu-content width="3">
+                                                <md-menu-item>
+                                                    <md-button aria-label="Delete" ng-click="showRemoveGuest($event, currentEvent, guest)">
+                                                        <md-icon md-font-set="md">remove_circle</md-icon>
+                                                        Remove Guest
+                                                    </md-button>
+                                                </md-menu-item>
+                                                <md-menu-divider ng-if="guest.phone_number"></md-menu-divider>
+                                                <md-menu-item ng-if="guest.phone_number">
+                                                    <md-button aria-label="Call" href="tel:{{guest.phone_number}}">
+                                                        <md-icon md-font-set="md">phone</md-icon>
+                                                        Call Guest
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </div>
+                                </md-grid-tile>
+                            </md-grid-list>
+                        </div>
+                    </md-list>
+                    </md-virtual-repeat-container>
+                </div>
+            </div>
+            <div ng-if="!currentEvent.id" layout="column" layout-align="center center" style="color: #888; padding-top: 50px">
+                <h2>Please select an event,</h2>
+                <h2>or create a new one <a href="" ng-click="openEventDialog($event, 1)">here</a></h2>
+            </div>
+        </div>
+    </div>
+</md-content>
