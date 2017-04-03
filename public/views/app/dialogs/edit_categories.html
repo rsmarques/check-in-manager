@@ -1,0 +1,44 @@
+<md-dialog class="edit-menu-dialog" aria-label="Edit Categories">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit Categories</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancelEditMenu()">
+                <md-icon md-font-set="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="categoriesForm" ng-submit="categoriesForm.$valid && finishEditMenu('categories')">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div>
+                    <div layout="row" ng-repeat="category in items.categories.current track by $index">
+                        <md-input-container class="md-block edit-menu" flex-gt-xs>
+                            <label>Category {{ $index + 1}}</label>
+                            <input required name="items.categories.current[$index]" ng-model="items.categories.current[$index]"/>
+                            <div ng-messages="categoriesForm.items.categories.current[$index].$error">
+                                <div ng-message="required">This field is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-button class="md-icon-button" ng-click="deleteItem('categories', $index)">
+                            <md-icon class="delete-icon" md-font-set="md">remove_circle</md-icon>
+                        </md-button>
+                    </div>
+                    <div layout="row">
+                        <md-input-container class="md-block edit-menu" flex-gt-xs>
+                            <label>Add Category</label>
+                            <input name="new_category" ng-model="items.categories.new"/>
+                        </md-input-container>
+                        <md-button class="md-icon-button" ng-click="createItem('categories')">
+                            <md-icon md-font-set="md">add_circle</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <span flex></span>
+            <md-button type="submit" aria-label="Finished">Done</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

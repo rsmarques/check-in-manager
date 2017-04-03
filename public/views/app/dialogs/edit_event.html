@@ -1,4 +1,4 @@
-<md-dialog aria-label="Edit Event" ng-cloak>
+<md-dialog class="edit-model-dialog" aria-label="Edit Event" ng-cloak>
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Edit Event</h2>
@@ -24,7 +24,7 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Category</label>
                                 <md-select name="category" required ng-model="currentEvent.category">
-                                    <md-option ng-repeat="category in ['Breakfast w/CEO', 'Discovery Week', 'Corporate Events', 'Career Workshop', 'Company Day', 'Campus Presentation']">
+                                    <md-option ng-repeat="category in items.categories.current">
                                         {{category}}
                                     </md-option>
                                 </md-select>
@@ -46,6 +46,20 @@
                                     <div ng-message="required">This field is required.</div>
                                 </div>
                             </mdp-time-picker>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Company</label>
+                                <input name="name" ng-model="currentEvent.company"/>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Industry</label>
+                                <md-select name="category" ng-model="currentEvent.industry">
+                                    <md-option ng-repeat="industry in items.industries.current">
+                                        {{industry}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
                         </div>
                     </div>
                 </md-content>

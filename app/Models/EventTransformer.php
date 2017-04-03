@@ -18,6 +18,8 @@ class EventTransformer extends Fractal\TransformerAbstract
             'date'              => $event->date,
             'slug'              => $event->slug,
             'category'          => $event->category,
+            'industry'          => $event->industry,
+            'company'           => $event->company,
             'guest_count'       => $event->getGuestCount(),
             'date'              => $event->getDate(),
             'date_formatted'    => $event->getDateFormatted(),

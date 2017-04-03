@@ -64,6 +64,25 @@
 .login-image {
     width: 100px;
 }
+.edit-menu {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.delete-icon {
+    color: #DD2C00;
+}
+
+.edit-menu-dialog {
+    max-width: 400px;
+    width: 75%;
+}
+
+.edit-model-dialog {
+    width: 80%;
+    max-width: 600px;
+}
+
 .event-guest-id {
     padding-right: 20px;
     color: #555;

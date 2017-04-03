@@ -41,6 +41,10 @@ Route::group(array('prefix' => 'api/v1'), function () {
         Route::get('/stats/global', array('uses' => 'StatsController@globalStats'));
         Route::get('/stats/events', array('uses' => 'StatsController@eventStats'));
         Route::get('/stats/events/{slug}', array('uses' => 'StatsController@eventStatsBySlug'));
+
+        // items endpoints
+        Route::get('/items/{type}', array('uses' => 'ItemController@index'));
+        Route::post('/items/{type}', array('uses' => 'ItemController@updateAll'));
     });
 });
 
