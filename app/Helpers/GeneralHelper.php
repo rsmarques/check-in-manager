@@ -7,10 +7,14 @@ class GeneralHelper
     // Math Functions
     public static function arrayAverage($arr)
     {
-        return array_sum($arr) / count($arr);
+        return count($arr) > 0 ? array_sum($arr) / count($arr) : 0;
     }
     public static function arrayMedian($arr)
     {
+        if (count($arr) == 0) {
+            return 0;
+        }
+
         rsort($arr);
         $middle = round(count($arr) / 2);
         return $arr[$middle - 1];

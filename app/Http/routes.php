@@ -17,7 +17,6 @@ Route::group(array('prefix' => 'api/v1'), function () {
     // authentication endpoints
     Route::post('/users/signin', array('uses' => 'UserController@signIn'));
     Route::post('/users/signup', array('uses' => 'UserController@signUp'));
-    Route::get('/stats/global', array('uses' => 'StatsController@globalStats'));
 
     Route::group(array('middleware' => ['jwt.auth']), function () {
 
@@ -37,6 +36,11 @@ Route::group(array('prefix' => 'api/v1'), function () {
         Route::get('events/{slug}/guests', 'EventController@eventGuestsBySlug');
         Route::post('events/store', 'EventController@store');
         Route::post('events/{slug}/delete', 'EventController@delete');
+
+        // stats endpoints
+        Route::get('/stats/global', array('uses' => 'StatsController@globalStats'));
+        Route::get('/stats/events', array('uses' => 'StatsController@eventStats'));
+        Route::get('/stats/events/{slug}', array('uses' => 'StatsController@eventStatsBySlug'));
     });
 });
 

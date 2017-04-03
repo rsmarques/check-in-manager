@@ -127,4 +127,46 @@ svg {
     overflow: inherit;
 }
 
+.date-filter {
+  margin-right: 20px;
+}
+
+.date-range-button {
+  background-color: #009FE3 !important;
+}
+
+.md-icon-float {
+  margin-bottom: 0px;
+}
+
+.stat-card-value {
+  font-size: 60px;
+  text-align: center;
+}
+
+.stat-card-label {
+  text-align: center;
+  color: #999;
+}
+
+.stat-card {
+  width: 100%;
+}
+
+.stat-industries {
+  color: #03A9F4;
+}
+
+.stat-companies {
+  color: #F44336;
+}
+
+.stat-check-ins {
+  color: #FF9800;
+}
+
+.stat-countries {
+  color: #607D8B;
+}
+
 /*# sourceMappingURL=all.css.map */
