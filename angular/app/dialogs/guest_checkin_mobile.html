@@ -1,17 +1,7 @@
-<md-dialog aria-label="Guest Check In" class="desktop-dialog-checkin" ng-cloak flex="80" flex-gt-sm="50">
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <h2>Guest Check in</h2>
-            <span flex></span>
-            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
-                <md-icon md-font-set="md">close</md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
+<md-dialog aria-label="Guest Check In" class="mobile-dialog-checkin" ng-cloak flex="100">
     <md-dialog-content>
         <div class="md-dialog-content check-in-form">
-
-            <form ng-submit="$event.preventDefault()">
+            <form class="mobile-form" ng-submit="$event.preventDefault()">
                 <p>Enter Guest ID / Name / Email.</p>
                 <md-autocomplete
                     id="guest_checkin"
@@ -29,12 +19,18 @@
                 </md-autocomplete>
                 <br/>
             </form>
-            <p ng-if="checkInStatus" layout="row" layout-align="center center" class="success">
-                {{checkInStatus}}
-            </p>
         </div>
+        <div layout="row" layout-align="end start">
+            <span flex></span>
+            <md-button class="md-icon-button mobile-close-button" ng-click="ctrl.finish($event)" layout="row">
+                <md-icon md-font-set="md">check_circle</md-icon>
+            </md-button>
+        </div>
+        <p ng-if="checkInStatus" layout="row" layout-align="center center" class="success">
+            {{checkInStatus}}
+        </p>
     </md-dialog-content>
-    <md-dialog-actions>
+<!--     <md-dialog-actions>
         <md-button aria-label="Done" ng-click="ctrl.finish($event)">Done</md-button>
-    </md-dialog-actions>
+    </md-dialog-actions> -->
 </md-dialog>

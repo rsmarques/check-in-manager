@@ -8,7 +8,7 @@
      * # EventCtrl
      * Controller of the checkInManager
      */
-    angular.module('check_in_app.controllers').controller('EventCtrl', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdMedia, $mdToast, API_URL, Event, Guest, GuestSrv, AuthSrv) {
+    angular.module('check_in_app.controllers').controller('EventCtrl', function ($rootScope, $window, $scope, $http, $stateParams, $location, $mdDialog, $mdMedia, $mdToast, API_URL, Event, Guest, GuestSrv, AuthSrv, mobileSrv) {
 
         // TODO change openDialogs location
         $scope.openGuestDialog = function ($event)
@@ -18,7 +18,7 @@
             $mdDialog.show({
                 controller: 'DialogCtrl',
                 controllerAs: 'ctrl',
-                templateUrl: './views/app/dialogs/guest_checkin.html',
+                templateUrl: './views/app/dialogs/guest_checkin' + (mobileSrv.mobileAndTabletCheck() ? '_mobile' : '') + '.html',
                 parent: angular.element(document.body),
                 // scope: $scope,
                 // preserveScope: true,

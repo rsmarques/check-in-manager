@@ -83,6 +83,23 @@
     max-width: 600px;
 }
 
+.mobile-dialog-checkin {
+    max-height: 100%;
+    height: 100%;
+}
+
+.mobile-close-button {
+    margin-top: -58px !important;
+}
+
+.mobile-form {
+    padding-right: 25px;
+}
+
+.desktop-dialog-checkin {
+    max-width: 400px;
+}
+
 .event-guest-id {
     padding-right: 20px;
     color: #555;

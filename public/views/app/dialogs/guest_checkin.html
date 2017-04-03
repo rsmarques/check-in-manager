@@ -1,5 +1,5 @@
-<md-dialog aria-label="Guest Check In" ng-cloak style="height: 100%; max-height: 100%; width: 100%; max-width: 100%">
-    <md-toolbar hide-xs>
+<md-dialog aria-label="Guest Check In" class="desktop-dialog-checkin" ng-cloak flex="80" flex-gt-sm="50">
+    <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Guest Check in</h2>
             <span flex></span>
@@ -19,7 +19,6 @@
                     md-no-cache=0
                     md-selected-item="selectedItem"
                     md-search-text="searchGuest"
-                    md-search-text-change="console.log(searchGuest)"
                     md-selected-item-change="selectedItemChange(item)"
                     md-items="item in searchGuests(searchGuest)"
                     md-item-text="item.slug"
