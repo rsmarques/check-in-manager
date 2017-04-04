@@ -2,8 +2,8 @@
     <md-dialog-content>
         <div class="md-dialog-content check-in-form">
             <form class="mobile-form" ng-submit="$event.preventDefault()">
-                <p>Enter Guest ID / Name / Email.</p>
                 <md-autocomplete
+                    class="check-in-autocomplete"
                     id="guest_checkin"
                     md-autofocus
                     md-no-cache=0
@@ -12,7 +12,7 @@
                     md-selected-item-change="selectedItemChange(item)"
                     md-items="item in searchGuests(searchGuest)"
                     md-item-text="item.slug"
-                    placeholder="nb12345, John Smith...">
+                    placeholder="Guest ID / Name / Email">
                     <md-item-template>
                         <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
                     </md-item-template>
