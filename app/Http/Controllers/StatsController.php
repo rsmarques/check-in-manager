@@ -30,8 +30,8 @@ class StatsController extends ApiController
      */
     public function globalStats()
     {
-        $startDate          = Input::get('start_date', '0000');
-        $endDate            = Input::get('end_date', '2099');
+        $startDate          = Input::get('start_date', '0000-00-00');
+        $endDate            = Input::get('end_date', '2099-01-01');
 
         $totalEvents        = Event::where('date', '>=', $startDate)->where('date', '<', $endDate)->count();
         $totalGuests        = Event::where('date', '>=', $startDate)->where('date', '<', $endDate)
@@ -68,8 +68,8 @@ class StatsController extends ApiController
     {
         $statsData      = [];
         $courses        = ['Masters', 'Bachelor', 'Other'];
-        $startDate      = Input::get('start_date', '0000');
-        $endDate        = Input::get('end_date', '2099');
+        $startDate      = Input::get('start_date', '0000-00-00');
+        $endDate        = Input::get('end_date', '2099-00-00');
 
         $industries     = Event::distinct()->where('date', '>=', $startDate)->where('date', '<', $endDate)->pluck('industry')->all();
         $countries      = Guest::distinct()->pluck('origin')->all();
