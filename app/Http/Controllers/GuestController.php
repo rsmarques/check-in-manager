@@ -19,7 +19,7 @@ class GuestController extends ApiController
     public function userGuests()
     {
         // TODO filter guests by user
-        $guests     = Guest::orderBy('slug')->get()->all();
+        $guests     = Guest::orderBy('slug', 'DESC')->get()->all();
         // return $guests;
         return $this->respondWithCollection($guests, new GuestTransformer);
     }
