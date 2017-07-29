@@ -19,7 +19,7 @@
                     Add Guest
                 </md-tooltip>
             </md-button>
-            <md-button class="md-icon-button" aria-label="Upload" ng-click="null" layout="row" layout-align="end center">
+            <md-button class="md-icon-button" aria-label="Upload" ng-click="openGuestUploadDialog($event)" layout="row" layout-align="end center" url="/upload" on-success="onSuccess(response)">
                 <md-icon md-font-set="md">file_upload</md-icon>
                 <md-tooltip hide-xs hide-sm md-direction="bottom">
                     Upload CSV

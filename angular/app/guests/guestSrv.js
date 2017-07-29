@@ -45,6 +45,14 @@
                     guest: '@guest',
                 }
             },
+
+            upload: {
+                url: API_URL + "guests/upload",
+                method: 'POST',
+                params: {
+                    guests: '@guests',
+                }
+            },
         });
     })
 

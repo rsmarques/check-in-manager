@@ -8,6 +8,7 @@ use Config;
 class Guest extends Model
 {
     protected $table = 'guests';
+    protected $fillable = ['id', 'slug', 'name', 'email', 'gender', 'degree', 'st_number', 'origin', 'phone_number'];
     public $timestamps = true;
 
     public function event()

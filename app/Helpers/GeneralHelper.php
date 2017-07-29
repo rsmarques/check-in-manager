@@ -58,4 +58,15 @@ class GeneralHelper
 
         return $csv;
     }
+
+    public static function CSVToArray($filename)
+    {
+        $csv = array_map('str_getcsv', file($filename));
+        array_walk($csv, function (&$a) use ($csv) {
+          $a = array_combine($csv[0], $a);
+        });
+        array_shift($csv); # remove column header
+
+        return $csv;
+    }
 }

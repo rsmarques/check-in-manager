@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Validator;
+
+use GeneralHelper;
 
 use Guest;
 use GuestTransformer;
@@ -146,6 +150,61 @@ class GuestController extends ApiController
         }
 
         DB::commit();
+
+        return $this->responseWithNoContent();
+    }
+
+    public function loadCSV(Request $request)
+    {
+        $file           = $request->file('file');
+
+        if (empty($file)) {
+            return $this->respondWithArray(['data' => []]);
+        }
+
+        $csv = GeneralHelper::CSVToArray($file->getRealPath());
+
+        return $this->respondWithArray(['data' => $csv]);
+    }
+
+    public function bulkStore()
+    {
+        $guestsData = Input::get('guests', array());
+
+        Log::info("GuestController :: Bulk Storing Guests");
+
+        foreach ($guestsData as $key => $guestData) {
+            Log::info("GuestController :: Bulk Storing Guest $key");
+
+            if (!$guestData['id']) {
+                continue;
+            }
+
+            $guest                  = Guest::firstOrNew(array('slug' => $guestData['id']));
+            if ($guestData['name']) {
+                $guest->name        = $guestData['name'];
+            }
+            if ($guestData['email']) {
+                $guest->email       = $guestData['email'];
+            }
+            if ($guestData['gender']) {
+                $guest->gender      = $guestData['gender'];
+            }
+            if ($guestData['degree']) {
+                $guest->degree      = $guestData['degree'];
+            }
+            if ($guestData['st_number']) {
+                $guest->st_number   = $guestData['st_number'];
+            }
+            if ($guestData['origin']) {
+                $guest->origin      = $guestData['origin'];
+            }
+            // if ($guestData['phone_number']) {
+            //     $guest->phone_number = $guestData['phone_number'];
+            // }
+
+            $guest->save();
+        }
 
         return $this->responseWithNoContent();
     }

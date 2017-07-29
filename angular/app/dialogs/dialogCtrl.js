@@ -8,7 +8,7 @@
      * # DialogCtrl
      * Controller of the checkInManager
      */
-    angular.module('check_in_app.controllers').controller('DialogCtrl', function ($timeout, $q, $rootScope, $scope, $mdDialog, guests, currentEvent, currentGuest) {
+    angular.module('check_in_app.controllers').controller('DialogCtrl', function ($timeout, $q, $rootScope, $scope, $mdDialog, Guest, guests, currentEvent, currentGuest, upload) {
 
         var self = this;
 
@@ -58,21 +58,56 @@
             return true;
         };
 
-        self.finishEditGuest = function ($event) {
+        $scope.onUploadStarted  =  function (res)
+        {
+            // TODO loader
+        };
+
+        $scope.onUploadSuccess  =  function (res)
+        {
+            $scope.loadedGuests = res.data.data;
+        };
+
+        $scope.onUploadError    =  function (res)
+        {
+            // TODO error message
+        };
+
+        self.uploadGuestCSV     = function ($event)
+        {
+            if (!$scope.loadedGuests) {
+                self.finish();
+                return false;
+            }
+
+            Guest.upload({guests: $scope.loadedGuests}, function (result) {
+                // TODO success
+            }, function (err) {
+                // TODO error treatment
+            });
+
+            self.finish();
+        };
+
+        self.finishEditGuest = function ($event)
+        {
             $rootScope.$broadcast('storeGuest');
             self.finish();
         };
 
-        self.finishEditEvent = function ($event) {
+        self.finishEditEvent = function ($event)
+        {
             $rootScope.$broadcast('storeEvent');
             self.finish();
         };
 
-        self.cancel = function($event) {
+        self.cancel = function($event)
+        {
             $mdDialog.cancel();
         };
 
-        self.finish = function($event) {
+        self.finish = function($event)
+        {
             $mdDialog.hide();
         };
     });

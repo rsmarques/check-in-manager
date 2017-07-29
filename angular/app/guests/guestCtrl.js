@@ -36,6 +36,25 @@
             });
         };
 
+        $scope.openGuestUploadDialog    = function ($event)
+        {
+            $mdDialog.show({
+                controller: 'DialogCtrl',
+                controllerAs: 'ctrl',
+                templateUrl: './views/app/dialogs/guest_upload.html',
+                locals: {
+                    guests: $scope.guests,
+                    currentEvent: null,
+                    currentGuest: null,
+                },
+                parent: angular.element(document.body),
+                scope: $scope,
+                preserveScope: true,
+                targetEvent: $event,
+                clickOutsideToClose:true
+            });
+        };
+
         $scope.showDeleteGuest = function (ev, guest) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm     = $mdDialog.confirm()

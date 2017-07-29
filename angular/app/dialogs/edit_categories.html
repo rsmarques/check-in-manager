@@ -14,7 +14,7 @@
                 <div>
                     <div layout="row" ng-repeat="category in items.categories.current track by $index">
                         <md-input-container class="md-block edit-menu" flex-gt-xs>
-                            <label>Category {{ $index + 1}}</label>
+                            <!-- <label>Category {{ $index + 1}}</label> -->
                             <input required name="items.categories.current[$index]" ng-model="items.categories.current[$index]"/>
                             <div ng-messages="categoriesForm.items.categories.current[$index].$error">
                                 <div ng-message="required">This field is required.</div>
