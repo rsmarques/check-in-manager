@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 
+// Fractal
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+
 use GeneralHelper;
 
 use Guest;
 use GuestTransformer;
+use GuestCsvTransformer;
 use Event;
 use EventGuest;
 
@@ -24,7 +29,18 @@ class GuestController extends ApiController
     {
         // TODO filter guests by user
         $guests     = Guest::orderBy('slug', 'DESC')->get()->all();
-        // return $guests;
+
+        if (Input::get('csv')) {
+
+            $fractal    = new Manager();
+            $resource   = new Collection($guests, new GuestCsvTransformer(false));
+
+            $guestData  = $fractal->createData($resource)->toArray()['data'];
+            $csvData    = GeneralHelper::arrayToCsv($guestData);
+            Log::info($csvData);
+            return $this->respondWithArray(array('data' => $csvData));
+        }
+
         return $this->respondWithCollection($guests, new GuestTransformer);
     }
 

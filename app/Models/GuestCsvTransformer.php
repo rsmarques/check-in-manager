@@ -6,9 +6,16 @@ use League\Fractal;
 
 class GuestCsvTransformer extends Fractal\TransformerAbstract
 {
+    public $includeCheckIn;
+
+    public function __construct($includeCheckIn = true)
+    {
+        $this->includeCheckIn = $includeCheckIn;
+    }
+
     public function transform(Guest $guest)
     {
-        return [
+        $data = [
             'id'            => $guest->slug,
             'name'          => $guest->name,
             'email'         => $guest->email,
@@ -16,7 +23,13 @@ class GuestCsvTransformer extends Fractal\TransformerAbstract
             'degree'        => $guest->degree,
             'st_number'     => $guest->st_number,
             'origin'        => $guest->origin,
-            'check_in'      => $guest->getCheckInData(),
+            'phone_number'  => $guest->getPhoneNumber(),
         ];
+
+        if ($this->includeCheckIn) {
+            $data['check_in']   = $guest->getCheckInData();
+        }
+
+        return $data;
     }
 }

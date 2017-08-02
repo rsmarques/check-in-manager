@@ -119,6 +119,28 @@
             return true;
         };
 
+        $scope.downloadGuestsCsv = function ()
+        {
+            Guest.get({csv: 1}, function (result) {
+
+                var file = new Blob([ result.data ], {
+                    type : 'application/csv'
+                });
+
+                //trick to download store a file having its URL
+                var fileURL     = URL.createObjectURL(file);
+                var a           = document.createElement('a');
+                a.href          = fileURL;
+                a.target        = '_blank';
+                a.download      = 'guests.csv';
+                document.body.appendChild(a);
+                a.click();
+
+            }, function (error) {
+                // TODO error message
+            });
+        };
+
         $window.addEventListener('resize', onResize);
 
         function onResize() {
