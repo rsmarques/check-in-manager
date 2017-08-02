@@ -24,6 +24,7 @@ class GuestCsvTransformer extends Fractal\TransformerAbstract
             'st_number'     => $guest->st_number,
             'origin'        => $guest->origin,
             'phone_number'  => $guest->getPhoneNumber(),
+            'graduated'     => (int) $guest->graduated,
         ];
 
         if ($this->includeCheckIn) {

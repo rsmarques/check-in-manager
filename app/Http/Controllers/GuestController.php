@@ -131,6 +131,9 @@ class GuestController extends ApiController
         $guest->email       = $guestData['email'];
         $guest->gender      = $guestData['gender'];
         $guest->degree      = $guestData['degree'];
+        if ($guestData['graduated']) {
+            $guest->graduated   = $guestData['graduated'];
+        }
         $guest->save();
 
         return $this->respondWithItem($guest, new GuestTransformer);
@@ -214,6 +217,9 @@ class GuestController extends ApiController
             }
             if ($guestData['origin']) {
                 $guest->origin      = $guestData['origin'];
+            }
+            if ($guestData['graduated']) {
+                $guest->graduated   = $guestData['graduated'];
             }
             // if ($guestData['phone_number']) {
             //     $guest->phone_number = $guestData['phone_number'];

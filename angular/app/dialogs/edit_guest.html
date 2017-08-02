@@ -63,6 +63,34 @@
                                 </div>
                             </md-input-container>
                         </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Guest Student Number</label>
+                                <input name="st_number" ng-model="currentGuest.st_number" ng-disabled="!editMode"/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Guest Origin</label>
+                                <input name="origin" ng-model="currentGuest.origin" ng-disabled="!editMode"/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Guest Phone Number</label>
+                                <input name="phone_number" ng-model="currentGuest.phone_number" ng-disabled="!editMode"/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Graduated</label>
+                                <md-select required name="graduated" ng-model="currentGuest.graduated" ng-disabled="!editMode">
+                                    <md-option ng-repeat="category in [1, 0]">
+                                        {{category}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
                     </div>
                 </md-content>
             </div>
