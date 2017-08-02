@@ -16,9 +16,9 @@
                         <div layout="row">
                             <input type="file" ngf-select="onFileChange($file)">
                         </div>
-                        <div layout="row">
-                            {{ loadedGuests }}
-                        </div>
+                        <ul ng-repeat="guest in loadedGuests">
+                            <li><strong>{{ guest.id }}</strong> - {{ guest.name }}, {{ guest.email }}</li>
+                        </ul>
                     </div>
                 </md-content>
             </div>
@@ -26,7 +26,7 @@
         <md-dialog-actions>
 <!--             <md-button ng-if="currentGuest.id && hasAdminAccess()" class="md-raised md-warn" aria-label="Delete" ng-click="showDeleteGuest($event, currentGuest)">Delete Guest</md-button>
             <span flex></span> -->
-            <md-button type="submit" aria-label="Finished">Done</md-button>
+            <md-button type="submit" aria-label="Finished">Import</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
