@@ -16,7 +16,8 @@ class EditGuestsPhoneNumber extends Migration
         $guests = Guest::whereNotNull('phone_number')->get();
 
         foreach ($guests as $guest) {
-            Log::info($guest->phone_number);
+            $guest->phone_number    = $guest->getPhoneNumber();
+            $guest->save();
         }
 
         Schema::table('guests', function (Blueprint $table) {
