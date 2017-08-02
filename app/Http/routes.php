@@ -26,7 +26,7 @@ Route::group(array('prefix' => 'api/v1'), function () {
         // guest endpoints
         Route::get('guests', 'GuestController@userGuests');
         Route::post('guests/store', 'GuestController@store');
-        Route::post('guests/load', 'GuestController@loadCSV');
+        Route::post('guests/load', 'GuestController@bulkLoad');
         Route::post('guests/upload', 'GuestController@bulkStore');
         Route::post('guests/{id}/delete', 'GuestController@delete');
         Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@eventGuestCheckIn');

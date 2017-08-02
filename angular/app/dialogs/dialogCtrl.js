@@ -8,7 +8,7 @@
      * # DialogCtrl
      * Controller of the checkInManager
      */
-    angular.module('check_in_app.controllers').controller('DialogCtrl', function ($timeout, $q, $rootScope, $scope, $mdDialog, Guest, guests, currentEvent, currentGuest, upload) {
+    angular.module('check_in_app.controllers').controller('DialogCtrl', function ($timeout, $q, $rootScope, $scope, $mdDialog, Guest, guests, currentEvent, currentGuest, Upload) {
 
         var self = this;
 
@@ -58,31 +58,32 @@
             return true;
         };
 
-        $scope.onUploadStarted  =  function (res)
+        $scope.onFileChange     = function (file)
         {
-            // TODO loader
-        };
+            if (file) {
+                $scope.file     = file;
+            }
 
-        $scope.onUploadSuccess  =  function (res)
-        {
-            $scope.loadedGuests = res.data.data;
-        };
-
-        $scope.onUploadError    =  function (res)
-        {
-            // TODO error message
+            Upload.upload({
+                url: '/api/v1/guests/load',
+                data: {file: $scope.file}
+            }).then(function(res, status, headers, config) {
+                // file is uploaded successfully
+                $scope.loadedGuests = res.data.data
+            });
         };
 
         self.uploadGuestCSV     = function ($event)
         {
-            if (!$scope.loadedGuests) {
+            if (!$scope.loadedGuests || !$scope.file) {
                 self.finish();
                 return false;
             }
 
-            Guest.upload({guests: $scope.loadedGuests}, function (result) {
-                // TODO success
-            }, function (err) {
+            Upload.upload({
+                url: '/api/v1/guests/upload',
+                data: {file: $scope.file}
+            }).then(function(res, status, headers, config) {
                 // TODO error treatment
             });
 

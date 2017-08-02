@@ -132,16 +132,16 @@ class GuestController extends ApiController
         $guest->gender      = $guestData['gender'];
         $guest->degree      = $guestData['degree'];
 
-        if ($guestData['st_number']) {
+        if (!empty($guestData['st_number'])) {
             $guest->st_number   = $guestData['st_number'];
         }
-        if ($guestData['origin']) {
+        if (!empty($guestData['origin'])) {
             $guest->origin      = $guestData['origin'];
         }
-        if ($guestData['graduated']) {
+        if (isset($guestData['graduated'])) {
             $guest->graduated   = $guestData['graduated'];
         }
-        if ($guestData['phone_number']) {
+        if (!empty($guestData['phone_number'])) {
             $guest->phone_number =  str_replace(' ', '', $guestData['phone_number']);
         }
         $guest->save();
@@ -188,21 +188,28 @@ class GuestController extends ApiController
         $file           = $request->file('file');
 
         if (empty($file)) {
-            return $this->respondWithArray(['data' => []]);
+            return [];
         }
 
         $csv = GeneralHelper::CSVToArray($file->getRealPath());
 
-        return $this->respondWithArray(['data' => $csv]);
+        return $csv;
     }
 
-    public function bulkStore()
+    public function bulkLoad(Request $request)
     {
-        $guestsData = Input::get('guests', array());
+        $csvData = $this->loadCSV($request);
+
+        return $this->respondWithArray(['data' => $csvData]);
+    }
+
+    public function bulkStore(Request $request)
+    {
+        $csvData = $this->loadCSV($request);
 
         Log::info("GuestController :: Bulk Storing Guests");
 
-        foreach ($guestsData as $key => $guestData) {
+        foreach ($csvData as $key => $guestData) {
             Log::info("GuestController :: Bulk Storing Guest $key");
 
             if (!$guestData['id']) {
@@ -210,28 +217,28 @@ class GuestController extends ApiController
             }
 
             $guest                  = Guest::firstOrNew(array('slug' => $guestData['id']));
-            if ($guestData['name']) {
+            if (!empty($guestData['name'])) {
                 $guest->name        = $guestData['name'];
             }
-            if ($guestData['email']) {
+            if (!empty($guestData['email'])) {
                 $guest->email       = $guestData['email'];
             }
-            if ($guestData['gender']) {
+            if (!empty($guestData['gender'])) {
                 $guest->gender      = $guestData['gender'];
             }
-            if ($guestData['degree']) {
+            if (!empty($guestData['degree'])) {
                 $guest->degree      = $guestData['degree'];
             }
-            if ($guestData['st_number']) {
+            if (!empty($guestData['st_number'])) {
                 $guest->st_number   = $guestData['st_number'];
             }
-            if ($guestData['origin']) {
+            if (!empty($guestData['origin'])) {
                 $guest->origin      = $guestData['origin'];
             }
-            if ($guestData['graduated']) {
+            if (isset($guestData['graduated'])) {
                 $guest->graduated   = $guestData['graduated'];
             }
-            if ($guestData['phone_number']) {
+            if (!empty($guestData['phone_number'])) {
                 $guest->phone_number =  str_replace(' ', '', $guestData['phone_number']);
             }
 

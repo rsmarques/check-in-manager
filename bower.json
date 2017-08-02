@@ -34,7 +34,7 @@
     "nvd3": "^1.8.5",
     "datatables": "^1.10.13",
     "angular-nvd3": "^1.0.9",
-    "angular-upload": "^1.0.12"
+    "ng-file-upload": "^12.2.13"
   },
   "resolutions": {
     "angular": "~1.5.1",
