@@ -69,7 +69,7 @@
                 data: {file: $scope.file}
             }).then(function(res, status, headers, config) {
                 // file is uploaded successfully
-                $scope.loadedGuests = res.data.data
+                $scope.loadedGuests = res.data.data;
             });
         };
 

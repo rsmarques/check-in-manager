@@ -1,0 +1,32 @@
+<md-dialog class="edit-model-dialog" aria-label="Upload Guests" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Upload Guests</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                <md-icon md-font-set="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="uploadForm" ng-submit="ctrl.uploadGuestCSV($event)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-content layout-padding>
+                    <div>
+                        <div layout="row">
+                            <input type="file" ngf-select="onFileChange($file)">
+                        </div>
+                        <ul ng-repeat="guest in loadedGuests">
+                            <li><strong>{{ guest.id }}</strong> - {{ guest.name }}, {{ guest.email }}</li>
+                        </ul>
+                    </div>
+                </md-content>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+<!--             <md-button ng-if="currentGuest.id && hasAdminAccess()" class="md-raised md-warn" aria-label="Delete" ng-click="showDeleteGuest($event, currentGuest)">Delete Guest</md-button>
+            <span flex></span> -->
+            <md-button type="submit" aria-label="Finished">Import</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
