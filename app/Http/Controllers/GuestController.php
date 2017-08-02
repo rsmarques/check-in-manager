@@ -131,8 +131,18 @@ class GuestController extends ApiController
         $guest->email       = $guestData['email'];
         $guest->gender      = $guestData['gender'];
         $guest->degree      = $guestData['degree'];
+
+        if ($guestData['st_number']) {
+            $guest->st_number   = $guestData['st_number'];
+        }
+        if ($guestData['origin']) {
+            $guest->origin      = $guestData['origin'];
+        }
         if ($guestData['graduated']) {
             $guest->graduated   = $guestData['graduated'];
+        }
+        if ($guestData['phone_number']) {
+            $guest->phone_number =  str_replace(' ', '', $guestData['phone_number']);
         }
         $guest->save();
 
@@ -221,9 +231,9 @@ class GuestController extends ApiController
             if ($guestData['graduated']) {
                 $guest->graduated   = $guestData['graduated'];
             }
-            // if ($guestData['phone_number']) {
-            //     $guest->phone_number = $guestData['phone_number'];
-            // }
+            if ($guestData['phone_number']) {
+                $guest->phone_number =  str_replace(' ', '', $guestData['phone_number']);
+            }
 
             $guest->save();
         }

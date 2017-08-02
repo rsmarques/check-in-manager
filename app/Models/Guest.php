@@ -35,7 +35,7 @@ class Guest extends Model
 
         $countryCode    = Config::get("country_phones.$this->phone_country");
 
-        return $countryCode && $this->phone_number ? ('+' . $countryCode . $this->phone_number) : null;
+        return $countryCode && $this->phone_number ? ('+' . $countryCode . str_replace(' ', '', $this->phone_number)) : null;
     }
 
     public function getShortName()

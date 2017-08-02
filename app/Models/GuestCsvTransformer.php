@@ -23,7 +23,7 @@ class GuestCsvTransformer extends Fractal\TransformerAbstract
             'degree'        => $guest->degree,
             'st_number'     => $guest->st_number,
             'origin'        => $guest->origin,
-            'phone_number'  => $guest->getPhoneNumber(),
+            'phone_number'  => $guest->phone_number,
             'graduated'     => (int) $guest->graduated,
         ];
 
