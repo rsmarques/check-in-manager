@@ -8,7 +8,7 @@
      * # NavbarCtrl
      * Controller of the checkInManager
      */
-    angular.module('check_in_app.controllers').controller('NavbarCtrl', function ($rootScope, $window, $scope, $http, $mdDialog, mdDialogSrv, Auth, Item, CategorySrv, IndustrySrv) {
+    angular.module('check_in_app.controllers').controller('NavbarCtrl', function ($rootScope, $window, $scope, $http, $mdDialog, mdDialogSrv, Auth, Item, DegreeSrv, CategorySrv, IndustrySrv) {
 
         $scope.logout = function () {
             Auth.logout(function () {
@@ -16,6 +16,10 @@
             });
         };
 
+        $scope.openDegreesDialog = function (event)
+        {
+            mdDialogSrv.fromTemplate('./views/app/dialogs/edit_degrees.html', event, $scope);
+        };
 
         $scope.openCategoriesDialog = function (event)
         {
@@ -61,6 +65,7 @@
             mdDialogSrv.hide();
         };
 
+        DegreeSrv.getDegrees();
         CategorySrv.getCategories();
         IndustrySrv.getIndustries();
     });
