@@ -10,6 +10,8 @@
      */
     angular.module('check_in_app.controllers').controller('GuestCtrl', function ($rootScope, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, $window, API_URL, Guest, GuestSrv, AuthSrv) {
 
+        $scope.filterGraduated = 0;
+
         $scope.openGuestEditDialog = function ($event, editMode, guest)
         {
             $scope.editMode             = editMode;
@@ -139,6 +141,11 @@
             }, function (error) {
                 // TODO error message
             });
+        };
+
+        $scope.switchFilterGraduated = function ()
+        {
+            $scope.filterGraduated = $scope.filterGraduated ? 0 : 1;
         };
 
         $window.addEventListener('resize', onResize);

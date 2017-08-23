@@ -1,3 +1,11 @@
 .guest-list {
     width: 100%;
 }
+
+.filter-graduated-button {
+  background: #aaa;
+}
+
+.filter-graduated-icon {
+  color: #eee;
+}

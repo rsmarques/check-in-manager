@@ -37,7 +37,7 @@ class GuestController extends ApiController
 
             $guestData  = $fractal->createData($resource)->toArray()['data'];
             $csvData    = GeneralHelper::arrayToCsv($guestData);
-            Log::info($csvData);
+
             return $this->respondWithArray(array('data' => $csvData));
         }
 

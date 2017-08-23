@@ -7,12 +7,12 @@
         $locationProvider.hashPrefix('');
 
         $stateProvider
-            .state('signup', {
-                url: '/signup',
-                templateUrl: './views/app/auth/auth.html',
-                controller: 'AuthCtrl',
-                register: 1
-            })
+            // .state('signup', {
+            //     url: '/signup',
+            //     templateUrl: './views/app/auth/auth.html',
+            //     controller: 'AuthCtrl',
+            //     register: 1
+            // })
             .state('signin', {
                 url: '/signin',
                 templateUrl: './views/app/auth/auth.html',

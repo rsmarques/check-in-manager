@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Log;
+
 class GeneralHelper
 {
     // Math Functions
@@ -61,7 +63,21 @@ class GeneralHelper
 
     public static function CSVToArray($filename)
     {
-        $csv = array_map('str_getcsv', file($filename));
+        // $csvFile    = file($filename);
+        // $csv        = [];
+        // foreach ($csvFile as $line) {
+        //     array_push($csv, str_getcsv($line, ';'));
+        // }
+
+        // Log::info($csvFile);
+
+        // parsing file
+        $csvFile    = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($csvFile as $key => $line) {
+            $csvFile[$key]  = utf8_encode(str_replace(';', ',', $line));
+        }
+
+        $csv = array_map('str_getcsv', $csvFile);
         array_walk($csv, function (&$a) use ($csv) {
           $a = array_combine($csv[0], $a);
         });
