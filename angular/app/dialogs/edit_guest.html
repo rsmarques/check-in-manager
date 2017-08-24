@@ -24,8 +24,8 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Degree</label>
                                 <md-select required name="degree" ng-model="currentGuest.degree" ng-disabled="!editMode">
-                                    <md-option ng-repeat="category in ['MSc in Economics', 'MSc in Management', 'MSc in Finance', 'BSc in Economics', 'BSc in Management', 'BSc in Finance']">
-                                        {{category}}
+                                    <md-option ng-repeat="degree in items.degrees.current">
+                                        {{degree}}
                                     </md-option>
                                 </md-select>
                                 <div ng-messages="userForm.degree.$error" ng-show="userForm.$submitted">

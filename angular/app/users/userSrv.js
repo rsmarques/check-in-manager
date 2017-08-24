@@ -27,20 +27,5 @@
                 }
             }
         });
-    })
-
-    .service('DegreeSrv', function ($rootScope, Item) {
-
-        this.getDegrees     = function () {
-            var degrees     = Item.get({type: 'degrees'}, function (result) {
-                if (typeof $rootScope.items === 'undefined') {
-                    $rootScope.items = {};
-                }
-
-                $rootScope.items.degrees = {current: result.data};
-            }, function (err) {
-                // console.log(err);
-            });
-        };
     });
 })();

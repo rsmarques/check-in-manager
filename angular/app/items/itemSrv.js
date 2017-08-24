@@ -29,7 +29,7 @@
                     $rootScope.items = {};
                 }
 
-                $rootScope.items.degrees = {current: result.data};
+                $rootScope.items.degrees = {current: result.data.sort()};
             }, function (err) {
                 // console.log(err);
             });
