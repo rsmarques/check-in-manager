@@ -71,8 +71,12 @@
                         </div>
                         <div layout="row">
                             <md-input-container class="md-block" flex-gt-xs>
-                                <label>Guest Origin</label>
-                                <input name="origin" ng-model="currentGuest.origin" ng-disabled="!editMode"/>
+                                <label>Guest Country</label>
+                                <md-select required name="degree" ng-model="currentGuest.origin" ng-disabled="!editMode">
+                                    <md-option ng-value="country.code" ng-repeat="country in countries">
+                                        {{ country.name }}
+                                    </md-option>
+                                </md-select>
                             </md-input-container>
                         </div>
                         <div layout="row">

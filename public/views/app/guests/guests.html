@@ -31,6 +31,12 @@
                     Export CSV
                 </md-tooltip>
             </md-button>
+            <md-button hide-xs hide-sm class="md-icon-button" ng-class="{'filter-graduated-button': filterGraduated}" aria-label="Graduated" ng-click="switchFilterGraduated()">
+                <md-icon ng-class="{'filter-graduated-icon': filterGraduated}"  md-font-set="md">school</md-icon>
+                <md-tooltip hide-xs md-direction="bottom">
+                    Graduated
+                </md-tooltip>
+            </md-button>
         </div>
     </div>
 
@@ -74,7 +80,7 @@
         <div ng-cloak class="virtualRepeatdemoDeferredLoading">
             <md-virtual-repeat-container class="vertical-container" ng-style="getGuestRepeaterHeight()">
                 <md-list ng-cloak>
-                    <md-list-item md-virtual-repeat="guest in guests | filter:filterGuest | orderBy:sortGuest:sortGuestReverse" class="repeated-item" ng-click="openGuestEditDialog($event, 0, guest)">
+                    <md-list-item md-virtual-repeat="guest in guests | filter:filterGuest | filter:{graduated: filterGraduated} | orderBy:sortGuest:sortGuestReverse" class="repeated-item" ng-click="openGuestEditDialog($event, 0, guest)">
                         <div class="md-list-item guest-list" layout="row" layout-align="start center">
                             <span flex-gt-sm="10" flex-sm="15" flex-xs="40">{{guest.slug}}</span>
                             <span flex-gt-sm="45" flex-sm="50" hide-xs>{{guest.name}}</span>
