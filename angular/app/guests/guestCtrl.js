@@ -8,9 +8,10 @@
      * # GuestCtrl
      * Controller of the checkInManager
      */
-    angular.module('check_in_app.controllers').controller('GuestCtrl', function ($rootScope, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, $window, API_URL, Guest, GuestSrv, AuthSrv) {
+    angular.module('check_in_app.controllers').controller('GuestCtrl', function ($rootScope, $scope, $http, $stateParams, $location, $mdDialog, $mdToast, $window, API_URL, Guest, GuestSrv, AuthSrv, CountrySrv) {
 
-        $scope.filterGraduated = 0;
+        $scope.filterGraduated  = 0;
+        $scope.countries        = CountrySrv.allCountries();
 
         $scope.openGuestEditDialog = function ($event, editMode, guest)
         {
