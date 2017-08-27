@@ -8,13 +8,14 @@
      * # DialogCtrl
      * Controller of the checkInManager
      */
-    angular.module('check_in_app.controllers').controller('DialogCtrl', function ($timeout, $q, $rootScope, $scope, $mdDialog, Guest, guests, currentEvent, currentGuest, Upload) {
+    angular.module('check_in_app.controllers').controller('DialogCtrl', function ($timeout, $q, $rootScope, $scope, $mdDialog, Guest, guests, currentEvent, currentGuests, currentGuest, Upload) {
 
         var self = this;
 
         $scope.allGuests        = guests;
         $scope.currentEvent     = currentEvent;
         $scope.currentGuest     = currentGuest;
+        $scope.currentGuests    = currentGuests;
         $scope.checkInStatus    = null;
 
         $scope.searchGuests = function (searchKey)
@@ -71,6 +72,10 @@
                 // file is uploaded successfully
                 $scope.loadedGuests = res.data.data;
             });
+        };
+
+        $scope.isGuestCheckedInStr  = function (item) {
+            return currentGuests.find(function (guest) { return guest.slug == item.slug; }) ? "(+) " : "";
         };
 
         self.uploadGuestCSV     = function ($event)

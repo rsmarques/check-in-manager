@@ -12,6 +12,12 @@
                 <md-icon md-font-set="md">search</md-icon>
                 <input ng-model="filterEvent" type="text" placeholder="Search">
             </md-input-container>
+            <md-button ng-show="hasAdminAccess()" class="md-icon-button filter-events-button" aria-label="Filter" ng-click="openEventDialog($event, 1)">
+                <md-icon md-font-set="md">add</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    New Event
+                </md-tooltip>
+            </md-button>
 <!--             <md-button class="md-icon-button filter-events-button" aria-label="Filter">
                 <md-icon md-font-set="md">filter_list</md-icon>
                 <md-tooltip hide-xs hide-sm md-direction="bottom">
@@ -105,12 +111,12 @@
                                 Export CSV
                             </md-tooltip>
                         </md-button>
-                        <md-button hide hide-xs ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Stats" ng-click="openStatsDialog($event)">
+<!--                         <md-button hide hide-xs ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Stats" ng-click="openStatsDialog($event)">
                             <md-icon md-font-set="md">trending_up</md-icon>
                             <md-tooltip hide-xs hide-sm md-direction="bottom">
                                 Stats
                             </md-tooltip>
-                        </md-button>
+                        </md-button> -->
                         <md-button ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Edit" ng-click="openEventDialog($event)">
                             <md-icon md-font-set="md">mode_edit</md-icon>
                             <md-tooltip hide-xs hide-sm md-direction="bottom">

@@ -25,6 +25,14 @@
                     filters: '@filters',
                 }
             },
+
+            csv: {
+                url: API_URL + "stats/csv",
+                method: 'GET',
+                params: {
+                    filters: '@filters',
+                }
+            },
         });
     });
 })();

@@ -25,6 +25,7 @@
                 locals: {
                     guests: $scope.guests,
                     currentEvent: $scope.currentEvent,
+                    currentGuests: $scope.currentGuests,
                     currentGuest: null,
                 },
                 targetEvent: $event,
@@ -45,6 +46,7 @@
                 locals: {
                     guests: null,
                     currentEvent: $scope.currentEvent,
+                    currentGuests: null,
                     currentGuest: null,
                 },
                 parent: angular.element(document.body),

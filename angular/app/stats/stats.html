@@ -11,6 +11,12 @@
         <span flex></span>
 
         <div layout="row" class="date-filter" layout-align="start center">
+            <md-button class="md-icon-button" aria-label="Download" ng-click="downloadStatsCsv()">
+                <md-icon md-font-set="md">file_download</md-icon>
+                <md-tooltip hide-xs hide-sm md-direction="bottom">
+                    Export CSV
+                </md-tooltip>
+            </md-button>
             <md-input-container ng-show="!customRangeActive" class="md-block">
                 <label>Filter Date</label>
                 <md-select name="Date Range" md-on-open="setDefaultDateRangeFilters()" md-on-close="dateRangeChanged()" ng-model="dateRange">

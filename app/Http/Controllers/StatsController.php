@@ -28,7 +28,7 @@ class StatsController extends ApiController
      *
      * @return Response
      */
-    public function globalStats()
+    public function globalStatsData()
     {
         $startDate          = Input::get('start_date', '0000-00-00');
         $endDate            = Input::get('end_date', '2099-01-01');
@@ -51,8 +51,7 @@ class StatsController extends ApiController
             ->join('guests', 'guests.id', '=', 'event_guests.guest_id')
             ->count('origin');
 
-
-        return $this->respondWithArray(['data' => [
+        return [
             "total_events"          => $totalEvents,
             "total_guests"          => $totalGuests,
             "event_guests_avg"      => $eventGuestsAvg,
@@ -60,11 +59,15 @@ class StatsController extends ApiController
             "total_industries"      => $totalIndustries,
             "total_companies"       => $totalCompanies,
             "total_countries"       => $totalCountries,
-            ]
-        ]);
+        ];
     }
 
-    public function eventStats()
+    public function globalStats()
+    {
+        return $this->respondWithArray(['data' => $this->globalStatsData()]);
+    }
+
+    public function eventStatsData()
     {
         $statsData      = [];
         $courses        = ['Masters', 'Bachelor', 'Other'];
@@ -110,6 +113,72 @@ class StatsController extends ApiController
             $statsData['time'][$stat->course][$timestamp]                   += $stat->count;
         }
 
-        return $this->respondWithArray(['data' => $statsData]);
+        return $statsData;
+    }
+
+    public function eventStats()
+    {
+        return $this->respondWithArray(['data' => $this->eventStatsData()]);
+    }
+
+    public function csvStats()
+    {
+        $eventStatsData = $this->eventStatsData();
+        $globalStatsData = $this->globalStatsData();
+
+        # Creating temp CSV
+        $fh = fopen('php://temp', 'rw');
+
+        // Industry Stats
+        $industriesHeader = array_merge(['Industry'], array_keys($eventStatsData['industries_abs']), ['Total', '%']);
+        fputcsv($fh, $industriesHeader);
+
+        $courses = array_keys($eventStatsData['industries_abs']);
+
+        foreach (reset($eventStatsData['industries_abs']) as $industry => $value) {
+            $industryLine = [$industry];
+            foreach ($courses as $course) {
+                array_push($industryLine, $eventStatsData['industries_abs'][$course][$industry]);
+            }
+            array_push($industryLine, $eventStatsData['industries_percentage'][$industry]);
+            array_push($industryLine, round($eventStatsData['industries_percentage'][$industry] / array_sum($eventStatsData['industries_percentage']) * 100., 2) . '%');
+            fputcsv($fh, $industryLine);
+        }
+
+        // Country Stats
+        fputcsv($fh, ['', '']);
+        fputcsv($fh, ['Country', '# Guests']);
+        foreach ($eventStatsData['countries'] as $country => $value) {
+            fputcsv($fh, [$country, $value]);
+        }
+
+        // Time Stats
+        fputcsv($fh, ['', '']);
+        fputcsv($fh, array_merge(['Date'], $courses, ['Total']));
+        foreach (reset($eventStatsData['time']) as $timestamp => $value) {
+            $dateStr    = Carbon::createFromTimestamp($timestamp / 1000)->format('F Y');
+            $dateLine   = [$dateStr];
+            $dateCount  = 0;
+            foreach ($courses as $course) {
+                array_push($dateLine, $eventStatsData['time'][$course][$timestamp]);
+                $dateCount  += $eventStatsData['time'][$course][$timestamp];
+            }
+            array_push($dateLine, $dateCount);
+            fputcsv($fh, $dateLine);
+        }
+
+        // Global Stats
+        fputcsv($fh, ['', '']);
+        fputcsv($fh, ['Global Stats', '# Guests']);
+        foreach ($globalStatsData as $key => $value) {
+            fputcsv($fh, [$key, $value]);
+        }
+
+        rewind($fh);
+        $csv = stream_get_contents($fh);
+        fclose($fh);
+
+        // return $this->respondWithArray(['data' => ['events' => $eventStatsData, 'global' => $globalStatsData]]);
+        return $this->respondWithArray(array('data' => $csv));
     }
 }

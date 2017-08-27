@@ -22,6 +22,9 @@ Route::group(array('prefix' => 'api/v1'), function () {
 
         // User endpoints
         Route::get('/me', 'UserController@me');
+        // Route::get('/users', 'UserController@getAllUsers');
+        // Route::get('/users/{id}', 'UserController@getUserById');
+        // Route::post('/users/{id}', 'UserController@updateUserById');
 
         // guest endpoints
         Route::get('guests', 'GuestController@userGuests');
@@ -42,7 +45,8 @@ Route::group(array('prefix' => 'api/v1'), function () {
         // stats endpoints
         Route::get('/stats/global', array('uses' => 'StatsController@globalStats'));
         Route::get('/stats/events', array('uses' => 'StatsController@eventStats'));
-        Route::get('/stats/events/{slug}', array('uses' => 'StatsController@eventStatsBySlug'));
+        Route::get('/stats/csv', array('uses' => 'StatsController@csvStats'));
+        // Route::get('/stats/events/{slug}', array('uses' => 'StatsController@eventStatsBySlug'));
 
         // items endpoints
         Route::get('/items/{type}', array('uses' => 'ItemController@index'));

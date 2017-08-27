@@ -10,7 +10,7 @@
             <span>Check In Manager</span>
         </h2>
         <span flex></span>
-        <md-button class="md-icon-button" aria-label="Stats" href="#/stats">
+        <md-button ng-if="hasAdminAccess()" class="md-icon-button" aria-label="Stats" href="#/stats">
             <md-icon md-font-set="md">insert_chart</md-icon>
             <md-tooltip hide-xs hide-sm md-direction="bottom">
                 Stats
@@ -37,32 +37,32 @@
                 </md-tooltip>
             </md-button>
             <md-menu-content width="3">
-                <md-menu-item>
+                <md-menu-item ng-show="hasAdminAccess()">
                     <md-button ng-click="null">
                         <md-icon md-font-set="md">person</md-icon>
                         Admin Backoffice
                     </md-button>
                 </md-menu-item>
-                <md-menu-divider></md-menu-divider>
-                <md-menu-item>
+                <md-menu-divider ng-show="hasAdminAccess()"></md-menu-divider>
+                <md-menu-item ng-show="hasAdminAccess()">
                     <md-button ng-click="openDegreesDialog($event)">
                         <md-icon md-font-set="md">school</md-icon>
                         Edit Degrees
                     </md-button>
                 </md-menu-item>
-                <md-menu-item>
+                <md-menu-item ng-show="hasAdminAccess()">
                     <md-button ng-click="openCategoriesDialog($event)">
                         <md-icon md-font-set="md">list</md-icon>
                         Edit Categories
                     </md-button>
                 </md-menu-item>
-                <md-menu-item>
+                <md-menu-item ng-show="hasAdminAccess()">
                     <md-button ng-click="openIndustriesDialog($event)">
                         <md-icon md-font-set="md">work</md-icon>
                         Edit Industries
                     </md-button>
                 </md-menu-item>
-                <md-menu-divider></md-menu-divider>
+                <md-menu-divider ng-show="hasAdminAccess()"></md-menu-divider>
                 <md-menu-item>
                     <md-button ng-click="logout()">
                         <md-icon md-font-set="md">exit_to_app</md-icon>

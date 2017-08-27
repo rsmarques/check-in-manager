@@ -221,6 +221,28 @@
             $scope.dateRanges   = [{key: 'alltime', description: 'All-time'}, {key: 'monthly', description: 'This Month', start_date: moment().startOf('month')._d}, {key: 'yearly', description: 'This Year', start_date: moment().startOf('year')._d}, {key: 'custom', description: 'Pick a date range...'}];
         };
 
+        $scope.downloadStatsCsv = function ()
+        {
+            Stats.csv($scope.getFilters(), function (res) {
+
+                var file = new Blob([ res.data ], {
+                    type : 'application/csv'
+                });
+
+                //trick to download store a file having its URL
+                var fileURL     = URL.createObjectURL(file);
+                var a           = document.createElement('a');
+                a.href          = fileURL;
+                a.target        = '_blank';
+                a.download      = 'stats.csv';
+                document.body.appendChild(a);
+                a.click();
+
+            }, function (error) {
+                // TODO error message
+            });
+        };
+
         $scope.setDefaultDateRangeFilters();
         $scope.dateRange    = $scope.dateRanges[0];
         $scope.filters      = {start_date: null, end_date: null};
