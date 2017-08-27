@@ -75,7 +75,7 @@
         };
 
         $scope.isGuestCheckedInStr  = function (item) {
-            return currentGuests.find(function (guest) { return guest.slug == item.slug; }) ? "(+) " : "";
+            return currentGuests.find(function (guest) { return guest.slug == item.slug && guest.check_in; }) ? "(+) " : "";
         };
 
         self.uploadGuestCSV     = function ($event)

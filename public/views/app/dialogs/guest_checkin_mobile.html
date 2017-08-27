@@ -14,7 +14,7 @@
                     md-item-text="item.slug"
                     placeholder="Guest ID / Name / Email">
                     <md-item-template>
-                        <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{item.slug}} - {{item.name}}</span>
+                        <span md-highlight-text="searchGuest" md-highlight-flags="^i">{{ isGuestCheckedInStr(item) }}{{item.slug}} - {{item.name}}</span>
                     </md-item-template>
                 </md-autocomplete>
                 <br/>
