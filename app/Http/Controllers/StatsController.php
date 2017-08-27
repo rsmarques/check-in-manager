@@ -113,6 +113,17 @@ class StatsController extends ApiController
             $statsData['time'][$stat->course][$timestamp]                   += $stat->count;
         }
 
+        // rearraging country keys
+        foreach ($statsData['countries'] as $origin => $value) {
+            $country    = config("countries.$origin", $origin);
+            if ($country === $origin) {
+                continue;
+            }
+
+            $statsData['countries'][$country] = $statsData['countries'][$origin];
+            unset($statsData['countries'][$origin]);
+        }
+
         return $statsData;
     }
 
