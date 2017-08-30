@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 // use League\Fractal\Resource\Collection;
 use User;
 use UserTransformer;
@@ -121,9 +122,90 @@ class UserController extends ApiController
         $user   = JWTAuth::parseToken()->toUser();
 
         if (!$user) {
-            return $this->responseWithErrors("User not authenticated!");
+            return $this->responseWithErrors("User not authenticated!", 404);
         }
 
         return $this->respondWithItem($user, new UserTransformer);
+    }
+
+    public function getAllUsers()
+    {
+        $me     = JWTAuth::parseToken()->toUser();
+
+        if (!$me || !$me->admin) {
+            return $this->responseWithErrors("Not a valid user!", 404);
+        }
+
+        $users  = User::orderBy('id', 'ASC')->get()->all();
+
+        return $this->respondWithCollection($users, new UserTransformer);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        $me     = JWTAuth::parseToken()->toUser();
+
+        if (!$me || !$me->admin) {
+            return $this->responseWithErrors("Not a valid user!", 404);
+        }
+
+        $userData   = Input::get('user', array());
+
+        $validator  = Validator::make($userData, [
+            'email'         => 'required|email|max:255',
+            'admin'         => 'required',
+            // 'password'      => 'required|min:6',
+            // 'slug'          => 'unique:users',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->responseWithErrors($validator->errors()->all(), 422);
+        }
+
+        Log::info("UserController :: Storing User!");
+
+        $user               = !empty($userData['id']) ? User::firstOrNew(array('id' => $userData['id'])) : new User;
+
+        $user->email        = $userData['email'];
+        $user->admin        = $userData['admin'];
+        $user->slug         = $user->calcSlug();
+        if (!empty($userData['password'])) {
+            $user->password = $userData['password'];
+        }
+
+        $user->save();
+
+        return $this->respondWithItem($user, new UserTransformer);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $slug
+     *
+     * @return Response
+     */
+    public function delete($id)
+    {
+        $me     = JWTAuth::parseToken()->toUser();
+
+        if (!$me || !$me->admin) {
+            return $this->responseWithErrors("Not a valid user!", 404);
+        }
+
+        $user          = User::find($id);
+
+        if (!$user) {
+            return $this->responseWithErrors("User [$id] not found!", 500);
+        }
+
+        $user->delete();
+
+        return $this->responseWithNoContent();
     }
 }

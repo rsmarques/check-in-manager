@@ -22,9 +22,9 @@ Route::group(array('prefix' => 'api/v1'), function () {
 
         // User endpoints
         Route::get('/me', 'UserController@me');
-        // Route::get('/users', 'UserController@getAllUsers');
-        // Route::get('/users/{id}', 'UserController@getUserById');
-        // Route::post('/users/{id}', 'UserController@updateUserById');
+        Route::get('/users', 'UserController@getAllUsers');
+        Route::post('/users/store', 'UserController@store');
+        Route::post('/users/{id}/delete', 'UserController@delete');
 
         // guest endpoints
         Route::get('guests', 'GuestController@userGuests');

@@ -19,6 +19,11 @@
                 controller: 'AuthCtrl',
                 register: 0
             })
+            .state('users', {
+                url: '/users',
+                templateUrl: './views/app/users/users.html',
+                controller: 'UserCtrl'
+            })
             .state('guests', {
                 url: '/guests',
                 templateUrl: './views/app/guests/guests.html',

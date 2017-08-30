@@ -11,21 +11,21 @@
     angular.module('check_in_app.services').factory('User', function ($resource, API_URL) {
         return $resource(API_URL + "users/:id", {type: '@type'}, {
 
-            getAll: {
-                method: 'GET',
+            delete: {
+                url: API_URL + "users/:userId/delete",
+                method: 'POST',
                 params: {
-                    type: '@type',
-                    items: '@items',
+                    userId: '@userId',
                 }
             },
 
-            update: {
-                method: 'GET',
+            store: {
+                url: API_URL + "users/store",
+                method: 'POST',
                 params: {
-                    type: '@type',
-                    items: '@items',
+                    user: '@user',
                 }
-            }
+            },
         });
     });
 })();

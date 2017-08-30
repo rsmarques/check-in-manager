@@ -1,0 +1,87 @@
+<div id="navbar">
+    <div ng-include="'./views/app/navbar/navbar.html'"></div>
+</div>
+<md-content>
+    <div id="guestListHeader" layout="row" layout-align="start center" class="content-header" flex>
+        <div layout="column">
+            <h1>Admin Backoffice</h1>
+            <h4><strong>{{users.length}}</strong> Users</h4>
+        </div>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Add User" ng-click="openUserEditDialog($event)">
+            <md-icon md-font-set="md">add</md-icon>
+            <md-tooltip hide-xs hide-sm md-direction="bottom">
+                Add User
+            </md-tooltip>
+        </md-button>
+    </div>
+
+    <md-divider></md-divider>
+    <md-list-item id="guestTableHeader">
+        <div class="md-list-item guest-list" layout="row" layout-align="start center">
+            <div flex="80">
+                <md-button ng-click="sortGuests('slug')">
+                    <span>Email</span>
+                    <md-icon ng-show="sortGuest === 'slug'" md-font-set="md">{{sortIcon}}</md-icon>
+                </md-button>
+            </div>
+            <div flex="20" hide-xs ng-click="sortGuests('name')">
+                <md-button>
+                    <span>Admin</span>
+                    <md-icon ng-show="sortGuest === 'name'" md-font-set="md">{{sortIcon}}</md-icon>
+                </md-button>
+            </div>
+<!--         <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon>
+        <md-icon class="md-secondary" ng-click="null" md-font-set="md">null</md-icon> -->
+        </div>
+        <div class="_md-secondary-container" style="width: 49px;"></div>
+        <div class="_md-secondary-container" style="width: 49px;"></div>
+        <div class="_md-secondary-container" style="width: 49px;"></div>
+    <!-- <div ></div> -->
+    </md-list-item>
+    <md-divider></md-divider>
+
+    <div layout="column">
+        <div ng-cloak class="virtualRepeatdemoDeferredLoading">
+            <md-virtual-repeat-container class="vertical-container" ng-style="getGuestRepeaterHeight()">
+                <md-list ng-cloak>
+                    <md-list-item md-virtual-repeat="user in users" class="repeated-item" ng-click="openUserEditDialog($event, user)">
+                        <div class="md-list-item guest-list" layout="row" layout-align="start center">
+                            <span flex="80">{{user.email}}</span>
+                            <span flex="20" hide-xs>{{user.admin ? 'Yes' : 'No'}}</span>
+                            <md-icon class="md-secondary" aria-label="Edit User" ng-click="openUserEditDialog($event, user)" md-font-set="md">mode_edit</md-icon>
+                            <md-icon class="md-secondary" aria-label="Delete" ng-click="showDeleteUser($event, user)" md-font-set="md">delete</md-icon>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-virtual-repeat-container>
+        </div>
+    </div>
+
+<!--     <div layout="column">
+        <div ng-repeat="user in users" ng-click="null">
+            <form name="userForm">
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Email</label>
+                        <input required name="email" ng-model="user.email" ng-pattern="/^.+@.+\..+$/"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <md-checkbox name="admin" ng-model="user.admin" required>
+                            Admin
+                        </md-checkbox>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <md-icon md-font-set="md">lock</md-icon>
+                        <input type="password" md-no-asterisk required name="password" ng-model="user.password">
+                        <label>Password</label>
+                    </md-input-container>
+                    <div>
+                        <md-button type="submit">Update</md-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> -->
+</md-content>

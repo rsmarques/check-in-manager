@@ -27,6 +27,7 @@
                     currentEvent: $scope.currentEvent,
                     currentGuests: $scope.currentGuests,
                     currentGuest: null,
+                    currentUser: null,
                 },
                 targetEvent: $event,
                 clickOutsideToClose:true
@@ -48,6 +49,7 @@
                     currentEvent: $scope.currentEvent,
                     currentGuests: null,
                     currentGuest: null,
+                    currentUser: null,
                 },
                 parent: angular.element(document.body),
                 scope: $scope,

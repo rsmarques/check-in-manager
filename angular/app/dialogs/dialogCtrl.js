@@ -95,6 +95,12 @@
             self.finish();
         };
 
+        self.finishEditUser = function ($event)
+        {
+            $rootScope.$broadcast('storeUser');
+            self.finish();
+        };
+
         self.finishEditGuest = function ($event)
         {
             $rootScope.$broadcast('storeGuest');
