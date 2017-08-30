@@ -1,0 +1,48 @@
+<md-dialog class="edit-model-dialog" aria-label="Edit User" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit User</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                <md-icon md-font-set="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="userForm" ng-submit="userForm.$valid && ctrl.finishEditUser($event)">
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-content layout-padding>
+                    <div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex="80">
+                                <label>User Email</label>
+                                <input required name="email" ng-model="currentUser.email" ng-pattern="/^.+@.+\..+$/"/>
+                                <div ng-messages="userForm.email.$error">
+                                    <div ng-message="pattern">This is not a valid email address.</div>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="20">
+                                <md-checkbox name="admin" ng-model="currentUser.admin">
+                                    Admin
+                                </md-checkbox>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-icon-float md-block" flex>
+                                <label>Password</label>
+                                <md-icon md-font-set="md">lock</md-icon>
+                                <input type="password" md-no-asterisk name="password" ng-model="currentUser.password">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-if="currentUser.id && hasAdminAccess()" class="md-raised md-warn" aria-label="Delete" ng-click="showDeleteUser($event, currentUser)">Delete User</md-button>
+            <span flex></span>
+            <md-button type="submit" aria-label="Finished">Done</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
