@@ -11,6 +11,11 @@ class Guest extends Model
     protected $fillable = ['id', 'slug', 'name', 'email', 'gender', 'degree', 'st_number', 'origin', 'phone_number'];
     public $timestamps = true;
 
+    public static function findBySlug($slug)
+    {
+        return Guest::where('slug', $slug)->first();
+    }
+
     public function event()
     {
         return $this->belongsTo('Event');

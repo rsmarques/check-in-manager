@@ -33,6 +33,7 @@ Route::group(array('prefix' => 'api/v1'), function () {
         Route::post('guests/upload', 'GuestController@bulkStore');
         Route::post('guests/{id}/delete', 'GuestController@delete');
         Route::post('events/{slug}/guests/{guestId}/checkin', 'GuestController@eventGuestCheckIn');
+        Route::post('events/{slug}/guests/bulk_checkin', 'GuestController@eventGuestsBulkCheckIn');
         Route::post('events/{slug}/guests/{guestId}/remove', 'GuestController@eventGuestRemove');
 
         // event endpoints

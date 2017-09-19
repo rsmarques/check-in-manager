@@ -59,6 +59,27 @@
             });
         };
 
+        $scope.openUploadGuestsDialog = function (ev)
+        {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirm = $mdDialog.prompt()
+                .title('Guest List Upload')
+                .textContent('Input your Student Ids (comma separated)')
+                .placeholder('31700,31701,31702')
+                .ariaLabel('Student Ids')
+                .targetEvent(ev)
+                .ok('Submit');
+
+            $mdDialog.show(confirm).then(function(result) {
+                var guestIds = result;
+                // bulk checking in guests
+                $scope.bulkCheckInGuests($scope.currentEvent, guestIds);
+
+            }, function() {
+
+            });
+        };
+
         $scope.openEventMenu = function ($mdOpenMenu, ev) {
             var originatorEv = ev;
             $mdOpenMenu(ev);
@@ -109,7 +130,7 @@
             $location.search({});
         };
 
-        $scope.checkCurrentEvent    = function ()
+        $scope.checkCurrentEvent    = function (force)
         {
             var params  = $location.search();
 
@@ -118,7 +139,7 @@
                 var event   = $scope.findEvent(eventId);
 
                 if (typeof event !== "undefined") {
-                    if ($scope.eventId !== event.id) {
+                    if ($scope.eventId !== event.id || force) {
                         $scope.setCurrentEvent(event);
                     }
                 }
@@ -160,6 +181,22 @@
 
             // forcing window resize to update virtual repeater
             angular.element(window).triggerHandler('resize');
+
+            return true;
+        };
+
+        $scope.bulkCheckInGuests = function(event, guestIds)
+        {
+
+            Guest.bulkCheckIn({eventSlug: event.slug, guestIds: guestIds, data: 'checkin'}, function (result) {
+
+                $scope.checkCurrentEvent(true);
+                // forcing window resize to update virtual repeater
+                angular.element(window).triggerHandler('resize');
+
+            }, function (err) {
+
+            });
 
             return true;
         };

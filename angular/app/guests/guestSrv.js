@@ -20,6 +20,15 @@
                 }
             },
 
+            bulkCheckIn: {
+                url: API_URL + "events/:eventSlug/guests/bulk_checkin",
+                method: 'POST',
+                params: {
+                    eventSlug: '@eventSlug',
+                    guest_ids: '@guestIds',
+                }
+            },
+
             remove: {
                 url: API_URL + "events/:eventSlug/guests/:guestId/:data",
                 method: 'POST',
