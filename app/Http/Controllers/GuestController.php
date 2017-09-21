@@ -72,7 +72,7 @@ class GuestController extends ApiController
         Log::info("GuestController :: Checking Guest [$guestId] in event [$eventSlug]!");
 
         $eventGuest             = EventGuest::firstOrNew(array('event_id' => $event->id, 'guest_id' => $guest->id));
-        $eventGuest->check_in   = is_null($eventGuest->check_in) ? 0 : !$eventGuest->check_in;
+        $eventGuest->check_in   = is_null($eventGuest->check_in) ? 1 : !$eventGuest->check_in;
         $eventGuest->save();
 
         return $eventGuest;
@@ -99,7 +99,7 @@ class GuestController extends ApiController
             Log::info("GuestController :: Checking Guest [$guest->id] in event [$eventSlug]!");
 
             $eventGuest             = EventGuest::firstOrNew(array('event_id' => $event->id, 'guest_id' => $guest->id));
-            $eventGuest->check_in   = is_null($eventGuest->check_in) ? 1 : !$eventGuest->check_in;
+            $eventGuest->check_in   = is_null($eventGuest->check_in) ? 0 : !$eventGuest->check_in;
             $eventGuest->save();
         }
 
