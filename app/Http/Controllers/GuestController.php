@@ -164,7 +164,7 @@ class GuestController extends ApiController
             $guest->st_number   = $guestData['st_number'];
         }
         if (!empty($guestData['origin'])) {
-            $guest->origin      = $guestData['origin'];
+            $guest->origin      = strtoupper($guestData['origin']);
         }
         if (isset($guestData['graduated'])) {
             $guest->graduated   = $guestData['graduated'];
@@ -261,7 +261,7 @@ class GuestController extends ApiController
                 $guest->st_number   = $guestData['st_number'];
             }
             if (!empty($guestData['origin'])) {
-                $guest->origin      = $guestData['origin'];
+                $guest->origin      = strtoupper($guestData['origin']);
             }
             if (isset($guestData['graduated'])) {
                 $guest->graduated   = $guestData['graduated'];
