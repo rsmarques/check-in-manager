@@ -75,7 +75,7 @@ class StatsController extends ApiController
         $endDate        = Input::get('end_date', '2099-00-00');
 
         $industries     = Event::distinct()->where('date', '>=', $startDate)->where('date', '<', $endDate)->pluck('industry')->all();
-        $countries      = Guest::distinct()->pluck('origin')->all();
+        $countries      = array_map('strtoupper', Guest::distinct()->pluck('origin')->all());
         $months         = Event::selectRaw('date_format(date, "%Y-%m") as month')
             ->distinct()
             ->where('date', '>=', $startDate)->where('date', '<', $endDate)
@@ -109,7 +109,7 @@ class StatsController extends ApiController
 
             $statsData['industries_abs'][$stat->course][$stat->industry]    += $stat->count;
             $statsData['industries_percentage'][$stat->industry]            += $stat->count;
-            $statsData['countries'][$stat->origin]                          += $stat->count;
+            $statsData['countries'][strtoupper($stat->origin)]              += $stat->count;
             $statsData['time'][$stat->course][$timestamp]                   += $stat->count;
         }
 
