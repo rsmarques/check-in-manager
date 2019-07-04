@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "prod": "gulp --production",
-    "dev": "gulp watch"
+    "dev": "gulp watch",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "gulp-concat": "^2.6.0",
@@ -17,11 +19,13 @@
     "gulp-uglify": "^1",
     "jshint-stylish": "^2",
     "laravel-elixir-livereload": "^1.1.1",
-    "main-bower-files": "^2.1.0"
+    "main-bower-files": "^2.1.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "laravel-elixir": "^5.0.0",
     "bootstrap-sass": "^3.0.0"
-  }
+  },
+  "snyk": true
 }
